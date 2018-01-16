@@ -2,12 +2,9 @@ Git is a distributed version control system
 Git is free software under GPL.
 Git has mutable index called stage.
 Git tracks changes of files.
-when I type in add THIS changed.
-andd  this thsi tshi 
 
 Git Keywords:
 init 初始化Git
-
 git config --global user.name "Name"
 git config --global user.email "EmaiName@address.add"
 mkdir 新建一个目录
@@ -28,3 +25,5 @@ Working Stage 工作区
 Stage 暂存区
 Repository 版本库
 工作区 add 暂存区 commit 版本库
+git 管理的是修改，当输入add时候此时修改了的内容被添加进暂存区，commit命令时，只能把暂存区的内容提交
+并不能提交后续修改的内容，后续修改内容都算作修改部分
