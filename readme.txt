@@ -28,4 +28,8 @@ Repository 版本库
 git 管理的是修改，当输入add时候此时修改了的内容被添加进暂存区，commit命令时，只能把暂存区的内容提交
 并不能提交后续修改的内容，后续修改内容都算作修改部分
 git checkout -- file 把工作区文件恢复到上次提交的状态
-git reset HEAD file 把提交到暂存区的文件撤销 
+git reset HEAD file 把提交到暂存区的文件撤销
+rm  删除一个文件
+git rm 在git暂存区中删除一个文件
+如果需要删除一个文件，使用git rm 删除文件后 使用 git commit提交删除
+如果发现删除错误了 可以使用checkout来恢复
