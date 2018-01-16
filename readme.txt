@@ -33,3 +33,7 @@ rm  删除一个文件
 git rm 在git暂存区中删除一个文件
 如果需要删除一个文件，使用git rm 删除文件后 使用 git commit提交删除
 如果发现删除错误了 可以使用checkout来恢复
+在GitHub托管代码时候需要用到SSH协议
+创建SSH协议过程
+ssh-keygen -t rsa -C."emailName@add.reg" 会在用户主目录下生成两个文件
+id_rsa 和 id_rsa.pub 这就是两个秘钥对 .pub是公钥
