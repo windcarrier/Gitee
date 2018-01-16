@@ -27,3 +27,5 @@ Repository 版本库
 工作区 add 暂存区 commit 版本库
 git 管理的是修改，当输入add时候此时修改了的内容被添加进暂存区，commit命令时，只能把暂存区的内容提交
 并不能提交后续修改的内容，后续修改内容都算作修改部分
+git checkout -- file 把工作区文件恢复到上次提交的状态
+git reset HEAD file 把提交到暂存区的文件撤销 
