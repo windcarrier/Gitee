@@ -1,7 +1,9 @@
 Git is a distributed version control system
 Git is free software under GPL.
-
-
+Git has mutable index called stage.
+Git tracks changes of files.
+when I type in add THIS changed.
+andd  this thsi tshi 
 
 Git Keywords:
 init 初始化Git
