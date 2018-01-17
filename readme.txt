@@ -6,6 +6,9 @@ Git new branch "div"
 Vim This is a Vim edit
 Git Creating a new branch AND simple IN feature1
 
+As a branch I must DO some change
+
+
 Git Keywords:
 init 初始化Git
 git config --global user.name "Name"
