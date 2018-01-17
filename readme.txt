@@ -3,8 +3,13 @@ Git is free software under GPL.
 Git has mutable index called stage.
 Git tracks changes of files.
 Git new branch "div"
+<<<<<<< HEAD
 Git Creat a new branch and a difference
 
+=======
+Vim This is a Vim edit
+Git Creating a new branch AND simple IN feature1
+>>>>>>> feature1 //This is coflict mark
 
 Git Keywords:
 init 初始化Git
@@ -48,3 +53,5 @@ git branch  查看当前分支情况 当前分支前面会有一个*
 git checkout BranchName 用于跳转到一个分支
 git merge BranchName 将BranchName的文件合并到当前分支
 git branch -d BranchName 删除一个分支
+当git的几个分支出现冲突时 merge时会显示冲突
+此时需要修改冲突的内容然后进行提交从而合并为新的master
