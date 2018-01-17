@@ -3,6 +3,8 @@ Git is free software under GPL.
 Git has mutable index called stage.
 Git tracks changes of files.
 Git new branch "div"
+Git Creat a new branch and a difference
+
 
 Git Keywords:
 init 初始化Git
