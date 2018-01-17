@@ -59,4 +59,9 @@ git branch -d BranchName 删除一个分支
 当git的几个分支出现冲突时 merge时会显示冲突
 此时需要修改冲突的内容然后进行提交从而合并为新的master
 git log --graph 可以以图的格式观察合并的情况
-如果前期处理过冲突 后来分支和master独立进行修改 但是分支中并没有处理conflict而直接进行修改，然后master 也继续修改的话 合并到master自后 分支的修改将被合并到master中
+如果前期处理过冲突 后来分支和master独立进行修改
+但是分支中并没有处理conflict而直接进行修改，然后master 也继续修改的话
+合并到master自后 分支的修改将被合并到master中
+如果只有一条分支且不冲突的情况下Git默认使用Fast forward格式进行merge
+此时如果删除分支 分支信息就会丢掉
+如需保留分支信息可以使用--no-ff形式
