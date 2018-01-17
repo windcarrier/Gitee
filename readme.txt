@@ -64,4 +64,5 @@ git log --graph 可以以图的格式观察合并的情况
 合并到master自后 分支的修改将被合并到master中
 如果只有一条分支且不冲突的情况下Git默认使用Fast forward格式进行merge
 此时如果删除分支 分支信息就会丢掉
-如需保留分支信息可以使用--no-ff形式
+如需保留分支信息可以使用--no-ff形式 no Fast forward
+这个做法相当于在分支后提交一个新的commit的master
