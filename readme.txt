@@ -81,3 +81,6 @@ git stash list 可以看有几个stash
 恢复工作有两个方法
 git stash pop 恢复同时删除stash
 git stash prop 恢复stash git stash drop 删除stash
+git 中新建一个试验性质的分支 并修改之后 commit之后 如果么有合并
+删除时候意味着废弃此次修改 使用 git branch -D BranchName
+
