@@ -70,6 +70,14 @@ Git 在项目使用的的规则
 master分支只用来发布版本时使用
 dev分支用来合并和管理更新
 每个人有自己独立的brach分支来进行工作
-bugbugbugbug
 合并*尤其是master与dev*时一般不采用Fast forward形式，因为此种形式看不出合并过
+<<<<<<< Updated upstream
 
+=======
+Git 管理bug的强大之处
+>>>>>>> Stashed changes// stash 命令自动合并之后产生的
+git stash 可以用来临时储藏一个未编辑完成的工作
+git stash list 可以看有几个stash
+恢复工作有两个方法
+git stash pop 恢复同时删除stash
+git stash prop 恢复stash git stash drop 删除stash
