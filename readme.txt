@@ -43,3 +43,6 @@ git checkout -b dev 创建一个新的分支"div" -b 表示创建并切换
 git branch dev
 git checkout dev
 git branch  查看当前分支情况 当前分支前面会有一个*
+git checkout BranchName 用于跳转到一个分支
+git merge BranchName 将BranchName的文件合并到当前分支
+git branch -d BranchName 删除一个分支
