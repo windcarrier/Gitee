@@ -70,4 +70,6 @@ Git 在项目使用的的规则
 master分支只用来发布版本时使用
 dev分支用来合并和管理更新
 每个人有自己独立的brach分支来进行工作
+bugbugbugbug
 合并*尤其是master与dev*时一般不采用Fast forward形式，因为此种形式看不出合并过
+
