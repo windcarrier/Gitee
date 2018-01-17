@@ -2,6 +2,7 @@ Git is a distributed version control system
 Git is free software under GPL.
 Git has mutable index called stage.
 Git tracks changes of files.
+Git new branch "div"
 
 Git Keywords:
 init 初始化Git
@@ -37,3 +38,8 @@ git rm 在git暂存区中删除一个文件
 创建SSH协议过程
 ssh-keygen -t rsa -C."emailName@add.reg" 会在用户主目录下生成两个文件
 id_rsa 和 id_rsa.pub 这就是两个秘钥对 .pub是公钥
+git checkout -b dev 创建一个新的分支"div" -b 表示创建并切换
+等于 以下两条命令：
+git branch dev
+git checkout dev
+git branch  查看当前分支情况 当前分支前面会有一个*
