@@ -90,6 +90,11 @@ git 在于远程仓库连接时，最好先使用clone 来建立本地branch
 提交时候如果分支不是master的分支情况，如果需要合并需要使用 
 git merge BranchName --allow-unrelated-history
 git 从远程仓库下载时也会有不是一个分支的情况，此时也需要使用上述语句来强制合并
-
+git 可以通过建立一个.gitignore文件来忽略不想要上传的文件
+需要把想要忽略的文件名写到这个文件中就可以了
+git 可以就该命令 使用 git config --global alias. SHORTCMD ORIGENCMD
+--global指的是修改全局变量， 后面填写短命令和原始命令
+来看一个变态的修改lg命令的人的例子
+git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 
 
