@@ -97,5 +97,6 @@ git 可以就该命令 使用 git config --global alias. SHORTCMD ORIGENCMD
 来看一个变态的修改lg命令的人的例子
 git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 git的配置文件都存储在.git/config文件中 别名等信息需要修改只需要在里面删除即可
+后面的内容为在一个Linux系统上搭建Git服务的功能目前还未涉及暂时不考虑学习
 
 
