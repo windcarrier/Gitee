@@ -89,5 +89,6 @@ git push -u Name BranchName 用于上传代码
 git 在于远程仓库连接时，最好先使用clone 来建立本地branch 
 提交时候如果分支不是master的分支情况，如果需要合并需要使用 
 git merge BranchName --allow-unrelated-history
->>>>>>> b6d2df47d95be2f11d14d52761b8266ef561ac70
+
+
 
