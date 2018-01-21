@@ -14,6 +14,9 @@ This is a **SERIOUS** plan for my C#.
 — ASP.Net做网页
 — Xamarin 做跨平台APP
 
+目前考虑使用ASP.Net Core 的学习路线
+
 vi 基本操作 :X 后面输入密码 进行加密，如果密码不对文章乱码
 加密之后要进行保存：w 或者保存退出:wq 
 强制退出:q! 或者 ZZ 都是无法保存设置的密码的
+
