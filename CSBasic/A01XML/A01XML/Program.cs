@@ -37,6 +37,7 @@ namespace A01XML
             Console.WriteLine("******************************");
             Console.WriteLine(aResult);
             Console.ReadKey();
+            aDoc.Save("TestXML.xml");
         }
     }
 }

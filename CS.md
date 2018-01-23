@@ -9,4 +9,5 @@
 + XDeclaration XML的文档声明 涵盖板板号，字符编码类型，是否引用外部数据
 + XProcessingInstruction 处理指令，由两个参数组成
 
-
+XDocument aDoc = new XDocument();
+aDoc.Save("SaveName.xml");//保存XML文件的函数
