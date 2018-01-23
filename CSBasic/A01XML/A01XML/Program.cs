@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Xml.Linq;
+using System.IO;
 namespace A01XML
 {
     class XMLTest
@@ -8,6 +9,8 @@ namespace A01XML
         {
             Console.WriteLine("Hello World_MY computer first C# test");
             Console.ReadKey();
+            Console.WriteLine();
+            
             XDocument aDoc = new XDocument(
                 new XDeclaration("0.1", "utf-8", "yes"),
                 new XElement("AElename",
@@ -23,7 +26,16 @@ namespace A01XML
             AEle.Attribute("BAttri").Remove();
 
             aDoc.Add(new XProcessingInstruction("xml-stylesheet", @"href=""stories.css""type=""text/css"""));
-            Console.WriteLine(aDoc);
+            Console.WriteLine(aDoc.ToString());
+            Console.WriteLine(aDoc.ToString());
+            //这里会发现好神奇Declaration中的内容是打不出来的，
+            //必须采用以下的方法才能将Declaration的内容打印出来
+            Console.ReadKey();
+            var sw = new StringWriter();
+            aDoc.Save(sw);
+            string aResult = sw.GetStringBuilder().ToString();
+            Console.WriteLine("******************************");
+            Console.WriteLine(aResult);
             Console.ReadKey();
         }
     }
