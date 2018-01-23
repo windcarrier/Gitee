@@ -5,4 +5,5 @@
 + XElement
 + XComment
 + XAttribute
+- 使用XDocument来插入一个新的XML文档
 
