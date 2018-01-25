@@ -1,7 +1,7 @@
 # C#语言记录——菜鸟初飞篇  
 ## 基础部分
 ### XML调用  
-常用标签 
+常用标签
 + XElement 一个单元节点
 + XComment 不参与编译 相当于注释 给人看的
 + XAttribute 节点属性
@@ -10,9 +10,8 @@
 + XProcessingInstruction 处理指令，由两个参数组成
 
 XDocument aDoc = new XDocument();
-aDoc.Save("SaveName.xml");//保存XML文件的函数
-<Code>
-
+aDoc.Save("SaveName.xml");//保存XML文件的函数  
+```C#
 using System;
 using System.Xml.Linq;
 using System.IO;
@@ -25,11 +24,11 @@ namespace A01XML
             Console.WriteLine("Hello World_MY computer first C# test");
             Console.ReadKey();
             Console.WriteLine();
-            
+
             XDocument aDoc = new XDocument(
                 new XDeclaration("0.1", "utf-8", "yes"),
                 new XElement("AElename",
-                new XComment("This is the AElemet Comment"), 
+                new XComment("This is the AElemet Comment"),
                 new XAttribute("AEleAtriName","Atrribute Obj content"),
                 new XElement("A1EleName","A1Content"
                     ),new XElement("A2EleName","A2Content")));
@@ -56,8 +55,6 @@ namespace A01XML
         }
     }
 }
-</Code>
-
+```
 ### 异步编程
-C#5最新的async/await特性用来实现异步线程 
-
+C#5最新的async/await特性用来实现异步线程
