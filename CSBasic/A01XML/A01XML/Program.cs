@@ -10,7 +10,6 @@ namespace A01XML
             Console.WriteLine("Hello World_MY computer first C# test");
             Console.ReadKey();
             Console.WriteLine();
-            
             XDocument aDoc = new XDocument(
                 new XDeclaration("0.1", "utf-8", "yes"),
                 new XElement("AElename",
@@ -24,7 +23,6 @@ namespace A01XML
             AEle.Add(new XComment("BComment Obj"));
             AEle.AddFirst(new XComment("AddFirstCommet"));
             AEle.Attribute("BAttri").Remove();
-
             aDoc.Add(new XProcessingInstruction("xml-stylesheet", @"href=""stories.css""type=""text/css"""));
             Console.WriteLine(aDoc.ToString());
             Console.WriteLine(aDoc.ToString());
