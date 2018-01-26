@@ -63,9 +63,8 @@ namespace A01XML
 ```
 ### 异步编程  
 C#5最新的async/await特性用来实现异步线程
-<<<<<<< HEAD
+
 #### 取消异步操作
-=======
 
 #### 可删除的对象
 实现IDisposable接口中的Dispose()方法。当不再需要某个对象时，调用这个方法，释放重要资源。  
@@ -81,4 +80,4 @@ using (VariableName)
 **abstract** 只能被继承不能实例化  
 **sealed** 实例化不能被继承  
 
->>>>>>> 7bae9e4de8792a6cc9ad852f508127ee3e3434fc
+
