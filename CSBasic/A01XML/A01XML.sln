@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "A01XML", "A01XML\A01XML.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncAwait", "ConsoleApplication1\AsyncAwait.csproj", "{71253C5C-F582-422D-BC0B-109B20784C54}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardLib", "ConsoleApplication2\CardLib.csproj", "{BA17A4BF-F0A8-4243-82F0-DF5AF5A9D0F5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{71253C5C-F582-422D-BC0B-109B20784C54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71253C5C-F582-422D-BC0B-109B20784C54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71253C5C-F582-422D-BC0B-109B20784C54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA17A4BF-F0A8-4243-82F0-DF5AF5A9D0F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA17A4BF-F0A8-4243-82F0-DF5AF5A9D0F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA17A4BF-F0A8-4243-82F0-DF5AF5A9D0F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA17A4BF-F0A8-4243-82F0-DF5AF5A9D0F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

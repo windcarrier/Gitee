@@ -80,4 +80,3 @@ using (VariableName)
 **abstract** 只能被继承不能实例化  
 **sealed** 实例化不能被继承  
 
-
