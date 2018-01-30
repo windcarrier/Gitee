@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -74,6 +75,9 @@ namespace CardLib
             else
                 throw (new System.ArgumentOutOfRangeException("cardNum", cardNum, "Value must be between 0 and 51."));
         }
+        /// <summary>
+        /// 洗牌
+        /// </summary>
         public void Shuffle()
         {
             Card[] newDeck = new Card[52];
@@ -97,5 +101,34 @@ namespace CardLib
             newDeck.CopyTo(cards, 0);
         }
     }
-
+    public class Cards : CollectionBase
+    {
+        public void Add(Card aCard)
+        {
+            List.Add(aCard);
+        }
+        public void Remove(Card aCard)
+        {
+            List.Remove(aCard);
+        }
+        public Card this[int cardIndex]
+        {
+            get
+            {
+                return (Card)List[cardIndex];
+            }
+            set
+            {
+                List[cardIndex] = value;
+            }
+        }
+        public void CopyTo(Cards targetCards)
+        {
+            for(int i = 0;i<this.Count;i++)
+            {
+                targetCards[i] = this[i];
+            }
+        }
+        public bool Contains(Card aCard) => this.InnerList.Contains(aCard);
+    }
 }
