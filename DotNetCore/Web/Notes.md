@@ -36,6 +36,18 @@ Visual Studio、VisualcStudio Core、Vim。这种集成由[OmniSharp 项目](htt
 .NET Standard是一种 API 规范，用于描述开发者可以在每个 .NET 实现代码中使用的一组一致 .NET API。 .NET 实现需要实现此规范才能被视为符合 .NET Standard ，并且才能支持面向 .NET Standard 的库。
 由于 .NET Core 可实现 .NET Standard，因此也支持 .NET Standard 库。
 
+### Workload
+
+就本身而言，.NET Core 包括单个应用程序模型（控制台应用），这对工具、本地服务和基于文本的游戏很有用。 除 .NET Core 外，还生成了其他应用程序模型以扩展其功能，例如：
+
++ [ASP.NET Core](https://docs.microsoft.com/zh-cn/aspnet/core/)
++ [Windows 10 通用 Windows 平台 (UWP)](https://developer.microsoft.com/windows)
++ [面向 UWP 时的 Xamarin.Forms](https://www.xamarin.com/forms)
+
+### 开源
+
+.NET Core 属于开放源（MIT 许可证），由 Microsoft 于 2014 年提供给 [.NET Foundation](https://dotnetfoundation.org/)。 现在它是最活跃的 .NET Foundation 项目之一。 可由个人和企业自由采用，包括用于个人、学术或商业目的。 许多公司已使用 .NET Core 作为应用、工具、新平台和托管服务的一部分。 其中某些公司对 GitHub 上的 .NET Core 做出了巨大贡献，并作为 [.NET Foundation Technical Steering Group](https://dotnetfoundation.org/blog/tsg-welcome)（.NET Foundation 技术控制组）的成员，指导产品方向。
+
 -----------------------------------------------------------------------
 
 ## ASP.NET Core
