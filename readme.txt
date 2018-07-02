@@ -83,7 +83,26 @@ git stash pop 恢复同时删除stash
 git stash prop 恢复stash git stash drop 删除stash
 git 中新建一个试验性质的分支 并修改之后 commit之后 如果么有合并
 删除时候意味着废弃此次修改 使用 git branch -D BranchName
+<<<<<<< HEAD
 git 在于远程仓库连接时，最好先使用clone 来建立本地branch 
 提交时候如果分支不是master的分支情况，如果需要合并需要使用 
 git merge BranchName --allow-unrelated-history
+=======
+<<<<<<< HEAD
+git push -u Name BranchName 用于上传代码
+=======
+git 在于远程仓库连接时，最好先使用clone 来建立本地branch 
+提交时候如果分支不是master的分支情况，如果需要合并需要使用 
+git merge BranchName --allow-unrelated-history
+git 从远程仓库下载时也会有不是一个分支的情况，此时也需要使用上述语句来强制合并
+git 可以通过建立一个.gitignore文件来忽略不想要上传的文件
+需要把想要忽略的文件名写到这个文件中就可以了
+git 可以就该命令 使用 git config --global alias. SHORTCMD ORIGENCMD
+--global指的是修改全局变量， 后面填写短命令和原始命令
+来看一个变态的修改lg命令的人的例子
+git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+git的配置文件都存储在.git/config文件中 别名等信息需要修改只需要在里面删除即可
+后面的内容为在一个Linux系统上搭建Git服务的功能目前还未涉及暂时不考虑学习
+
+>>>>>>> 53eb5e874b822ec27668c8ddd6e8b53cb47f3ac4
 
