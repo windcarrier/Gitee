@@ -74,6 +74,29 @@ Mono 是原始的跨平台和开放源 .NET 实现，于 2004 年首次发布。
 + 开放源 -- Mono 和 .NET Core 两者都使用 MIT 许可证，且都属于 .NET Foundation 项目。
 + 焦点 --最近几年，Mono 的主要焦点是移动平台，而 .NET Core 的焦点是云工作负荷。
 
+### VS Core & .NET Core HelloWorld
+
+#### VSCore生成控制台程序
+
+(1) 使用VS Core中资源管理器中的“打开文件夹”打开文件的工作目录
+(2) 使用控制台进入所在工作目录，输入"dotnet new console"，建立一个新的工作台程序
+(3) 此命令会在工作目录下创建Program.cs文件，以及HelloWorld.csproj的C#项目文件。
+(4) 对于.NET Core 1.X 需要键入"dotnet restore" ，使有权限风闻所需的.NET Core包，后续版本不需要
+(5) 键入"dotnet run"运行程序
+
+#### 使用命令行实现HelloWorld
+
+1. $ dotnet new console  
+ 生成一个Hello.csproj项目文件，其中包含生产控制台应用所必需的依赖项。它还将创建Program.cs，这是包含应用程序入口点的基本文件。
+
+2. $ dotnet restore
+ dotnet restore 调用到 [NuGet](https://www.nuget.org/)（.NET 包管理器）以还原依赖项树。 NuGet 分析 Hello.csproj 文件、下载文件中所述的依赖项（或从计算机缓存中获取）并编写 obj/project.assets.json 文件。 需要 project.assets.json 文件才可进行编译和运行。
+ project.assets.json 文件是 NuGet 依赖项和其他描述应用的信息的持久化完整图片集。 此文件由其他工具（如 dotnet build 和 dotnet run）读取，让它们可以使用正确的 NuGet 依赖项和绑定解决方法集处理源代码。
+
+3. $ dotnet run
+ dotnet run 调用 dotnet build 来确保已生成要生成的目标，然后调用 dotnet <assembly.dll> 运行目标应用程序。  
+ 或者，还可以执行 dotnet build 来编译代码，无需运行已生成的控制台应用程序。 这使得编译的应用程序（作为 DLL 文件）可以在 Windows 上使用 dotnet bin\Debug\netcoreapp1.0\Hello.dll 运行（将 / 用于非 Windows 系统）。 还可以对应用程序指定参数，相关操作将在本主题稍后部分进行介绍。
+ 在高级方案中，可以将应用程序作为独立的特定于平台的文件集生成，该应用程序可以在未安装 .NET Core 的计算机上部署或运行。 请参阅 [.NET Core 应用程序部署](https://docs.microsoft.com/zh-cn/dotnet/core/deploying/index)了解详细信息。
 -----------------------------------------------------------------------
 
 ## ASP.NET Core
