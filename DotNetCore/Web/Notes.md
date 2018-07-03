@@ -97,6 +97,9 @@ Mono 是原始的跨平台和开放源 .NET 实现，于 2004 年首次发布。
  dotnet run 调用 dotnet build 来确保已生成要生成的目标，然后调用 dotnet <assembly.dll> 运行目标应用程序。  
  或者，还可以执行 dotnet build 来编译代码，无需运行已生成的控制台应用程序。 这使得编译的应用程序（作为 DLL 文件）可以在 Windows 上使用 dotnet bin\Debug\netcoreapp1.0\Hello.dll 运行（将 / 用于非 Windows 系统）。 还可以对应用程序指定参数，相关操作将在本主题稍后部分进行介绍。
  在高级方案中，可以将应用程序作为独立的特定于平台的文件集生成，该应用程序可以在未安装 .NET Core 的计算机上部署或运行。 请参阅 [.NET Core 应用程序部署](https://docs.microsoft.com/zh-cn/dotnet/core/deploying/index)了解详细信息。
+
+请注意，以上过程中用来运行应用程序的命令和步骤仅用于开发过程。 准备好部署应用后，需要查看适用于 .NET Core 应用的不同[部署策略](https://docs.microsoft.com/zh-cn/dotnet/core/deploying/index)和 dotnet publish 命令。
+
 -----------------------------------------------------------------------
 
 ## ASP.NET Core
