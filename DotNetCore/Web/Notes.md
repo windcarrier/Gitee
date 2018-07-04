@@ -100,6 +100,8 @@ Mono 是原始的跨平台和开放源 .NET 实现，于 2004 年首次发布。
 
 请注意，以上过程中用来运行应用程序的命令和步骤仅用于开发过程。 准备好部署应用后，需要查看适用于 .NET Core 应用的不同[部署策略](https://docs.microsoft.com/zh-cn/dotnet/core/deploying/index)和 dotnet publish 命令。
 
+参考：**[.NET Core CLI 命令](https://docs.microsoft.com/zh-cn/dotnet/core/tools/index)**
+
 ### .NET Core命令组织和测试项目
 
 #### .NET Core文件组织
@@ -216,6 +218,10 @@ NewTypesTests.csproj 文件包含下列内容：
 .NET Framework：NET20, NET35, NET40, NET45, NET451, NET452, NET46, NET461, NET462, NET47, NET471, NET472  
 .NET Standard： NETSTANDARD1_0, NETSTANDARD1_1, NETSTANDARD1_2, NETSTANDARD1_3, NETSTANDARD1_4, NETSTANDARD1_5, NETSTANDARD1_6, NETSTANDARD2_0  
 .NET Core： NETCOREAPP1_0, NETCOREAPP1_1, NETCOREAPP2_0, NETCOREAPP2_1
+
+#### 在 .NET Core 上测试库  
+
+能够跨平台进行测试至关重要。 可使用现成的 xUnit 或 MSTest。 它们都十分适合在 .NET Core 上对库进行单元测试。 如何使用测试项目设置解决方案取决于解决方案的结构。 下面的示例假设测试和源目录位于同一顶级目录下。
 
 -----------------------------------------------------------------------
 
