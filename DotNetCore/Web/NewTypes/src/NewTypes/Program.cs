@@ -11,7 +11,8 @@ namespace ConsoleApplication
             List<IPet> pets = new List<IPet>
             {
                 new Dog(),
-                new Cat()  
+                new Cat(),
+                new Bird()  
             };
             
             foreach (var pet in pets)

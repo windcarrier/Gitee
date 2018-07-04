@@ -84,7 +84,7 @@ Mono 是原始的跨平台和开放源 .NET 实现，于 2004 年首次发布。
 (4) 对于.NET Core 1.X 需要键入"dotnet restore" ，使有权限风闻所需的.NET Core包，后续版本不需要
 (5) 键入"dotnet run"运行程序
 
-#### 使用命令行实现HelloWorld
+#### 使用CLI实现HelloWorld
 
 1. $ dotnet new console  
  生成一个Hello.csproj项目文件，其中包含生产控制台应用所必需的依赖项。它还将创建Program.cs，这是包含应用程序入口点的基本文件。
@@ -120,7 +120,49 @@ Mono 是原始的跨平台和开放源 .NET 实现，于 2004 年首次发布。
 
 #### 测试示例
 
+NewTypes 项目已准备就绪，与宠物相关的类型均置于一个文件夹中，因此具有良好的组织。 接下来，创建测试项目，并使用 [xUnit](https://xunit.github.io/) 测试框架开始编写测试。 使用单元测试，可自动检查宠物类型的行为，确认其正常运行。  
+创建 test 文件夹，并在其中包含一个 NewTypesTests 文件夹。 在 NewTypesTests 文件夹的命令提示符中，执行 **dotnet new xunit**。这将生成两个文件：NewTypesTests.csproj 和 UnitTest1.cs。  
+新建的试项目当前无法测试 NewTypes 中的类型，并且需要对 NewTypes 项目的项目引用。 要添加项目引用，请使用 **dotnet add reference** 命令。
 
+```(console)  
+dotnet add reference ../../src/NewTypes/NewTypes.csproj
+```
+
+也可以通过在NewTypesTests.csproj文件中添加\<ItemGroup>节点，手动添加项目引用。
+
+```(xml)
+<ItemGroup>
+  <ProjectReference Include="../../src/NewTypes/NewTypes.csproj" />
+</ItemGroup>
+```
+
+NewTypesTests.csproj 文件包含下列内容：
+
++ 对 .NET 测试基础结构 Microsoft.NET.Test.Sdk 的包引用
++ 对 xUnit 测试框架 xunit 的包引用
++ 对测试运行程序 xunit.runner.visualstudio 的包引用
++ 对要测试的代码 NewTypes 的项目引用
+
+下面为整个程序的目录结构  
+
+```(File Organizing)
+/NewTypes
+|__/src
+   |__/NewTypes
+      |__/Pets
+         |__Dog.cs
+         |__Cat.cs
+         |__IPet.cs
+      |__Program.cs
+      |__NewTypes.csproj
+|__/test
+   |__NewTypesTests
+      |__PetTests.cs
+      |__NewTypesTests.csproj
+```
+
+**NOTES:**  
+尽管期望 expected 和 actual 值相等，但使用 Assert.NotEqual 检查的初始断言表明它们并不相等。 务必使最初创建的测试失败一次，以检查测试的逻辑是否正确。 这是测试驱动设计 (TDD) 方法中的一个重要步骤。 在确认测试失败后，调整断言使测试通过。
 
 -----------------------------------------------------------------------
 
