@@ -164,6 +164,59 @@ NewTypesTests.csproj 文件包含下列内容：
 **NOTES:**  
 尽管期望 expected 和 actual 值相等，但使用 Assert.NotEqual 检查的初始断言表明它们并不相等。 务必使最初创建的测试失败一次，以检查测试的逻辑是否正确。 这是测试驱动设计 (TDD) 方法中的一个重要步骤。 在确认测试失败后，调整断言使测试通过。
 
+### 使用跨平台工具开发
+
+此处介绍如何使用跨平台CLI工具编写.NET的库。CLI提供可跨任何支持OS工作的简化体验。
+
+#### 面向 .NET Standard
+
+如果对 .NET Standard 不是很熟悉，请参阅 [.NET Standard](https://docs.microsoft.com/zh-cn/dotnet/standard/net-standard) 了解详细信息。文章中含有一个表格，提供了各个版本各种实现的对应。  
+以下是此表格对于创建库的意义：  
+选择 .NET Standard 版本时，需要在能够访问最新 API 与能够定位更多 .NET 实现代码和 .NET Standard 版本之间进行权衡。 通过选择 netstandardX.X 版本（其中 X.X 是版本号）并将其添加到项目文件（.csproj 或 .fsproj），控制可面向的平台和版本范围。
+
+面向 .NET Standard 时，有三种主要选项，具体取决于你的需求。
+
+1. 可使用 .NET Standard 的默认版本，该版本由 netstandard1.4 模板提供，可提供对 .NET Standard 上大多数 API 的访问权限，同时仍与 UWP、.NET Framework 4.6.1 和即将推出的 .NET Standard 2.0 兼容。
+2. .NET Standard 版本可后向兼容。 这意味着 netstandard1.0 库可在 netstandard1.1 平台以及更高版本上运行。 但是，不可向前兼容，即版本较低的 .NET Standard 平台无法引用版本较高的平台。 这意味着 netstandard1.0 库不能引用面向 netstandard1.1 或更高版本的库。 选择适合所需、恰当混合有 API 和平台支持的 Standard 版本。 目前，我们建议 netstandard1.4。
+3. 如果希望面向 .NET Framework 版本 4.0 或更低版本，或者要使用 .NET Framework 中提供但 .NET Standard 中不提供的 API（例如 System.Drawing），请阅读以下部分，了解如何设定多目标。
+
+#### 面向多目标
+
+如果项目同时支持 .NET Framework 和 .NET Core，可能需要面向较旧版本的 .NET Framework。 在此方案中，如果要为较新目标使用较新的 API 和语言构造，请在代码中使用 **#if** 指令。 可能还需要为要面向的每个平台添加不同的包和依赖项，以包含每种情况所需的不同 API。  
+例如，假设有一个库，它通过 HTTP 执行联网操作。 对于 .NET Standard 和 .NET Framework 版本 4.5 或更高版本，可从 System.Net.Http 命名空间使用 HttpClient 类。 但是，.NET Framework 的早期版本没有 HttpClient 类，因此可对早期版本使用 System.Net 命名空间中的 WebClient 类。
+项目文件可能如下所示：
+
+```(xml)
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>netstandard1.4;net40;net45</TargetFrameworks>
+  </PropertyGroup>
+
+  <!-- Need to conditionally bring in references for the .NET Framework 4.0 target -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
+    <Reference Include="System.Net" />
+  </ItemGroup>
+
+  <!-- Need to conditionally bring in references for the .NET Framework 4.5 target -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'net45'">
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Threading.Tasks" />
+  </ItemGroup>
+</Project>
+```
+
+在此处可看到三项主要更改：
+
++ TargetFramework 节点已替换为 TargetFrameworks，其中表示了三个 TFM。
++ net40 目标有一个 \<ItemGroup> 节点，拉取一个 .NET Framework 引用。
++ net45 目标中有一个 \<ItemGroup> 节点，拉取两个 .NET Framework 引用。
+
+生成系统可识别以下用在 **#if** 指令中的处理器符号：
+
+.NET Framework：NET20, NET35, NET40, NET45, NET451, NET452, NET46, NET461, NET462, NET47, NET471, NET472  
+.NET Standard： NETSTANDARD1_0, NETSTANDARD1_1, NETSTANDARD1_2, NETSTANDARD1_3, NETSTANDARD1_4, NETSTANDARD1_5, NETSTANDARD1_6, NETSTANDARD2_0  
+.NET Core： NETCOREAPP1_0, NETCOREAPP1_1, NETCOREAPP2_0, NETCOREAPP2_1
+
 -----------------------------------------------------------------------
 
 ## ASP.NET Core
