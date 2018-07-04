@@ -100,6 +100,28 @@ Mono 是原始的跨平台和开放源 .NET 实现，于 2004 年首次发布。
 
 请注意，以上过程中用来运行应用程序的命令和步骤仅用于开发过程。 准备好部署应用后，需要查看适用于 .NET Core 应用的不同[部署策略](https://docs.microsoft.com/zh-cn/dotnet/core/deploying/index)和 dotnet publish 命令。
 
+### .NET Core命令组织和测试项目
+
+#### .NET Core文件组织
+
+典型的组织类型  
+
+```(File Organizing)
+/NewTypes
+|__/src
+   |__/NewTypes
+      |__/Pets
+         |__Dog.cs
+         |__Cat.cs
+         |__IPet.cs
+      |__Program.cs
+      |__NewTypes.csproj
+```
+
+#### 测试示例
+
+
+
 -----------------------------------------------------------------------
 
 ## ASP.NET Core
