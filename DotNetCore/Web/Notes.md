@@ -264,6 +264,32 @@ dotnet build
 
 #### 使用多个项目
 
+对于较大的库，通常需要将功能置于不同项目中。
+假设要生成一个可以惯用的 C# 和 F# 使用的库。 这意味着库的使用者可通过对 C# 或 F# 来说很自然的方式来使用它们。 例如，在 C# 中，了能会这样使用库：
+
+这样的使用方案意味着被访问的 API 必须具有用于 C# 和 F# 的不同结构。 通常的方法是将库的所有逻辑因子转化到核心项目中，C# 和 F# 项目定义调用到核心项目的 API 层。 该部分的其余部分将使用以下名称：
+
++ AwesomeLibrary.Core - 核心项目，其中包含库的所有逻辑
++ AwesomeLibrary.CSharp - 具有打算在 C# 中使用的公共 API 的项目
++ AwesomeLibrary.FSharp - 具有打算在 F# 中使用的公共 API 的项目
+
+可在终端运行下列命令，生成下列指南的结构：
+
+```(bash)
+mkdir AwesomeLibrary && cd AwesomeLibrary
+dotnet new sln
+mkdir AwesomeLibrary.Core && cd AwesomeLibrary.Core && dotnet new classlib
+cd ..
+mkdir AwesomeLibrary.CSharp && cd AwesomeLibrary.CSharp && dotnet new classlib
+cd ..
+mkdir AwesomeLibrary.FSharp && cd AwesomeLibrary.FSharp && dotnet new classlib -lang F#
+cd ..
+dotnet sln add AwesomeLibrary.Core/AwesomeLibrary.Core.csproj
+dotnet sln add AwesomeLibrary.CSharp/AwesomeLibrary.CSharp.csproj
+dotnet sln add AwesomeLibrary.FSharp/AwesomeLibrary.FSharp.fsproj
+
+```
+
 -----------------------------------------------------------------------
 
 ## ASP.NET Core
