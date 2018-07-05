@@ -219,9 +219,50 @@ NewTypesTests.csproj 文件包含下列内容：
 .NET Standard： NETSTANDARD1_0, NETSTANDARD1_1, NETSTANDARD1_2, NETSTANDARD1_3, NETSTANDARD1_4, NETSTANDARD1_5, NETSTANDARD1_6, NETSTANDARD2_0  
 .NET Core： NETCOREAPP1_0, NETCOREAPP1_1, NETCOREAPP2_0, NETCOREAPP2_1
 
+如果使用多版本编译，则编译后会在bin目录下生成多个版本的编译结果。
+
 #### 在 .NET Core 上测试库  
 
 能够跨平台进行测试至关重要。 可使用现成的 xUnit 或 MSTest。 它们都十分适合在 .NET Core 上对库进行单元测试。 如何使用测试项目设置解决方案取决于解决方案的结构。 下面的示例假设测试和源目录位于同一顶级目录下。
+
+1.设置解决方案。 可使用以下命令实现此目的：
+
+```(bash)
+ mkdir SolutionWithSrcAndTest
+ cd SolutionWithSrcAndTest
+ dotnet new sln
+ dotnet new classlib -o MyProject
+ dotnet new xunit -o MyProject.Test
+ dotnet sln add MyProject.Test/MyProject.Test.csproj
+ dotnet sln add MyProject/MyProject.csproj
+```
+
+这将创建多个项目，并一个解决方案中将这些项目链接在一起。 SolutionWithSrcAndTest 的目录应如下所示：
+
+```(File Organizing)
+/SolutionWithSrcAndTest
+|__SolutionWithSrcAndTest.sln
+|__MyProject/
+|__MyProject.Test/
+```
+
+2.导航到测试项目的目录，然后添加对 MyProject 中的 MyProject.Test 的引用。
+
+```(bash)
+cd MyProject.Test
+dotnet add reference ../MyProject/MyProject.csproj
+```
+
+3.还原包和生成项目：
+
+```(bash)
+dotnet restore
+dotnet build
+```
+
+4.执行dotnet test 命令，验证xUnit是否在运行。如果选用MSTest，则应改为MSTest控制台运行程序。
+
+#### 使用多个项目
 
 -----------------------------------------------------------------------
 
