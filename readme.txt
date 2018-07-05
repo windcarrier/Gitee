@@ -16,7 +16,12 @@ As a branch I must DO some change
 
 Git Keywords:
 init 初始化Git
+      git init
+      git remote add origin <你的项目地址> //注:项目地址形式为:https://gitee.com/xxx/xxx.git或者 git@gitee.com:xxx/xxx.gi
+      如果你想克隆，只需要执行命令
+      git clone <项目地址>
 git config --global user.name "Name"
+    
 git config --global user.email "EmaiName@address.add"
 mkdir 新建一个目录
 cd Location 进入Location位置 Location格式按照Unix格式书写
