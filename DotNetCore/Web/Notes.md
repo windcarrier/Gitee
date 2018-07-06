@@ -327,6 +327,13 @@ AwesomeLibrary.CSharp 和 AwesomeLibrary.FSharp 的项目文件现在需要将 A
 [若要可靠的回复包并编写可靠代码，将依赖项修复为随.NET Core 1.0一起提供的包版本，这很重要。这意味着每个包应具有单个版本，且没有额外的限定符。](https://docs.microsoft.com/zh-cn/dotnet/core/tutorials/managing-package-dependency-versions)
 后续内容略（暂时没看懂）
 
+### 托管.NET COre
+
+像所有的托管代码一样，.NET Core 应用程序也由主机执行。 主机负责启动运行时（包括 JIT 和垃圾回收器等组件）、创建 AppDomain 并调用托管的入口点。
+托管 .NET Core 运行时是高级方案，在大多数情况下，.NET Core 开发人员无需担心托管问题，因为 .NET Core 生成过程会提供默认主机来运行 .NET Core 应用程序。 虽然在某些特殊情况下，它对显式托管 .NET Core 运行时非常有用 - 无论是作为一种在本机进程中调用托管代码的方式还是为了获得对运行时工作原理更好的控制。
+本文概述了从本机代码启动 .NET Core 运行时、创建初始应用程序域 ([AppDomain](https://docs.microsoft.com/zh-cn/dotnet/api/system.appdomain)) 以及在域中执行托管代码的必要步骤。
+
+#### 系统必备
 
 
 -----------------------------------------------------------------------
