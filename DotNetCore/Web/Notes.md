@@ -290,6 +290,45 @@ dotnet sln add AwesomeLibrary.FSharp/AwesomeLibrary.FSharp.fsproj
 
 ```
 
+##### 项目到项目的引用
+
+引用项目的最佳方式是使用 .NET Core CLI 添加项目引用。 在 AwesomeLibrary.CSharp 和 AwesomeLibrary.FSharp 项目目录中，可运行下列命令：
+
+```(bash)
+dotnet add reference ../AwesomeLibrary.Core/AwesomeLibrary.Core.csproj
+```
+
+AwesomeLibrary.CSharp 和 AwesomeLibrary.FSharp 的项目文件现在需要将 AwesomeLibrary.Core 作为 ProjectReference 目标引用。 可通过检查项目文件和查看其中的下列内容来进行验证：
+
+```(xml)
+<ItemGroup>
+  <ProjectReference Include="..\AwesomeLibrary.Core\AwesomeLibrary.Core.csproj" />
+</ItemGroup>
+```
+
+如果不想使用 .NET Core CLI，可手动将此部分添加到每个项目文件。
+
+##### 结构化解决方案
+
+多项目解决方案的另一个重要方面是建立良好的整体项目结构。 可根据自己的喜好随意组织代码，只要使用 dotnet sln add 将每个项目链接到解决方案文件，就可在解决方案级别运行 dotnet restore 和 dotnet build。
+
+### 如何管理 .NET Core 1.0 的包依赖项版本
+
+下文介绍需要了解的 .NET Core 库和应用的包版本信息。
+
+#### 词汇表
+
++ **Fix**修复 - 修复依赖项意味着使用 .NET Core 1.0 NuGet 上发布的相同“系列”的包。
++ **Metapackage**元包 - 表示一组 NuGet 包的 NuGet 包。
++ **Trimming**修整 - 从元包删除不依赖的包的操作。 这与 NuGet 包作者有关。 有关详细信息，请参阅减少 [project.json](https://docs.microsoft.com/zh-cn/dotnet/core/deploying/reducing-dependencies) 的包依赖项。
+
+#### 将依赖项修复为 .NET Core 1.0
+
+[若要可靠的回复包并编写可靠代码，将依赖项修复为随.NET Core 1.0一起提供的包版本，这很重要。这意味着每个包应具有单个版本，且没有额外的限定符。](https://docs.microsoft.com/zh-cn/dotnet/core/tutorials/managing-package-dependency-versions)
+后续内容略（暂时没看懂）
+
+
+
 -----------------------------------------------------------------------
 
 ## ASP.NET Core
