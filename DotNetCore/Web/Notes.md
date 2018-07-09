@@ -2,6 +2,8 @@
 
 ## .NET Core
 
+> 包的依赖管理和托管 .NET Core 内容还有很多问题。
+
 ### 简介
 
 .NET Core是一个通用开发平台，支持Windows MacOS和Linux,并且可用于设备、云和嵌入式/IoT方案。  
@@ -338,6 +340,20 @@ AwesomeLibrary.CSharp 和 AwesomeLibrary.FSharp 的项目文件现在需要将 A
 由于主机是本机应用程序，所以本教程将介绍如何构造 C++ 应用程序以托管 .NET Core。 将需要一个 C++ 开发环境（例如，Visual Studio 提供的环境）。
 还将需要一个简单的 .NET Core 应用程序来测试主机，因此应安装 .NET Core SDK 并构建一个小型的 .NET Core 测试应用（例如，“Hello World”应用）。 使用通过新 .NET Core 控制台项目模板创建的“Hello World”应用就足够了。
 本教程及其相关示例会构建一个 Windows 主机，请参阅本文结尾处有关在 Unix 上托管的说明。
+
+#### 创建主机
+
+有关展示本文中所述步骤的示例主机，请访问 dotnet/samples GitHub 存储库。 该示例的 host.cpp 文件中的注释清楚地将本教程中已编号的步骤与它们在示例中的执行位置关联。 有关下载说明，请参阅示例和教程。
+请记住，示例主机的用途在于提供学习指导，在纠错方面不甚严谨，其重在可读性而非效率。 更多的真实主机示例可从 [dotnet/coreclr](https://github.com/dotnet/coreclr/tree/master/src/coreclr/hosts) 存储库获取。 尤其是 [CoreRun](https://github.com/dotnet/coreclr/tree/master/src/coreclr/hosts/corerun) 主机，它是学习者了解简单示例后用来深入学习的通用主机。
+
+##### 有关mscoree.h的说明
+
+.NET Core 主托管接口 (ICLRRuntimeHost2) 在 [MSCOREE.IDL](https://github.com/dotnet/coreclr/blob/master/src/inc/MSCOREE.IDL) 中定义。 主机需要引用的此文件 (mscoree.h) 的标头版本，该版本是在构建 .NET Core 运行时时通过 MIDL 生成。 如果不想构建 .NET Core 运行时，还可在 dotnet/coreclr 存储库中将 mscoree.h 获取为[预生成的标头](https://github.com/dotnet/coreclr/tree/master/src/pal/prebuilt/inc)。 [有关构建 .NET Core 运行时的说明](https://github.com/dotnet/coreclr#building-the-repository)可在其 GitHub 存储库中找到。
+
+##### 步骤1-标识托管的入口点
+
+引用必要的标头后（例如，mscoree.h 和 stdio.h），.NET Core 主机必须完成的首要任务之一就是找到要使用的托管入口点。 在示例主机中，通过将主机的第一个命令行参数作为托管的二进制文件（将执行该文件的 main 方法）的路径，即可完成此操作。
+
 
 
 -----------------------------------------------------------------------
