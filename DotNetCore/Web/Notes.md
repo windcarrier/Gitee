@@ -354,9 +354,40 @@ AwesomeLibrary.CSharp 和 AwesomeLibrary.FSharp 的项目文件现在需要将 A
 
 引用必要的标头后（例如，mscoree.h 和 stdio.h），.NET Core 主机必须完成的首要任务之一就是找到要使用的托管入口点。 在示例主机中，通过将主机的第一个命令行参数作为托管的二进制文件（将执行该文件的 main 方法）的路径，即可完成此操作。
 
+#### [后续内容略。。。没看懂！！！](https://docs.microsoft.com/zh-cn/dotnet/core/tutorials/netcore-hosting)
 
+### 使用dotnet new创建一个用户模版
 
------------------------------------------------------------------------
+此处将简述一下内容：
+
++ 使用已有程序或者控制台方法建立一个基本模版
+
++ 从nuget.org或者本地nupkg打包以供分发
+
++ 从 nuget.org nupkg 或则本地文件系统安装模版
+
++ 卸载模版
+
+示例模版代码[连接地址](https://github.com/dotnet/dotnet-template-samples/tree/master/16-nuget-package)
+该示例是按照NuGet发布风格配置的。
+
+如果需要使用示例的文件系统进行操作还需要进行以下工作：
+
+1. 把*contents*文件下的文件移动到*GarciaSoftware.ConsoleTemplate.CSharp*下
+
+2. 删除空的*contents*文件
+
+3. 删除*nuspec*文件 
+
+#### 从一个文件创建模版
+
+从本地硬盘中已有的文件中创建一个模版，一般文件模版的文件名为:公司.模版类型.使用语言。然后进行如下操作：
+
+1. 在文件根目录下添加名为*.template.config*的目录
+
+2. 在 *.template.config* 目录下添加配置文件 *template.json*。 如需了解json文件 更多内容请参阅[新用户控制台程序模版定义](https://docs.microsoft.com/zh-cn/dotnet/core/tools/custom-templates#templatejson)
+
+-----------
 
 ## ASP.NET Core
 
