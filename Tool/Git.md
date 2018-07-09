@@ -4,7 +4,7 @@
 
 ### 本机设置
 
-本地Git仓库和GitHub仓库之间的传输通过SSH加密 
+本地Git仓库和GitHub仓库之间的传输通过SSH加密
 
 #### SSH设置
 
@@ -28,6 +28,22 @@ ssh-keygen -t rsa -C "youremail@example.com"
 
 这样GitHub就可以使用RSS来进行身份验证，同时也可以使用HTTPS，不过https比较慢同时每次都要进行身份识别。
 
+### 从远程仓库克隆
+
+如果需要创建远程仓库时，最好先在远程位置先行创建项目之后clone到本地
+
+#### 远程仓库clone
+
+##### 使用ssh-key方式从远程仓库clone
+
+1. 在远程端设置好ssh-key，将共钥粘贴到远程端。
+
+2. 使用git clone git@github.com:windcarrier/Gitee.git（此处为git仓库地址）
+
+此时就在本地**当前**文件目录创建一个文件的clone
+
+------------------------------------
+
 Git is a distributed version control system
 Git is free software under GPL.
 Git has mutable index called stage.
@@ -42,7 +58,6 @@ Git Creating a new branch AND simple IN feature1
 > feature1 //This is coflict mark
 
 As a branch I must DO some change
-
 
 Git Keywords:
 init 初始化Git
