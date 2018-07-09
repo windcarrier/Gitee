@@ -108,7 +108,7 @@ Mono 是原始的跨平台和开放源 .NET 实现，于 2004 年首次发布。
 
 典型的组织类型  
 
-```(File Organizing)
+```File Organizing
 /NewTypes
 |__/src
    |__/NewTypes
@@ -126,13 +126,13 @@ NewTypes 项目已准备就绪，与宠物相关的类型均置于一个文件�
 创建 test 文件夹，并在其中包含一个 NewTypesTests 文件夹。 在 NewTypesTests 文件夹的命令提示符中，执行 **dotnet new xunit**。这将生成两个文件：NewTypesTests.csproj 和 UnitTest1.cs。  
 新建的试项目当前无法测试 NewTypes 中的类型，并且需要对 NewTypes 项目的项目引用。 要添加项目引用，请使用 **dotnet add reference** 命令。
 
-```(console)  
+```console
 dotnet add reference ../../src/NewTypes/NewTypes.csproj
 ```
 
 也可以通过在NewTypesTests.csproj文件中添加\<ItemGroup>节点，手动添加项目引用。
 
-```(xml)
+```xml
 <ItemGroup>
   <ProjectReference Include="../../src/NewTypes/NewTypes.csproj" />
 </ItemGroup>
@@ -147,7 +147,7 @@ NewTypesTests.csproj 文件包含下列内容：
 
 下面为整个程序的目录结构  
 
-```(File Organizing)
+```File Organizing
 /NewTypes
 |__/src
    |__/NewTypes
@@ -188,7 +188,7 @@ NewTypesTests.csproj 文件包含下列内容：
 例如，假设有一个库，它通过 HTTP 执行联网操作。 对于 .NET Standard 和 .NET Framework 版本 4.5 或更高版本，可从 System.Net.Http 命名空间使用 HttpClient 类。 但是，.NET Framework 的早期版本没有 HttpClient 类，因此可对早期版本使用 System.Net 命名空间中的 WebClient 类。
 项目文件可能如下所示：
 
-```(xml)
+```xml
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard1.4;net40;net45</TargetFrameworks>
@@ -227,7 +227,7 @@ NewTypesTests.csproj 文件包含下列内容：
 
 1.设置解决方案。 可使用以下命令实现此目的：
 
-```(bash)
+```bash
  mkdir SolutionWithSrcAndTest
  cd SolutionWithSrcAndTest
  dotnet new sln
@@ -239,7 +239,7 @@ NewTypesTests.csproj 文件包含下列内容：
 
 这将创建多个项目，并一个解决方案中将这些项目链接在一起。 SolutionWithSrcAndTest 的目录应如下所示：
 
-```(File Organizing)
+```File Organizing
 /SolutionWithSrcAndTest
 |__SolutionWithSrcAndTest.sln
 |__MyProject/
@@ -248,14 +248,14 @@ NewTypesTests.csproj 文件包含下列内容：
 
 2.导航到测试项目的目录，然后添加对 MyProject 中的 MyProject.Test 的引用。
 
-```(bash)
+```bash
 cd MyProject.Test
 dotnet add reference ../MyProject/MyProject.csproj
 ```
 
 3.还原包和生成项目：
 
-```(bash)
+```bash
 dotnet restore
 dotnet build
 ```
@@ -275,7 +275,7 @@ dotnet build
 
 可在终端运行下列命令，生成下列指南的结构：
 
-```(bash)
+```bash
 mkdir AwesomeLibrary && cd AwesomeLibrary
 dotnet new sln
 mkdir AwesomeLibrary.Core && cd AwesomeLibrary.Core && dotnet new classlib
@@ -300,7 +300,7 @@ dotnet add reference ../AwesomeLibrary.Core/AwesomeLibrary.Core.csproj
 
 AwesomeLibrary.CSharp 和 AwesomeLibrary.FSharp 的项目文件现在需要将 AwesomeLibrary.Core 作为 ProjectReference 目标引用。 可通过检查项目文件和查看其中的下列内容来进行验证：
 
-```(xml)
+```xml
 <ItemGroup>
   <ProjectReference Include="..\AwesomeLibrary.Core\AwesomeLibrary.Core.csproj" />
 </ItemGroup>
@@ -334,6 +334,10 @@ AwesomeLibrary.CSharp 和 AwesomeLibrary.FSharp 的项目文件现在需要将 A
 本文概述了从本机代码启动 .NET Core 运行时、创建初始应用程序域 ([AppDomain](https://docs.microsoft.com/zh-cn/dotnet/api/system.appdomain)) 以及在域中执行托管代码的必要步骤。
 
 #### 系统必备
+
+由于主机是本机应用程序，所以本教程将介绍如何构造 C++ 应用程序以托管 .NET Core。 将需要一个 C++ 开发环境（例如，Visual Studio 提供的环境）。
+还将需要一个简单的 .NET Core 应用程序来测试主机，因此应安装 .NET Core SDK 并构建一个小型的 .NET Core 测试应用（例如，“Hello World”应用）。 使用通过新 .NET Core 控制台项目模板创建的“Hello World”应用就足够了。
+本教程及其相关示例会构建一个 Windows 主机，请参阅本文结尾处有关在 Unix 上托管的说明。
 
 
 -----------------------------------------------------------------------
