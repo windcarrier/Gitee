@@ -377,15 +377,16 @@ AwesomeLibrary.CSharp 和 AwesomeLibrary.FSharp 的项目文件现在需要将 A
 
 2. 删除空的*contents*文件
 
-3. 删除*nuspec*文件 
+3. 删除*nuspec*文件
 
 #### 从一个文件创建模版
 
 从本地硬盘中已有的文件中创建一个模版，一般文件模版的文件名为:公司.模版类型.使用语言。然后进行如下操作：
 
-1. 在文件根目录下添加名为*.template.config*的目录
+1. 在文件根目录下添加名为 *.template.config* 的目录
 
 2. 在 *.template.config* 目录下添加配置文件 *template.json*。 如需了解json文件 更多内容请参阅[新用户控制台程序模版定义](https://docs.microsoft.com/zh-cn/dotnet/core/tools/custom-templates#templatejson)
+
 
 -----------
 
