@@ -583,6 +583,343 @@
         }
 ```
 
+### 调用软件界面
+
+```C#
+        /// <summary>
+        /// 调用OrcaFlex将WAMIT水动力结果转换为可用形式
+        /// </summary>
+        /// <param name="InputFileFullPath"></param>需要转化的WAMIT的分析结果
+        /// <param name="OutYmlFileFullPath"></param>转化成功的OrcaFlex可用的水动力形式
+        static void MakeYmlFileWithOrcaFlex(string InputFileFullPath, string OutYmlFileFullPath)
+        {
+            System.Diagnostics.Process CadProcess = new System.Diagnostics.Process();
+            //找到OrcaFlex软件
+            CadProcess.StartInfo.FileName = @"C:\Program Files (x86)\Orcina\OrcaFlex\10.1\OrcaFlex64.exe";
+            //启动OrcaFlex软件
+            CadProcess.Start();
+
+            CadProcess.WaitForInputIdle();
+
+            //string HCCadTitleStr = "* OrcaFlex 10.1a";
+            string HCCadTitleStr = "OrcaFlex 10.1a";
+            //句柄、窗口初始值为空
+            IntPtr HCCadWndHwnd = IntPtr.Zero;
+            while (true)
+            {
+                System.Threading.Thread.Sleep(1000);
+                //找到主窗口为"OrcaFlex 10.1a"的一个窗口
+                HCCadWndHwnd = RTUIIntegration.WinAPIMethod.FindWindow(null, HCCadTitleStr);
+
+                if (HCCadWndHwnd != IntPtr.Zero)
+                {
+                    System.Threading.Thread.Sleep(5000);
+                    HCCadWndHwnd = RTUIIntegration.WinAPIMethod.FindWindow(null, HCCadTitleStr);
+                    break;
+                }
+            }
+
+            //获得某个窗口的焦点，或者理解为定位某个窗口。
+            //RTUIIntegration.WinAPIMethod.SetForegroundWindow(HCCadWndHwnd);
+            RTUIIntegration.RtWndContal.SetForegroundWindow(HCCadWndHwnd);
+
+            System.Threading.Thread.Sleep(2000);
+
+
+            //键盘命令 Alt+M+T+V， 新建Vess Type类型
+            {
+                //按下Alt
+                RTUIIntegration.WinAPIMethod.keybd_event(18, 0, 0, 0);
+                System.Threading.Thread.Sleep(10);
+                //按下M
+                RTUIIntegration.WinAPIMethod.keybd_event(77, 0, 0, 0);
+                System.Threading.Thread.Sleep(10);
+                //抬起M
+                RTUIIntegration.WinAPIMethod.keybd_event(77, 0, RTUIIntegration.APICode.KEYEVENTF_KEYUP, 0);
+                System.Threading.Thread.Sleep(10);
+                //按下T
+                RTUIIntegration.WinAPIMethod.keybd_event(84, 0, 0, 0);
+                System.Threading.Thread.Sleep(10);
+                //抬起T
+                RTUIIntegration.WinAPIMethod.keybd_event(84, 0, RTUIIntegration.APICode.KEYEVENTF_KEYUP, 0);
+                System.Threading.Thread.Sleep(10);
+                //按下V
+                RTUIIntegration.WinAPIMethod.keybd_event(86, 0, 0, 0);
+                System.Threading.Thread.Sleep(10);
+                //抬起V
+                RTUIIntegration.WinAPIMethod.keybd_event(86, 0, RTUIIntegration.APICode.KEYEVENTF_KEYUP, 0);
+                System.Threading.Thread.Sleep(10);
+                //抬起Alt
+                RTUIIntegration.WinAPIMethod.keybd_event(18, 0, RTUIIntegration.APICode.KEYEVENTF_KEYUP, 0);
+                System.Threading.Thread.Sleep(10);
+            }
+
+
+            #region //导入数据
+            {
+                //使左侧特征树获得焦点
+                {
+                    IntPtr Panel1WndHwnd = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(HCCadWndHwnd, IntPtr.Zero, "TPanel", null);
+                    IntPtr Panel2WndHwnd = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(HCCadWndHwnd, Panel1WndHwnd, "TPanel", null);
+
+
+                    IntPtr TModelBrowserWndHwnd = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(Panel2WndHwnd, IntPtr.Zero, null, "Model Browser");
+
+
+                    IntPtr Panel3WndHwnd = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(TModelBrowserWndHwnd, IntPtr.Zero, "TPanel", null);
+                    IntPtr Panel4WndHwnd = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(TModelBrowserWndHwnd, Panel3WndHwnd, "TPanel", null);
+
+                    IntPtr Tree1WndHwnd = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(Panel4WndHwnd, IntPtr.Zero, "TTreeViewFrame", null);
+                    IntPtr Tree2WndHwnd = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(Tree1WndHwnd, IntPtr.Zero, "TOrcTreeView", null);
+
+
+                    //获得某个窗口的焦点，或者理解为定位某个窗口。
+                    RTUIIntegration.WinAPIMethod.SetForegroundWindow(Tree2WndHwnd);
+                    System.Threading.Thread.Sleep(10);
+                }
+
+
+                //回车，触发对Vessel Type的编辑
+                {
+                    //按下回车
+                    RTUIIntegration.WinAPIMethod.keybd_event(13, 0, 0, 0);
+                    System.Threading.Thread.Sleep(10);
+                    //抬起回车
+                    RTUIIntegration.WinAPIMethod.keybd_event(13, 0, RTUIIntegration.APICode.KEYEVENTF_KEYUP, 0);
+                    System.Threading.Thread.Sleep(10);
+                }
+
+
+                //类似上面，这里是找到了名为"Edit Vessel Type Data"的一个窗口
+                string EditVesselTitleStr = "Edit Vessel Type Data";
+                IntPtr EditVesselWndHwnd = IntPtr.Zero;
+                while (true)
+                {
+                    System.Threading.Thread.Sleep(100);
+                    EditVesselWndHwnd = RTUIIntegration.WinAPIMethod.FindWindow(null, EditVesselTitleStr);
+                    if (EditVesselWndHwnd != IntPtr.Zero)
+                    {
+                        System.Threading.Thread.Sleep(100);
+                        EditVesselWndHwnd = RTUIIntegration.WinAPIMethod.FindWindow(null, EditVesselTitleStr);
+                        break;
+                    }
+                }
+                System.Threading.Thread.Sleep(500);
+
+                {
+                    IntPtr But1WndHwnd = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(EditVesselWndHwnd, IntPtr.Zero, null, "Import...");
+                    //点击import按钮
+                    RTUIIntegration.WinAPIMethod.PostMessage(But1WndHwnd, RTUIIntegration.APICode.WM_CLICK, 0, 0);
+                }
+                System.Threading.Thread.Sleep(1000);
+
+
+                IntPtr SelectVesselWndHwnd = IntPtr.Zero;
+                {
+                    //类似上面，这里是找到了名为"Select Vessel Hydrodynamic Data File"的一个窗口
+                    string SelectVesselTitleStr = "Select Vessel Hydrodynamic Data File";
+                    while (true)
+                    {
+                        System.Threading.Thread.Sleep(100);
+                        SelectVesselWndHwnd = RTUIIntegration.WinAPIMethod.FindWindow(null, SelectVesselTitleStr);
+                        if (SelectVesselWndHwnd != IntPtr.Zero)
+                        {
+                            System.Threading.Thread.Sleep(100);
+                            SelectVesselWndHwnd = RTUIIntegration.WinAPIMethod.FindWindow(null, SelectVesselTitleStr);
+                            break;
+                        }
+                    }
+                    System.Threading.Thread.Sleep(500);
+                }
+
+                {
+                    IntPtr Com1WndHwnd = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(SelectVesselWndHwnd, IntPtr.Zero, "ComboBoxEx32", null);
+                    IntPtr Com2WndHwnd = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(Com1WndHwnd, IntPtr.Zero, "ComboBox", null);
+                    IntPtr EditWndHwnd = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(Com2WndHwnd, IntPtr.Zero, "Edit", null);
+                    //找到输入文件的路径
+                    RTUIIntegration.WinAPIMethod.SendMessage(EditWndHwnd, RTUIIntegration.APICode.WM_SETTEXT, IntPtr.Zero, InputFileFullPath);
+                }
+                System.Threading.Thread.Sleep(2000);
+                {
+                    //点击打开
+                    IntPtr But2WndHwnd = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(SelectVesselWndHwnd, IntPtr.Zero, null, "打开(&O)");
+                    RTUIIntegration.WinAPIMethod.SendMessage(But2WndHwnd, RTUIIntegration.APICode.WM_CLICK, 0, 0);
+                }
+                System.Threading.Thread.Sleep(3000);
+
+
+                IntPtr ImportVesselDataWndHwnd = IntPtr.Zero;
+                {
+                    //类似上面，这里是找到了名为"Import Vessel Data"的一个窗口
+                    string ImportVesselDataTitleStr = "Import Vessel Data";
+                    while (true)
+                    {
+                        System.Threading.Thread.Sleep(100);
+                        ImportVesselDataWndHwnd = RTUIIntegration.WinAPIMethod.FindWindow(null, ImportVesselDataTitleStr);
+                        if (ImportVesselDataWndHwnd != IntPtr.Zero)
+                        {
+                            System.Threading.Thread.Sleep(100);
+                            ImportVesselDataWndHwnd = RTUIIntegration.WinAPIMethod.FindWindow(null, ImportVesselDataTitleStr);
+                            break;
+                        }
+                    }
+                    System.Threading.Thread.Sleep(1000);
+                }
+
+                {
+                    IntPtr Tb111WndHwnd1 = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(ImportVesselDataWndHwnd, IntPtr.Zero, "TPanel", null);
+                    //点击import按钮
+                    IntPtr But3WndHwnd = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(Tb111WndHwnd1, IntPtr.Zero, null, "&Import");
+                    RTUIIntegration.WinAPIMethod.SendMessage(But3WndHwnd, RTUIIntegration.APICode.WM_CLICK, 0, 0);
+                    System.Threading.Thread.Sleep(2000);
+                    //然后再点击close按钮
+                    IntPtr But4WndHwnd = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(Tb111WndHwnd1, IntPtr.Zero, null, "&Close");
+                    RTUIIntegration.WinAPIMethod.SendMessage(But4WndHwnd, RTUIIntegration.APICode.WM_CLICK, 0, 0);
+                }
+                System.Threading.Thread.Sleep(1000);
+
+
+                //关闭EditVess窗口
+                {
+                    //然后再点击OK按钮
+                    IntPtr But1WndHwnd = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(EditVesselWndHwnd, IntPtr.Zero, null, "OK");
+                    RTUIIntegration.WinAPIMethod.SendMessage(But1WndHwnd, RTUIIntegration.APICode.WM_CLICK, 0, 0);
+                }
+
+
+                //键盘命令 Alt+F+D， 保存数据
+                {
+                    RTUIIntegration.WinAPIMethod.keybd_event(18, 0, 0, 0);
+                    System.Threading.Thread.Sleep(10);
+
+                    RTUIIntegration.WinAPIMethod.keybd_event(70, 0, 0, 0);
+                    System.Threading.Thread.Sleep(10);
+                    RTUIIntegration.WinAPIMethod.keybd_event(70, 0, RTUIIntegration.APICode.KEYEVENTF_KEYUP, 0);
+                    System.Threading.Thread.Sleep(10);
+
+                    RTUIIntegration.WinAPIMethod.keybd_event(68, 0, 0, 0);
+                    System.Threading.Thread.Sleep(10);
+                    RTUIIntegration.WinAPIMethod.keybd_event(68, 0, RTUIIntegration.APICode.KEYEVENTF_KEYUP, 0);
+                    System.Threading.Thread.Sleep(10);
+
+                    RTUIIntegration.WinAPIMethod.keybd_event(18, 0, RTUIIntegration.APICode.KEYEVENTF_KEYUP, 0);
+                    System.Threading.Thread.Sleep(10);
+                }
+            }
+            #endregion
+
+
+            #region //Save Data 保存文件
+            {
+                IntPtr FileSaveDataWndHwnd = IntPtr.Zero;
+                {
+                    //类似上面，这里是找到了名为"Save Data"的一个窗口
+                    string TitleStr = "Save Data";
+                    while (true)
+                    {
+                        System.Threading.Thread.Sleep(100);
+                        FileSaveDataWndHwnd = RTUIIntegration.WinAPIMethod.FindWindow(null, TitleStr);
+                        if (FileSaveDataWndHwnd != IntPtr.Zero)
+                        {
+                            System.Threading.Thread.Sleep(100);
+                            FileSaveDataWndHwnd = RTUIIntegration.WinAPIMethod.FindWindow(null, TitleStr);
+                            break;
+                        }
+                    }
+                    System.Threading.Thread.Sleep(2000);
+                }
+                RTUIIntegration.WinAPIMethod.SetForegroundWindow(FileSaveDataWndHwnd);
+
+
+                IntPtr Hwnd1 = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(FileSaveDataWndHwnd, IntPtr.Zero, "DUIViewWndClassName", null);
+                IntPtr Hwnd2 = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(Hwnd1, IntPtr.Zero, "DirectUIHWND", null);
+                IntPtr Hwnd3 = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(Hwnd2, IntPtr.Zero, "FloatNotifySink", null);
+
+                //修改保存类型 combox选择值
+                {
+                    IntPtr Hwnd4 = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(Hwnd2, Hwnd3, "FloatNotifySink", null);
+                    IntPtr Combo1 = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(Hwnd4, IntPtr.Zero, "ComboBox", null);
+
+                    //RTUIIntegration.WinAPIMethod.SendMessage(Combo1, RTUIIntegration.APICode.WM_CLICK, 0, 0);
+                    RTUIIntegration.WinAPIMethod.SetForegroundWindow(Combo1);
+                    System.Threading.Thread.Sleep(100);
+
+                    //下箭头 + 回车
+                    {
+                        RTUIIntegration.WinAPIMethod.keybd_event(40, 0, 0, 0);
+                        System.Threading.Thread.Sleep(10);
+                        RTUIIntegration.WinAPIMethod.keybd_event(40, 0, RTUIIntegration.APICode.KEYEVENTF_KEYUP, 0);
+                        System.Threading.Thread.Sleep(10);
+
+                        RTUIIntegration.WinAPIMethod.keybd_event(40, 0, 0, 0);
+                        System.Threading.Thread.Sleep(10);
+                        RTUIIntegration.WinAPIMethod.keybd_event(40, 0, RTUIIntegration.APICode.KEYEVENTF_KEYUP, 0);
+                        System.Threading.Thread.Sleep(10);
+
+                        RTUIIntegration.WinAPIMethod.keybd_event(13, 0, 0, 0);
+                        System.Threading.Thread.Sleep(10);
+                        RTUIIntegration.WinAPIMethod.keybd_event(13, 0, RTUIIntegration.APICode.KEYEVENTF_KEYUP, 0);
+                        System.Threading.Thread.Sleep(10);
+                    }
+
+                    System.Threading.Thread.Sleep(1000);
+                }
+
+                {
+                    IntPtr Hwnd4 = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(Hwnd3, IntPtr.Zero, "ComboBox", null);
+                    IntPtr Edit4 = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(Hwnd4, IntPtr.Zero, "Edit", null);
+
+                    RTUIIntegration.WinAPIMethod.SetForegroundWindow(Edit4);
+
+                    if (System.IO.File.Exists(OutYmlFileFullPath))
+                    {
+                        System.IO.File.Delete(OutYmlFileFullPath);
+                    }
+
+                    string OutFileWithExtendFileName = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(OutYmlFileFullPath), System.IO.Path.GetFileNameWithoutExtension(OutYmlFileFullPath));
+
+                    RTUIIntegration.WinAPIMethod.SendMessage(Edit4, RTUIIntegration.APICode.WM_SETTEXT, IntPtr.Zero, OutFileWithExtendFileName);
+                    System.Threading.Thread.Sleep(500);
+                    //因为直接采用WM_SETTEXT消息时，此对话框不认识输入内容，所以以下对其进行一些键盘输入操作
+                    //依次触发右键头，a，退格键
+                    RTUIIntegration.WinAPIMethod.SetForegroundWindow(Edit4);
+                    {
+                        RTUIIntegration.WinAPIMethod.keybd_event(49, 0, 0, 0);
+                        System.Threading.Thread.Sleep(100);
+                        RTUIIntegration.WinAPIMethod.keybd_event(49, 0, RTUIIntegration.APICode.KEYEVENTF_KEYUP, 0);
+                        System.Threading.Thread.Sleep(100);
+
+                        System.Threading.Thread.Sleep(500);
+
+                        RTUIIntegration.WinAPIMethod.keybd_event(8, 0, 0, 0);
+                        System.Threading.Thread.Sleep(100);
+                        RTUIIntegration.WinAPIMethod.keybd_event(8, 0, RTUIIntegration.APICode.KEYEVENTF_KEYUP, 0);
+                        System.Threading.Thread.Sleep(100);
+                    }
+
+                    System.Threading.Thread.Sleep(500);
+                }
+
+
+                {
+                    //点击保存
+                    IntPtr OK4 = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(FileSaveDataWndHwnd, IntPtr.Zero, null, "保存(&S)");
+                    RTUIIntegration.WinAPIMethod.SendMessage(OK4, RTUIIntegration.APICode.WM_CLICK, 0, 0);
+                }
+                System.Threading.Thread.Sleep(1000);
+                //string PathOrc = @"E:\FFDEW3333.yml";
+                //System.IO.File.Copy(@"C:\WAMITv6\FPSOF\FFDEW3333.yml", PathOrc, true);
+            }
+            #endregion
+            //System.Threading.Thread.Sleep(1000);
+            //关掉这个进程
+            //CadProcess.WaitForExit();                                  //等待程序执行完退出进程
+            //CadProcess.Close();
+            CadProcess.Kill();  //结束线程
+
+        }
+```
+
 ### 表格数据绑定
 
 ```c#
