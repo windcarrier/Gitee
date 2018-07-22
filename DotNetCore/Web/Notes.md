@@ -356,7 +356,7 @@ AwesomeLibrary.CSharp 和 AwesomeLibrary.FSharp 的项目文件现在需要将 A
 
 #### [后续内容略。。。没看懂！！！](https://docs.microsoft.com/zh-cn/dotnet/core/tutorials/netcore-hosting)
 
-### 使用dotnet new创建一个用户模版
+### 使用dotnet new创建一个用户模版[没有看完](https://docs.microsoft.com/zh-cn/dotnet/core/tutorials/create-custom-template)
 
 此处将简述一下内容：
 
@@ -387,7 +387,7 @@ AwesomeLibrary.CSharp 和 AwesomeLibrary.FSharp 的项目文件现在需要将 A
 
 2. 在 *.template.config* 目录下添加配置文件 *template.json*。 如需了解json文件 更多内容请参阅[新用户控制台程序模版定义](https://docs.microsoft.com/zh-cn/dotnet/core/tools/custom-templates#templatejson)
 
-
+### 
 -----------
 
 ## ASP.NET Core
