@@ -1290,3 +1290,24 @@ namespace FIDContralBase
 }
 
 ```
+
+### C#中Unicode转换成ANSI
+
+实现从一个Unicode编码的文件改写成一个ANSI编码的文件。
+
++ 从Unicode编码文件中读取文件
++ 将文件转换成为ANSI编码方式的byte[]数组
++ 将文件ANSI编码方式的byte数据流写入文件
+
+```c#
+char[] uC =new char[]{ 'a','s'};//原Unicode
+byte[] buf=System.Text.Encoding.Unicode.GetBytes(uC, 0, uC.Length);
+char[] aC=System.Text.Encoding.GetEncoding(1252).GetChars(buf,0,buf.Length);//转换为Ansi
+/////////以下为文件读写方式实现
+string UnicodeString = System.IO.File.ReadAllText(UnicodeFileDir);
+byte[] buf = System.Text.Encoding.Default.GetBytes(UnicodeString);
+System.IO.FileStream af = new System.IO.FileStream(AnsiFileDir, System.IO.FileMode.Creat);
+af.Write(buf, 0, buf.Length);
+af.Flush();
+af.Close();
+```
