@@ -920,6 +920,469 @@
         }
 ```
 
+#### 调用Mars界面问题
+
+```c#
+static class RuleCheck
+    {
+        /// <summary>
+        /// 进行规范计算
+        /// </summary>
+        /// <param name="IptRule">规范类型</param>
+        /// <param name="OptFileFullPath">输出文件路径</param>
+        /// <returns>校核成功</returns>
+        public static bool DoRuleCheck(FIDFPSOData.FIDFPSOData.CRules IptRule,out string OptFileFullPath,out List<string> OptFileNameList)
+        {
+            //BV船级社规范
+            if (IptRule == FIDFPSOData.FIDFPSOData.CRules.BV)
+            {
+                #region BV Mars软件输入文件模板
+                // 摘要:
+                //     当模板内容在作为程序集资源文件存在时的对应关系,使用示例入校 // 注意1：在运行前请将目标模板文件的“生成格式”设置为“嵌入的资源”，否则运行会出现异常。
+                //     // 具体设置方法：右击目标模板文件，选择“属性”，选择“生成格式”，更改为“嵌入的资源”。 // 注意2：在运行前请将目标模板文件的文件格式更改为“Unicode”，否则运行会出现异常。
+                //     // 具体设置方法请参考：https://jingyan.baidu.com/article/46650658001823f548e5f851.html
+                TxtWriteTemplate.TemplateResouceInAssemblyRelInf TemplateResouceInAssemblyRelInfObj
+                = new TxtWriteTemplate.TemplateResouceInAssemblyRelInf();
+                TemplateResouceInAssemblyRelInfObj.ResouceAssembly = System.Reflection.Assembly.GetExecutingAssembly();
+                {
+                    TxtWriteTemplate.TemplateResouceInAssemblyRelInf.OneTemplateFile
+                        AA = new TxtWriteTemplate.TemplateResouceInAssemblyRelInf.OneTemplateFile();
+                    AA.TemplateFileName = "MarsInputFile.txt";
+                    AA.TemplateFullPathInAssembly
+                    = "FIDFPSOStructAnlyse.Template.MarsInputFile.txt";
+                    TemplateResouceInAssemblyRelInfObj.TemplateFileResouceRelList.Add(AA);
+                }
+                TxtWriteTemplate WriteFile = new TxtWriteTemplate();
+                TxtSection MarsTextSection = WriteFile.InitrialFromTxtTemplate("MarsInputFile.txt", TemplateResouceInAssemblyRelInfObj);
+                TxtSection RootSectionInstance = MarsTextSection.AddOneSelfInstance();
+
+                System.Reflection.Assembly Assem = System.Reflection.Assembly.GetExecutingAssembly();
+                string MarsInputFilePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Assem.Location), @"MarsFile");
+                string WorkDir = MarsInputFilePath;
+                string MarsFileName = "MarsInputFile.ma2";
+                string MarsWorkDir = MarsInputFilePath + "\\" + MarsFileName;
+
+                ///拷贝模板到目录 此处由于有问题暂时注释掉
+                if (System.IO.Directory.Exists(MarsInputFilePath))
+                {
+                    System.IO.Directory.Delete(MarsInputFilePath, true);
+                }
+                System.IO.Directory.CreateDirectory(MarsInputFilePath);
+                while (System.IO.Directory.Exists(MarsInputFilePath))
+                {
+                    WriteFile.MakeResultTxtFile("MarsInputFile.txt", MarsTextSection, System.IO.Path.Combine(WorkDir, MarsFileName), TemplateResouceInAssemblyRelInfObj);
+                    break;
+                }
+                #endregion
+                string MarsMa2Content = System.IO.File.ReadAllText(MarsWorkDir);
+                byte[] buf = System.Text.Encoding.Default.GetBytes(MarsMa2Content);
+                System.IO.FileStream af = new System.IO.FileStream(MarsWorkDir, System.IO.FileMode.Create);
+                af.Write(buf, 0, buf.Length);
+                af.Flush();
+                af.Close();
+                //调用BV Mars软件
+                OptFileFullPath = MarsInputFilePath;
+                OptFileNameList = null;
+                bool MarsRun = ControlMarsCal(MarsWorkDir, OptFileFullPath, out OptFileNameList);
+                if (MarsRun)
+                {
+                    return true;
+                }
+                return false;
+            }
+            //CCS 船级社规范实现
+            else if (IptRule == FIDFPSOData.FIDFPSOData.CRules.BV)
+            {
+                throw new Exception("CCS Rule is not available right now");
+            }
+            //其他船级社
+            else
+            {
+                throw new Exception("This Rule is not available right now");
+            }
+            return false;
+        }
+        /// <summary>
+        /// 调用Mars进行计算
+        /// </summary>
+        /// <param name="IptFileFullPath">输入文件的全部路径</param>
+        /// <param name="OutFolderFullPath">输出文件存放地址</param>
+        /// <param name="OutFileNameList">输入文件名子</param>
+        /// <returns>计算成功</returns>
+        private static bool ControlMarsCal(string IptFileFullPath, string OutFolderFullPath,out List<string> OutFileNameList)
+        {
+            //调用BV Mars软件
+            #region 启动BV软件
+            ////使用CMD方式启动
+            //System.Diagnostics.Process p = new System.Diagnostics.Process();
+            //p.StartInfo.FileName = "cmd.exe";
+            //p.StartInfo.UseShellExecute = false;    //是否使用操作系统shell启动
+            //p.StartInfo.RedirectStandardInput = true;//接受来自调用程序的输入信息
+            //p.StartInfo.RedirectStandardOutput = true;//由调用程序获取输出信息
+            //p.StartInfo.RedirectStandardError = true;//重定向标准错误输出
+            ////p.StartInfo.CreateNoWindow = false;//不显示程序窗口
+            //bool CreatWindowBool = p.StartInfo.CreateNoWindow;
+
+            //p.Start();//启动程序
+
+            ////向cmd窗口发送输入信息
+            //string CmdStr = @"C:";
+            //p.StandardInput.WriteLine(CmdStr);
+            //p.StandardInput.AutoFlush = true;
+
+            //CmdStr = @"C:\BVeritas\Mars2000\Mars2000.exe";
+            //p.StandardInput.WriteLine(CmdStr);
+            //p.StandardInput.AutoFlush = true;
+
+            //启动Mars
+            System.Diagnostics.Process MarsP = new System.Diagnostics.Process();
+            MarsP.StartInfo.FileName = @"C:\BVeritas\Mars2000\Mars2000.exe";
+            MarsP.Start();
+            MarsP.WaitForInputIdle();
+
+            IntPtr MarsHandle = RTUIIntegration.RtWndContal.WaitAndFindWindow(null, "Mars 2000");
+            if (MarsHandle.Equals(IntPtr.Zero))
+                MarsHandle = RTUIIntegration.RtWndContal.WaitAndFindWindow("ThunderRT6Main", null);
+            if (MarsHandle.Equals(IntPtr.Zero))
+            {
+                throw new Exception("BV结构计算软件调用异常");
+            }
+            OutFileNameList = null;
+            //IntPtr a = RTUIIntegration.WinAPIMethod
+
+            FIDDataBase.FIDLogData.PrintInfo("正在调用BV软件............");
+
+            //需要开启一个新的进程
+            //System.Diagnostics.Process MarsProcesss = new System.Diagnostics.Process();
+            //while (true)
+            {
+                MarsHandle = RTUIIntegration.RtWndContal.WaitAndFindWindow("ThunderRT6MDIForm", null);
+                if (!MarsHandle.Equals(IntPtr.Zero))
+                {
+                    System.Threading.Thread.Sleep(5000);
+                    RTUIIntegration.RtWndContal.SetForegroundWindow(MarsHandle);
+                    System.Threading.Thread.Sleep(10);
+                    //键盘命令 按下Alt->F->O->Alt+B->文件名处写入输入文件的全路径名
+                    {
+                        //按下Alt
+                        RTUIIntegration.WinAPIMethod.keybd_event(18, 0, 0, 0);
+                        System.Threading.Thread.Sleep(10);
+                        //F
+                        RTUIIntegration.WinAPIMethod.keybd_event(70, 0, 0, 0);
+                        System.Threading.Thread.Sleep(10);
+                        //!F
+                        RTUIIntegration.WinAPIMethod.keybd_event(70, 0, RTUIIntegration.APICode.KEYEVENTF_KEYUP, 0);
+                        System.Threading.Thread.Sleep(10);
+                        //O
+                        RTUIIntegration.WinAPIMethod.keybd_event(79, 0, 0, 0);
+                        System.Threading.Thread.Sleep(10);
+                        //!O
+                        RTUIIntegration.WinAPIMethod.keybd_event(79, 0, RTUIIntegration.APICode.KEYEVENTF_KEYUP, 0);
+                        System.Threading.Thread.Sleep(10);
+                        //!Alt
+                        RTUIIntegration.WinAPIMethod.keybd_event(18, 0, RTUIIntegration.APICode.KEYEVENTF_KEYUP, 0);
+                        IntPtr Open = RTUIIntegration.RtWndContal.WaitAndFindWindow("ThunderRT6FormDC", "Open database");
+                        IntPtr Location = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(Open, IntPtr.Zero, "ThunderRT6Frame", "Location");
+                        IntPtr Browse = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(Location, IntPtr.Zero, "ThunderRT6CommandButton", "&Browse...");
+                        //RTUIIntegration.RtWndContal.SetForegroundWindow(Open);
+                        RTUIIntegration.WinAPIMethod.PostMessage(Browse, RTUIIntegration.APICode.WM_CLICK, 0, 0);
+
+                        //System.Threading.Thread.Sleep(10);
+                        //System.Threading.Thread.Sleep(100);
+                        ////B
+                        //RTUIIntegration.WinAPIMethod.keybd_event(66, 0, 0, 0);
+                        //System.Threading.Thread.Sleep(10);
+                        ////!B
+                        //RTUIIntegration.WinAPIMethod.keybd_event(66, 0, RTUIIntegration.APICode.KEYEVENTF_KEYUP, 0);
+                        //System.Threading.Thread.Sleep(10);
+                        ////!Alt
+                        //RTUIIntegration.WinAPIMethod.keybd_event(18, 0, RTUIIntegration.APICode.KEYEVENTF_KEYUP, 0);
+                        //System.Threading.Thread.Sleep(10);
+
+                        IntPtr InputFileNameParent2 = RTUIIntegration.RtWndContal.WaitAndFindWindow(@"#32770", "Open database");
+                        IntPtr InputFileNameParent = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(InputFileNameParent2, IntPtr.Zero, "ComboBoxEx32", null);
+                        IntPtr InputFileWnd = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(InputFileNameParent, IntPtr.Zero, "ComboBox", null);
+                        IntPtr EditHandle = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(InputFileWnd, IntPtr.Zero, "Edit", null);
+
+                        //string ssssss = "E:\\RTProject\\bin\\FID\\MarsFile\\MarsInputFile.ma2";
+                        //RTUIIntegration.RtWndContal.SetForegroundWindow(EditHandle);
+                        while (InputFileNameParent2 != IntPtr.Zero)
+                        {
+                            RTUIIntegration.WinAPIMethod.SendMessage(EditHandle, RTUIIntegration.APICode.WM_SETTEXT, IntPtr.Zero, IptFileFullPath);
+                            //IntPtr OpenDatabase = RTUIIntegration.RtWndContal.WaitAndFindWindow(@"#32770", "Open database");
+                            System.Threading.Thread.Sleep(500);
+                            IntPtr OpenButton = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(InputFileNameParent2, IntPtr.Zero, "Button", @"打开(&O)");
+                            //System.Threading.Thread.Sleep(100);
+                            RTUIIntegration.WinAPIMethod.PostMessage(OpenButton, RTUIIntegration.APICode.WM_CLICK, 0, 0);
+                            System.Threading.Thread.Sleep(500);
+                            InputFileNameParent2 = RTUIIntegration.WinAPIMethod.FindWindow(@"#32770", "Open database");
+                        }
+
+                        {
+                            IntPtr Cancel_Open = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(Open, IntPtr.Zero, "ThunderRT6CommandButton", @"&Cancel");
+                            IntPtr OK_Open = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(Open, Cancel_Open, "ThunderRT6CommandButton", "&Ok");
+                            RTUIIntegration.WinAPIMethod.SendMessage(OK_Open, RTUIIntegration.APICode.WM_CLICK, 0, 0);
+                        }
+                        //{
+                        //    //RTUIIntegration.RtWndContal.SetForegroundWindow(EditHandle);
+                        //    //按下Alt
+                        //    RTUIIntegration.WinAPIMethod.keybd_event(18, 0, 0, 0);
+                        //    System.Threading.Thread.Sleep(10);
+                        //    //O
+                        //    RTUIIntegration.WinAPIMethod.keybd_event(79, 0, 0, 0);
+                        //    System.Threading.Thread.Sleep(10);
+                        //    //!O
+                        //    RTUIIntegration.WinAPIMethod.keybd_event(79, 0, RTUIIntegration.APICode.KEYEVENTF_KEYUP, 0);
+                        //    System.Threading.Thread.Sleep(100);
+                        //    //
+                        //    RTUIIntegration.RtWndContal.SetForegroundWindow(Open);
+                        //    System.Threading.Thread.Sleep(100);
+                        //    //O
+                        //    RTUIIntegration.WinAPIMethod.keybd_event(79, 0, 0, 0);
+                        //    System.Threading.Thread.Sleep(100);
+                        //    //!O
+                        //    RTUIIntegration.WinAPIMethod.keybd_event(79, 0, RTUIIntegration.APICode.KEYEVENTF_KEYUP, 0);
+                        //    System.Threading.Thread.Sleep(100);
+                        //    //!Alt
+                        //    RTUIIntegration.WinAPIMethod.keybd_event(18, 0, RTUIIntegration.APICode.KEYEVENTF_KEYUP, 0);
+                        //    System.Threading.Thread.Sleep(100);
+                        //}
+                        //打开Rule进行规范校核
+                        RTUIIntegration.RtWndContal.SetForegroundWindow(MarsHandle);
+                        IntPtr ThunderRT6PictureBoxDC = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(MarsHandle, IntPtr.Zero, "ThunderRT6PictureBoxDC", null);
+                        IntPtr Box_RuleHandle = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(MarsHandle, ThunderRT6PictureBoxDC, "ThunderRT6PictureBoxDC", null);
+                        IntPtr RuleHandle = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(Box_RuleHandle, IntPtr.Zero, "ThunderRT6CommandButton", @"&Rule");
+                        RTUIIntegration.WinAPIMethod.PostMessage(RuleHandle, RTUIIntegration.APICode.WM_CLICK, 0, 0);
+                        IntPtr ComputSection = RTUIIntegration.RtWndContal.WaitAndFindWindow(null, "Compute section");
+                        IntPtr ComputForm = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(ComputSection, IntPtr.Zero, "ThunderRT6Frame", "COMPUTE");
+                        IntPtr HullSCANTLING = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(ComputForm, IntPtr.Zero, "ThunderRT6Frame", "HULL SCANTLING");
+                        IntPtr HULL_GIRDER_STRENGTH_CRITERIA = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(ComputForm, IntPtr.Zero, "ThunderRT6Frame", "HULL GIRDER STRENGTH CRITERIA");
+                        //选择需要校核的参数
+                        IntPtr Ultimate_strength_check = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(HULL_GIRDER_STRENGTH_CRITERIA, IntPtr.Zero, "ThunderRT6CheckBox", @"&Ultimate strength check");
+                        //System.Threading.Thread.Sleep(500);
+
+                        IntPtr Transverse_ordinary_stiffeners = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(HullSCANTLING, IntPtr.Zero, "ThunderRT6CheckBox", @"&Transverse ordinary stiffeners");
+                        IntPtr StructuralDetail = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(HullSCANTLING, IntPtr.Zero, "ThunderRT6CheckBox", @"Structural details  -  &Fatigue");
+                        IntPtr MISCELLANEOUS = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(ComputForm, IntPtr.Zero, "ThunderRT6Frame", "MISCELLANEOUS");
+                        IntPtr ReplacementThickness = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(MISCELLANEOUS, IntPtr.Zero, "ThunderRT6CheckBox", @"&Replacement thickness");
+                        IntPtr Shear_Gross_Scantling = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(MISCELLANEOUS, IntPtr.Zero, "ThunderRT6CheckBox", @"&Shear (gross scantling)");
+                        IntPtr Pressure_Viewer = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(MISCELLANEOUS, IntPtr.Zero, "ThunderRT6CheckBox", @"Pressure &Viewer");
+
+                        IntPtr OK_Comput = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(ComputForm, IntPtr.Zero, "ThunderRT6CommandButton", @"&Ok");
+                        IntPtr Cancel_Comput = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(ComputForm, IntPtr.Zero, "ThunderRT6CommandButton", "&Cancel");
+                        //RTUIIntegration.WinAPIMethod.SendMessage(Cancel_Comput, RTUIIntegration.APICode.WM_CLICK, 0, 0);
+
+                        System.Threading.Thread.Sleep(500);
+                        //IntPtr Pic = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(ComputForm, IntPtr.Zero, "ThunderRT6PictureBoxDC", null);
+                        if ((OK_Comput != IntPtr.Zero))//&& (Pic!=IntPtr.Zero))
+                        {
+                            RTUIIntegration.WinAPIMethod.SendMessage(Ultimate_strength_check, RTUIIntegration.APICode.WM_CLICK, 0, 0);
+                            RTUIIntegration.WinAPIMethod.SendMessage(Transverse_ordinary_stiffeners, RTUIIntegration.APICode.WM_CLICK, 0, 0);
+                            RTUIIntegration.WinAPIMethod.SendMessage(StructuralDetail, RTUIIntegration.APICode.WM_CLICK, 0, 0);
+                            RTUIIntegration.WinAPIMethod.SendMessage(ReplacementThickness, RTUIIntegration.APICode.WM_CLICK, 0, 0);
+                            RTUIIntegration.WinAPIMethod.SendMessage(Shear_Gross_Scantling, RTUIIntegration.APICode.WM_CLICK, 0, 0);
+                            RTUIIntegration.WinAPIMethod.SendMessage(Pressure_Viewer, RTUIIntegration.APICode.WM_CLICK, 0, 0);
+                            RTUIIntegration.WinAPIMethod.SendMessage(OK_Comput, RTUIIntegration.APICode.WM_CLICK, 0, 0);
+                        }
+                        //System.Windows.Forms.Clipboard.SetDataObject("IptFileFullPath");
+
+                        IntPtr Rule_MainForm = RTUIIntegration.RtWndContal.WaitAndFindWindow("ThunderRT6MDIForm", "Mars Rule 2000 - MarsInputFile.ma2 - Midship section - (n°1)                  OFFSHORE BV RULES - ON SITE - SELECTED");
+
+                        IntPtr cccc = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(Rule_MainForm, IntPtr.Zero, "MDIClient", null);
+                        IntPtr Form3 = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(cccc, IntPtr.Zero, "ThunderRT6FormDC", null);
+                        IntPtr Form2 = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(Form3, IntPtr.Zero, "SSTabCtlWndClass", null);
+                        IntPtr ResualtForm = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(Form2
+                            , IntPtr.Zero, "ThunderRT6PictureBoxDC", null);
+                        while (ResualtForm == IntPtr.Zero)
+                        {
+                            cccc = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(Rule_MainForm, IntPtr.Zero, "MDIClient", null);
+                            Form3 = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(cccc, IntPtr.Zero, "ThunderRT6FormDC", null);
+                            Form2 = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(Form3, IntPtr.Zero, "SSTabCtlWndClass", null);
+                            ResualtForm = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(Form2
+                            , IntPtr.Zero, "ThunderRT6PictureBoxDC", null);
+                        }
+
+                        RTUIIntegration.RtWndContal.SetForegroundWindow(Rule_MainForm);
+                        //生成计算结果
+                        {
+                            if (!System.IO.Directory.Exists(OutFolderFullPath))
+                                System.IO.Directory.CreateDirectory(OutFolderFullPath);
+                            OutFileNameList = new List<string>();
+                            //{
+                            //    string OutFileName = "FID_MarsInputFile_Midship section_Strake.txt";
+                            //    OutFileNameList.Add(OutFileName);
+                            //    string OutFileFullPathName = OutFileFullPath + "\\" + OutFileName;
+                            //    if(System.IO.Directory.Exists(OutFileFullPathName))
+                            //        System.IO.Directory.Delete(OutFileFullPathName);
+                            //    //"FID_MarsInputFile_Midship section_Strake.txt"
+                            //    RTUIIntegration.RtWndContal.SetForegroundWindow(Rule_MainForm);
+                            //    System.Windows.Forms.SendKeys.SendWait("{F2}");
+                            //    System.Windows.Forms.SendKeys.SendWait("{E}");
+                            //    IntPtr SaveAsForm = RTUIIntegration.RtWndContal.WaitAndFindWindow(@"#32770", "Save as");
+                            //    IntPtr Save = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(SaveAsForm, IntPtr.Zero, "Button", "保存(&S)");
+                            //    IntPtr Form4 = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(SaveAsForm, IntPtr.Zero, "DUIViewWndClassName", null);
+                            //    IntPtr FormCom3 = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(Form4, IntPtr.Zero, "DirectUIHWND", null);
+                            //    IntPtr FormCom2 = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(FormCom3, IntPtr.Zero, "FloatNotifySink", null);
+                            //    IntPtr FormCom1 = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(FormCom2, IntPtr.Zero, "ComboBox", null);
+                            //    IntPtr EditForm = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(FormCom1, IntPtr.Zero, "Edit", null);
+                            //    RTUIIntegration.WinAPIMethod.SendMessage(EditForm, RTUIIntegration.APICode.WM_SETTEXT, IntPtr.Zero, OutFileName);
+                            //    //System.Threading.Thread.Sleep(500);
+                            //    RTUIIntegration.WinAPIMethod.PostMessage(Save, RTUIIntegration.APICode.WM_CLICK, 0, 0);
+                            //    //RTUIIntegration.RtWndContal.SetForegroundWindow(Save);
+                            //    //Rule_MainForm = RTUIIntegration.RtWndContal.WaitAndFindWindow("ThunderRT6MDIForm", "Mars Rule 2000 - MarsInputFile.ma2 - Midship section - (n°1)                  OFFSHORE BV RULES - ON SITE - SELECTED");
+                            //    IntPtr RuleSaveForm = RTUIIntegration.RtWndContal.WaitAndFindWindow( @"#32770", "Mars Rule 2000");
+                            //    IntPtr Yes = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(RuleSaveForm, IntPtr.Zero, "Button", "确定");
+                            //    RTUIIntegration.WinAPIMethod.SendMessage(Yes, RTUIIntegration.APICode.WM_CLICK, 0, 0);
+
+                            //}
+                            //保存骨材结果
+                            {
+                                string OutFileName = "FID_MarsInputFile_Midship section_Longi.txt";
+                                OutFileNameList.Add(OutFileName);
+                                string OutFileFullPathName = OutFolderFullPath + "\\" + OutFileName;
+                                if (System.IO.Directory.Exists(OutFileFullPathName))
+                                    System.IO.Directory.Delete(OutFileFullPathName);
+
+                                //RTUIIntegration.RtWndContal.SetForegroundWindow(Rule_MainForm);
+                                //bool setFor =
+                                //RTUIIntegration.RtWndContal.SetForegroundWindow(ThunderRT6PictureBoxDC);
+                                //RTUIIntegration.WinAPIMethod.PostMessage(ThunderRT6PictureBoxDC, RTUIIntegration.APICode.WM_CLICK, 0, 0);
+                                //System.Threading.Thread.Sleep(500);
+                                System.Windows.Forms.SendKeys.SendWait("{F2}");
+                                System.Windows.Forms.SendKeys.SendWait("{L}");
+                                IntPtr SaveAsForm = RTUIIntegration.RtWndContal.WaitAndFindWindow(@"#32770", "Save as");
+                                IntPtr Save = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(SaveAsForm, IntPtr.Zero, "Button", "保存(&S)");
+                                IntPtr Form4 = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(SaveAsForm, IntPtr.Zero, "DUIViewWndClassName", null);
+                                IntPtr FormCom3 = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(Form4, IntPtr.Zero, "DirectUIHWND", null);
+                                IntPtr FormCom2 = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(FormCom3, IntPtr.Zero, "FloatNotifySink", null);
+                                IntPtr FormCom1 = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(FormCom2, IntPtr.Zero, "ComboBox", null);
+                                IntPtr EditForm = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(FormCom1, IntPtr.Zero, "Edit", null);
+                                RTUIIntegration.WinAPIMethod.SendMessage(EditForm, RTUIIntegration.APICode.WM_SETTEXT, IntPtr.Zero, OutFileName);
+
+
+                                RTUIIntegration.WinAPIMethod.PostMessage(Save, RTUIIntegration.APICode.WM_CLICK, 0, 0);
+                                //RTUIIntegration.RtWndContal.SetForegroundWindow(Save);
+                                //Rule_MainForm = RTUIIntegration.RtWndContal.WaitAndFindWindow("ThunderRT6MDIForm", "Mars Rule 2000 - MarsInputFile.ma2 - Midship section - (n°1)                  OFFSHORE BV RULES - ON SITE - SELECTED");
+                                IntPtr RuleSaveForm = RTUIIntegration.RtWndContal.WaitAndFindWindow(@"#32770", "Mars Rule 2000");
+                                IntPtr Yes = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(RuleSaveForm, IntPtr.Zero, "Button", "确定");
+                                RTUIIntegration.WinAPIMethod.SendMessage(Yes, RTUIIntegration.APICode.WM_CLICK, 0, 0);
+
+                            }
+                            //保存板材结果
+                            {
+                                string OutFileName = "FID_MarsInputFile_Midship section_Strake.txt";
+                                OutFileNameList.Add(OutFileName);
+                                string OutFileFullPathName = OutFolderFullPath + "\\" + OutFileName;
+                                if (System.IO.Directory.Exists(OutFileFullPathName))
+                                    System.IO.Directory.Delete(OutFileFullPathName);
+                                //"FID_MarsInputFile_Midship section_Strake.txt"
+                                RTUIIntegration.RtWndContal.SetForegroundWindow(Rule_MainForm);
+                                System.Windows.Forms.SendKeys.SendWait("%{T}");
+                                System.Windows.Forms.SendKeys.SendWait("{T}");
+                                System.Windows.Forms.SendKeys.SendWait("{E}");
+                                IntPtr SaveAsForm = RTUIIntegration.RtWndContal.WaitAndFindWindow(@"#32770", "Save as");
+                                IntPtr Save = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(SaveAsForm, IntPtr.Zero, "Button", "保存(&S)");
+                                IntPtr Form4 = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(SaveAsForm, IntPtr.Zero, "DUIViewWndClassName", null);
+                                IntPtr FormCom3 = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(Form4, IntPtr.Zero, "DirectUIHWND", null);
+                                IntPtr FormCom2 = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(FormCom3, IntPtr.Zero, "FloatNotifySink", null);
+                                IntPtr FormCom1 = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(FormCom2, IntPtr.Zero, "ComboBox", null);
+                                IntPtr EditForm = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(FormCom1, IntPtr.Zero, "Edit", null);
+                                RTUIIntegration.WinAPIMethod.SendMessage(EditForm, RTUIIntegration.APICode.WM_SETTEXT, IntPtr.Zero, OutFileName);
+                                //System.Threading.Thread.Sleep(500);
+                                RTUIIntegration.WinAPIMethod.PostMessage(Save, RTUIIntegration.APICode.WM_CLICK, 0, 0);
+                                //RTUIIntegration.RtWndContal.SetForegroundWindow(Save);
+                                //Rule_MainForm = RTUIIntegration.RtWndContal.WaitAndFindWindow("ThunderRT6MDIForm", "Mars Rule 2000 - MarsInputFile.ma2 - Midship section - (n°1)                  OFFSHORE BV RULES - ON SITE - SELECTED");
+                                IntPtr RuleSaveForm = RTUIIntegration.RtWndContal.WaitAndFindWindow(@"#32770", "Mars Rule 2000");
+                                IntPtr Yes = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(RuleSaveForm, IntPtr.Zero, "Button", "确定");
+                                RTUIIntegration.WinAPIMethod.SendMessage(Yes, RTUIIntegration.APICode.WM_CLICK, 0, 0);
+
+                            }
+                            //保存疲劳操作
+                            {
+                                string OutFileName = "FID_MarsInputFile_Midship section_FatB.txt";
+                                OutFileNameList.Add(OutFileName);
+                                string OutFileFullPathName = OutFolderFullPath + "\\" + OutFileName;
+                                if (System.IO.Directory.Exists(OutFileFullPathName))
+                                    System.IO.Directory.Delete(OutFileFullPathName);
+                                //"FID_MarsInputFile_Midship section_Strake.txt"
+                                System.Windows.Forms.SendKeys.SendWait("%{T}");
+                                System.Windows.Forms.SendKeys.SendWait("{T}");
+                                System.Windows.Forms.SendKeys.SendWait("{F}");
+
+                                IntPtr OutputFatigue = RTUIIntegration.RtWndContal.WaitAndFindWindow("ThunderRT6FormDC", "Output of Fatigue intermediate results");
+                                IntPtr OK_Fatigue = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(OutputFatigue, IntPtr.Zero, "ThunderRT6CommandButton", @"&OK");
+
+                                RTUIIntegration.WinAPIMethod.SendMessage(OK_Fatigue, RTUIIntegration.APICode.WM_CLICK, 0, 0);
+                                IntPtr SaveAsForm = RTUIIntegration.RtWndContal.WaitAndFindWindow(@"#32770", "Save as");
+                                IntPtr Save = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(SaveAsForm, IntPtr.Zero, "Button", "保存(&S)");
+                                IntPtr Form4 = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(SaveAsForm, IntPtr.Zero, "DUIViewWndClassName", null);
+                                IntPtr FormCom3 = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(Form4, IntPtr.Zero, "DirectUIHWND", null);
+                                IntPtr FormCom2 = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(FormCom3, IntPtr.Zero, "FloatNotifySink", null);
+                                IntPtr FormCom1 = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(FormCom2, IntPtr.Zero, "ComboBox", null);
+                                IntPtr EditForm = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(FormCom1, IntPtr.Zero, "Edit", null);
+                                RTUIIntegration.WinAPIMethod.SendMessage(EditForm, RTUIIntegration.APICode.WM_SETTEXT, IntPtr.Zero, OutFileName);
+                                //System.Threading.Thread.Sleep(500);
+                                RTUIIntegration.WinAPIMethod.PostMessage(Save, RTUIIntegration.APICode.WM_CLICK, 0, 0);
+                                //RTUIIntegration.RtWndContal.SetForegroundWindow(Save);
+                                //Rule_MainForm = RTUIIntegration.RtWndContal.WaitAndFindWindow("ThunderRT6MDIForm", "Mars Rule 2000 - MarsInputFile.ma2 - Midship section - (n°1)                  OFFSHORE BV RULES - ON SITE - SELECTED");
+                                IntPtr RuleSaveForm = RTUIIntegration.RtWndContal.WaitAndFindWindow(@"#32770", "Mars Rule 2000");
+                                IntPtr Yes = RTUIIntegration.RtWndContal.WaitAndFindWindowEx(RuleSaveForm, IntPtr.Zero, "Button", "确定");
+                                RTUIIntegration.WinAPIMethod.SendMessage(Yes, RTUIIntegration.APICode.WM_CLICK, 0, 0);
+
+                            }
+
+                        }
+                        //RTUIIntegration.WinAPIMethod.SendKeydown("{F2}");
+                        //RTUIIntegration.WinAPIMethod.keybd_event(
+                        RTUIIntegration.WinAPIMethod.SendMessage(Rule_MainForm, RTUIIntegration.APICode.WM_CLOSE, 0, 0);
+                        //System.Threading.Thread.Sleep(1000);
+                    }
+                }
+            }
+            MarsP.Kill();
+            MarsP.WaitForExit();
+            return true;
+            #endregion
+        }
+    }
+```
+
+### 启动一个外部调用软件
+
+#### 使用shell方式启动
+
+```c#
+System.Diagnostics.Process p = new System.Diagnostics.Process();
+p.StartInfo.FileName = "cmd.exe";
+p.StartInfo.UseShellExecute = false;    //是否使用操作系统shell启动
+p.StartInfo.RedirectStandardInput = true;//接受来自调用程序的输入信息
+p.StartInfo.RedirectStandardOutput = true;//由调用程序获取输出信息
+p.StartInfo.RedirectStandardError = true;//重定向标准错误输出
+//p.StartInfo.CreateNoWindow = false;//不显示程序窗口
+bool CreatWindowBool = p.StartInfo.CreateNoWindow;
+
+p.Start();//启动程序
+
+//向cmd窗口发送输入信息
+string CmdStr = @"C:";
+p.StandardInput.WriteLine(CmdStr);
+p.StandardInput.AutoFlush = true;
+
+CmdStr = @"C:\BVeritas\Mars2000\Mars2000.exe";
+p.StandardInput.WriteLine(CmdStr);
+p.StandardInput.AutoFlush = true;
+
+```
+
+#### 直接在进程中启动EXE
+
+```c#
+System.Diagnostics.Process P = new System.Diagnostics.Process();
+p.StartInfo.FileName = @"C:\BVeritas\Mars2000\Mars2000.exe";
+p.Start();
+p.WaitForInputIdle();//等待窗口可以响应输入
+```
+
 ### 表格数据绑定
 
 ```c#
