@@ -398,6 +398,146 @@ AwesomeLibrary.CSharp 和 AwesomeLibrary.FSharp 的项目文件现在需要将 A
 ### 
 -----------
 
+## ASP.NET
+
+>[极客学院 ASP.NET 教程](http://wiki.jikexueyuan.com/project/asp-net/environment-setup.html)
+>[ASP.NET 学习总结（50+篇）](http://www.shouce.ren/api/view/a/15487)
+>[.NET Core+MySql+Nginx 容器化部署](https://www.jianshu.com/p/2a755277a1e6)
+>[Asp.net mvc 知多少（一）](https://www.jianshu.com/p/5f6156cacc76)
+
+### ASP.Net 简介
+
+ASP.NET 是一个 web 开发平台，它提供编程模型、软件基础程序以及多种服务来帮助开发者搭建健壮的网络应用程序。
+
+ASP.NET 工作于 HTTP 协议之上，并使用 HTTP 命令和政策来建立浏览器到用户之间双向的交流与合作。
+
+ASP.NET 是 Microsoft.NET 平台的一部分。ASP.NET 应用程序是编译后的代码，运行在 .Net framework 中，利用可扩展和可重用的组件和对象编写的。
+
+ASP.NET 应用程序编码可以用以下语言编写：
+
++ C#
++ Visual Basic.Net
++ Jscript
++ J#
+
+#### ASP.NET Web 表单模型
+
+ASP.NET web 表单延伸了交互作用对 web 应用程序的事件驱动模型。浏览器提交给 web 服务器一个 web 表单，然后服务器返回一个完整的标记页面或 HTML 页面作为回应。
+
+所有客户端用户活动转发到服务器进行有状态的处理。服务器处理客户端动作的输出并触发反馈。
+
+现在，HTTP 是一种无状态协议。ASP.NET 框架帮助储存有关应用程序状态的信息，由以下组成：
+
++ 页状态
++ 会话状态
+
+页状态是客户端状态，例如：在 web 表单中不同输入领域的内容。会话状态是由用户浏览和使用的不同页面中获得的集合信息。
+
+#### 项目和解决方案
+
+一个典型的 ASP.NET 应用程序由许多的项目组成：web 内容文件（.aspx），源文件（.cs 文件），程序集（.dll 和 .exe 文件），数据源文件（.mgd 文件），引用，图标，用户控件和其他杂项文件和文件夹。所有组成网址的这些文件包含在一个解决方案中。
+
+当创造了一个新的网站，.visual studio 自动创造了解决方案，并且在解决方案管理器中显示。
+
+解决方案可能包含一个或多个项目。一个项目包含内容文件，源文件，以及其他文件比如说数据源和图片文件。一般来说，一个项目的内容可以编译成一个程序集作为一个可执行文件（.exe）或者一个动态链接库（.dll）文件
+
+一般来说一个项目包含以下内容文件：
+
++ 页面文件（.aspx）
++ 用户控件（.ascx）
++ Web 服务器（.asmx）
++ 主版页（.master）
++ 网站导航（.sitemap）
++ 网站配置文件（.config）
+
+### 生命周期
+
+ASP.NET 生命周期指定如何：
+
++ ASP.NET 处理页面生成动态输出
++ 应用程序及其页面进行实例化和处理
++ ASP.NET 动态编译页面
+
+ASP.NET 生命周期可以被分为两组：
+
++ 应用程序生命周期
++ 页面生命周期
+
+#### ASP.NET 应用程序生命周期
+
+应用程序生命周期有以下阶段：
+
++ 用户请求访问应用程序的资源，即一个页面。浏览器发送此请求到 web 服务器。
++ 一个统一管道接收第一个请求，并发生以下事件：
+
+  + 一个 ApplicationManager 类的对象创建。
+
+  + 一个 HostingEnvironment 类的对象创建从而提供信息资源。
+  
++ 创建响应对象。应用程序对象如 HttpContext，HttpRequest 和 HttpResponse 被创建并初始化。
++ 一个 HttpApplication 对象的实例被创建并被分配到请求。
++ 请求由 HttpApplication 类所处理。不同的事件引发此类处理请求。
+
+#### ASP.NET 页面生命周期
+
+当请求一个页面时，页面被加载到服务器内存，然后处理并送达到浏览器中。然后再从内存中卸载。在这些步骤中的每一步，方法和事件都是可用的，可以根据应用程序所需进行改写。换言之，你可以编写自己的代码从而去置换缺省代码。
+
+页面类创建了页面上所有控件的等级树。页面上所有的组件，除了指令，其余都是控件树的一部分。你可以通过在页面指令上添加 trace = "true" 来看到控制树。我们会覆盖页面指令，然后在 'directives' 和 'event handling' 下追踪。
+
+页面生命周期阶段为：
+
++ 初始化
++ 页面控件实例化
++ 状态恢复和维护
++ 事件处理代码的执行
++ 页面显示
+
+以下是一个ASP.NET页面的不同阶段：
+
++ **页面请求** - 当 ASP.NET 得到一个页面请求，它决定是否解析和编译页面，或者会有一个页面的缓存版本；相应地进行回应。
++ **页面生命周期的开启** - 在这个阶段，设置请求和回应对象。如果是一个旧的请求或者是回发+ 的，页面 IsPostBack 属性设置为正确。页面 ULCulture 属性同样也被设置。
++ **页面初始化** - 在此阶段，页面上的控件通过设置 UniqueID 属性被分配到独特的 ID 并应用主题。对于一个新的请求，加载回发数据并且控件属性被重新储存到视图状态下的值。
++ **页面加载** - 在此阶段，设置控件属性，使用视图状态和控件状态值。
++ **验证** - 调用验证控件的校验方法并成功执行，页面的 IsValid 属性设置为 true。
++ **回发事件处理** - 如果请求是一个回发（旧请求），相关事件处理程序被调用。
++ **页面显示** - 在此阶段，页面的视图状态和所有控件被保存。页面为每一个控件调用显示方法，并且呈现的输出被写入页面响应属性中的 OutputStream 类。
++ **卸载** - 显示过的页面被送达客户端以及页面属性，例如响应和请求，被卸载并全部清除完毕。
+
+#### ASP.NET 页面生命周期事件
+
+在页面生命周期的每一阶段，页面引发一些时间，会被编码。一个事件处理程序基本上是一个函数或子程序，绑定到事件，使用声明式如 OnClick 属性或处理。
+
+以下是页面生命周期事件：
+
++ PreInit - PreInit 是页面生命周期的第一个事件。它检查 IsPostBack 属性并决定页面是否是回发。它设置主题及主版页，创建动态控件，并且获取和设置值配置文件属性值。此事件可通过重载 OnPreInit 方法或者创建一个 Page_PreInit 处理程序进行处置。
++ Init - Init 事件初始化控件属性，并且建立控件树。此事件可通过重载 OnInit 方法或者创建一个 Page_Init处理程序进行处置。
++ InitComplete - InitComplete 事件允许对视图状态的跟踪。所有的控件开启视图状态下的跟踪。
++ LoadViewState - LoadViewState 事件允许加载视图状态信息到控件中。
++ LoadPostData - 在此阶段期间，对所有由 \ 标签定义的输入字段的内容进行处理。
++ PreLoad - PreLoad 在回发数据加载在控件中之前发生。此事件可以通过重载 OnPreLoad 方法或者创建一个 Pre_Load 处理程序进行处置。
++ Load - Load 事件被页面最先引发，然后递归地引发所有子控件。控件树中的控件就被创建好了。此事件可通过重载 OnLoad 方法或者创建一个 Page_Load 处理程序来进行处置。
++ LoadComplete - 加载进程完成，控件事件处理程序运行，页面验证发生。此事件可通过重载 OnLoad 方法或者创建一个 Page_LoadComplete 处理程序来进行处置。
++ PreRender - PreRender 事件就在输出显示之前发生。通过处理此事件，页面和控件可以在输出显示之前执行任何更新。
++ PreRenderComplete - 当 PreRender 事件为所有子控件被循环引发，此事件确保了显示前阶段的完成。
++ SaveStateComplete - 页面控件状态被保存。个性化、控件状态以及视图状态信息被保存。
++ UnLoad - UnLoad 阶段是页面生命周期的最后一个阶段。它为所有控件循环引发 UnLoad 事件，最后为页面自身引发。最终完成清理和释放所有资源和引用，比如数据库连接。此事件可通过调整 OnLoad 方法或者创建一个 Page_UnLoad 处理程序来进行处置。
+
+### 实例
+
+ASP.NET 页面是由大量的服务器控件以及 HTML 控件、文本和图像组成的。页面的敏感数据和页面上的不同控件状态被储存在隐藏字段中，组成了页面请求的配置指令。
+
+ASP.NET 运行时控制一个页面实例和其状态的关联。一个 ASP.NET 页面是一个页面的对象或者从之继承而来。
+
+页面上所有的控件同样也是从一个父类控件继承而来的相关控件类的对象。当一个页面运行时，对象页面的一个实例就随其内容控件一起被创建。
+
+一个 ASP.NET 页面同样也是储存在 .aspx 延伸的服务器端文件。
+
+它在本质上是模块化的，并且可被分成以下几个核心部分：
+
++ 网页指令
++ 编码区段
++ 页面布局
+
 ## ASP.NET Core
 
 ### ASP.NET Core简介
@@ -428,3 +568,47 @@ ASP.NET Core 是一个跨平台的高性能开源框架，用于生成基于云�
 dotnet new webapp -o RazorPagesMovie  
 cd RazorPagesMovie  
 dotnet run
+
+### ASP.Net Core 常用命令
+
+```shell
+$ dotnet new -h
+使用情况: new [选项]
+
+选项:
+  -h, --help          显示有关此命令的帮助。
+  -l, --list          列出包含指定名称的模板。如果未指定名称，请列出所有模板。
+  -n, --name          正在创建输出的名称。如果未指定任何名称，将使用当前目录的名                                                                                                                                                                                               称。
+  -o, --output        要放置生成的输出的位置。
+  -i, --install       安装源或模板包。
+  -u, --uninstall     卸载一个源或模板包。
+  --type              基于可用的类型筛选模板。预定义的值为 "project"、"item" 或 "other"。
+  --force             强制生成内容，即使该内容会更改现有文件。
+  -lang, --language   指定要创建的模板的语言。
+
+模板                                                短名称              语言                                                                                                                                                                                                               标记
+--------------------------------------------------------------------------------                                                                                                                                                                                               ------------------------
+Console Application                               console          [C#], F#, VB                                                                                                                                                                                                     Common/Console
+Class library                                     classlib         [C#], F#, VB                                                                                                                                                                                                     Common/Library
+Unit Test Project                                 mstest           [C#], F#, VB                                                                                                                                                                                                     Test/MSTest
+xUnit Test Project                                xunit            [C#], F#, VB                                                                                                                                                                                                     Test/xUnit
+ASP.NET Core Empty                                web              [C#], F#                                                                                                                                                                                                         Web/Empty
+ASP.NET Core Web App (Model-View-Controller)      mvc              [C#], F#                                                                                                                                                                                                         Web/MVC
+ASP.NET Core Web App                              razor            [C#]                                                                                                                                                                                                             Web/MVC/Razor Pages
+ASP.NET Core with Angular                         angular          [C#]                                                                                                                                                                                                             Web/MVC/SPA
+ASP.NET Core with React.js                        react            [C#]                                                                                                                                                                                                             Web/MVC/SPA
+ASP.NET Core with React.js and Redux              reactredux       [C#]                                                                                                                                                                                                             Web/MVC/SPA
+ASP.NET Core Web API                              webapi           [C#], F#                                                                                                                                                                                                         Web/WebAPI
+global.json file                                  globaljson                                                                                                                                                                                                                        Config
+NuGet Config                                      nugetconfig                                                                                                                                                                                                                       Config
+Web Config                                        webconfig                                                                                                                                                                                                                         Config
+Solution File                                     sln                                                                                                                                                                                                                               Solution
+Razor Page                                        page                                                                                                                                                                                                                              Web/ASP.NET
+MVC ViewImports                                   viewimports                                                                                                                                                                                                                       Web/ASP.NET
+MVC ViewStart                                     viewstart                                                                                                                                                                                                                         Web/ASP.NET
+
+Examples:
+    dotnet new mvc --auth Individual
+    dotnet new page --namespace
+    dotnet new --help
+```

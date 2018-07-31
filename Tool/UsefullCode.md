@@ -1383,6 +1383,18 @@ p.Start();
 p.WaitForInputIdle();//等待窗口可以响应输入
 ```
 
+### 读取一个文本块
+
+```C#
+RTTxtDataParseHelp Parser01 = new RTTxtDataParseHelp(System.IO.Path.Combine(m_Workdir, "fullstability.ans", "out00001.txt")); //FID调试时使用
+            // 其次创建解析规则，参数1为起始匹配符，参数2为结束匹配符，参数3为起始匹配模式，参数4为结束匹配模式
+            RTTxtDataParseHelp.Rule RuleTankProperty01 = new RTTxtDataParseHelp.Rule(
+                "C O M P A R T M E N T", "Page   45", RTTxtDataParseHelp.Mode.FuzzyMatch, RTTxtDataParseHelp.Mode.FuzzyMatch);
+            // 查找块
+            RTTxtDataParseHelp.Block BlockTankProperty01 = Parser01.FindBlock(RuleTankProperty01);
+
+```
+
 ### 表格数据绑定
 
 ```c#

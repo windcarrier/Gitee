@@ -141,3 +141,9 @@ System.Diagnostics.Process[] procs = d4;
 ### Data
 
 Windows Presentation Foundation (WPF) 数据绑定为应用程序呈现数据并与数据交互提供了一种简单且一致的方式。 元素能够以 公共语言运行时 (CLR) 对象和 XML 的形式绑定到各种数据源中的数据。 Windows Presentation Foundation (WPF) 还提供了通过拖放操作传输数据的机制。
+
+## ASP.Net Core Demo
+
+[一个比较好的ASP.Net Core Demo](https://www.cnblogs.com/gutun/p/aspnetcore_in_action.html#%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8)
+
+[资源集中帖](https://gitee.com/defa/aspnetcore2.0.1)
