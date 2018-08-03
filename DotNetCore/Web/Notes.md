@@ -628,7 +628,7 @@ private 或 protected
 + 缓存
 + 请求  **Request**
 + 响应 **Response**
-+ 服务器
++ 服务器 **Server**
 + 用户
 + 跟踪
 
@@ -637,6 +637,74 @@ private 或 protected
 #### Server 对象
 
 ASP.NET 中的服务器对象是 **System.Web.HttpServerUtility** 类的一个实例。The HttpServerUtility 类提供了大量的属性和方法来执行不同的工作
+
+#### Sever 对象和方法
+
+HttpServerUtility类的方法和属性通过ASP.NET提供的内部服务器对象公开的。
+以下表格提供了HttpServerUtility类一系列的属性：
+
+| 属性 | 描述 |
+| ---- | ---- |
+|MachineName|服务器电脑的名称|
+|ScriptTimeOut|以秒为单位获取和设置请求超时的值|
+
+以下表格提供了一些重要的方法:
+| 方法 | 描述 |
+| ---- | ---- |
+CreateObject(String) | 创建一个 COM 对象的实例，由其 ProgID 验证。
+CreateObject(Type) | 创建一个 COM 对象的实例，由其 Type 验证。
+Equals(Object) | 决定具体的对象是否和现有对象一致。
+Execute(String) | 在当前请求的上下文中执行处理应用程序指定的虚拟路径。
+Execute(String, Boolean) | 在当前请求的上下文中执行处理程序指定的虚拟路径，指定是否清除 QueryString及表单集合。
+GetLastError | 返回之前的异常。
+GetType | 获取现有实例的类型。
+HtmlEncode | 将一个普通的字符串变成合法的 HTML 字符串。
+HtmlDecode | 将一个 Html 字符串转化成一个普通的字符串。
+ToString | 返回一个表示当前对象的字符串。
+Transfer(String) | 对于当前请求，终止当前页面的执行并通过指定页面的 URL 路径，开始执行一个新页面。
+UrlDecode | 将一个 URL 字符串转化成一个普通的字符串。
+UrlEncodeToken | 与 UrlEncode 作用相同，但是在一个字节数组中，包含以 Base64 编码的数据。
+UrlDecodeToken | 与 UrlDecode 工作相同，但是在一个字节数组中，包含以 Base64 编码的数据。
+MapPath | 返回与指定的虚拟服务器上的文件路径相对应的物理路径。
+Transfer | 在当前应用程序上转移执行到另一个 web 页面。
+
+#### Request 对象
+
+请求对象是 **System.Web.HttpRequest** 类的一个实例。它代表了 HTTP 请求的值和属性，使页面加载到浏览器中。
+
+此对象所呈现的信息被封装在更高级别的抽象中（web 控件模型）。然而，这个对象可以帮助检查一些信息，例如客户端浏览器和信息记录程序。
+
+#### Request 对象的属性和方法
+
+下表提供了请求对象一些值得注意的属性：
+
+属性 | 描述
+--- | ---
+AcceptTypes | 获取一个用户支持的 MIME 接受类型的字符串数组。
+ApplicationPath | 在服务器上获取 ASP.NET 应用程序的真实应用程序根路径。
+Browser | 获取或设置关于请求用户浏览器能力的信息。
+ContentEncoding | 获取或设置字符集的实体。
+ContentLength | 指定由客户端发送的内容的长度以字节为单位。
+ContentType | 获取或设置传入请求的 MIME 内容类型。
+Cookies | 获取客户端发送的 cookies 集合。
+FilePath | 获取当前请求的真实路径。
+Files | 以多部分的 MIME 格式获取客户端上传文件的集合。
+Form | 获取表单变量的集合。
+Headers | 获取 HTTP 标题的集合。
+HttpMethod | 获取用户使用的 HTTP 数据转移方法（如 GET，POST，或者 HEAD）
+InputStream | 获取传入的 HTTP 的实体内容。
+IsSecureConnection | 获取一个值，该值指示 HTTP 连接是否使用安全套接字（即HTTPS）。
+QueryString | 获取 HTTP 询问字符串变量的集合。
+RawUrl | 获取当前请求的原始 URL。
+RequestType | 获取或设置由用户使用的 HTTP 数据转移方法（GET 或者 POST）。
+ServerVariables | 获取 Web 服务器变量的集合。
+TotalBytes | 获取现有输入流的字节数。
+Url | 获取关于现有请求的 URL 的信息。
+UrlReferrer | 获取关于与现有 URL 相链接的客户端之前的请求的 URL 信息。
+UserAgent | 获取客户端浏览器的原始用户代理字符串。
+UserHostAddress | 获取远程客户机的 IP 主机地址。
+UserHostName | 获取远程客户机的 DNS 名称。
+UserLanguages | 获取客户端语言首选项的排序字符串数组。
 
 ## ASP.NET Core
 
