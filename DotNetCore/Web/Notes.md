@@ -538,6 +538,106 @@ ASP.NET 运行时控制一个页面实例和其状态的关联。一个 ASP.NET 
 + 编码区段
 + 页面布局
 
+### 事件处理
+
+ASP.NET 上的事件在用户机器上引发，在服务器上处理。例如，一个用户点击了在浏览器中显示的一个按钮。一个点击事件被引发。浏览器通过把它发送给服务器从而处理这个客户端事件。
+
+服务器有一个子程序来描述当事件被引发时该做什么；这个被称为**事件处理程序**。因此，当事件信息被传递给服务器，它会检查点击事件是否与事件处理程序有关联。如果有关联的话，事件处理程序就会被执行
+
+#### 事件参数
+
+ASP.NET 事件处理程序一般采用两个参数并返回空。第一个参数代表了对象激发事件，第二个参数是事件参数。
+
+一个事件的一般句法是：
+
+> private void EventName (object sender, EventArgs e);
+
+private 或 protected
+
+#### 应用程序和会话事件
+
+最重要的应用程序事件是：
+
++ Application_Start - 当开启应用程序或者网页时被引发。
++ Application_End - 当停止应用程序或者网页时被引发。
+
+同样的，最常使用的会话事件是：
+
++ Session_Start – 当用户最开始从应用程序上请求一个页面被引发。
++ Session_End – 当会话结束后被引发。
+
+#### 页面和控件事件
+
++ DataBinding – 当一个控件绑定到一个数据源时被引发。
++ Disposed – 当释放页面或者控件时被引发。
++ Error – 它是一个页面事件，当有未处理的异常时发生。
++ Init – 当初始化页面或者控件时被引发。
++ Load – 当加载页面或者控件时被引发。
++ PreRender – 当显示页面或者控件时被引发。
++ Unload – 当从内存中卸载页面或者控件时被引发。
+
+#### 使用页面控件处理事件
+
+常见的控件事件有：
+| 事件 | 属性 | 控件 |
+| ------ | ------ | ------ |
+| Click | OnClick | 按钮，图像按钮，链接按钮，图像导位图 |
+| Command | OnCommand | 按钮，图像按钮，链接按钮 |
+| TextChanged | OnTextChanged | 文本框 |
+| SelectedIndexChanged | OnSelectedIndexChanged | 下拉菜单，列表框，单选按钮列表，带复选框的列表框 |
+| CheckedChanged | OnCheckedChanged | 复选框，单选按钮 |
+
+一些事件导致表单立即发回到服务器，这些被称为回调事件。例如，单击事件像 Button.Click。
+
+一些事件则不会被立即发回到服务器，这些被称为非回调事件。
+
+例如，改变事件或者选择事件，像 TextBox.TextChanged 或者 CheckBox.CheckedChanged。这些非回调事件可以通过设置它们的 AutoPostBack 属性为 true 便可立即使它们回调。
+
+#### 默认事件
+
+页面对象的默认事件是加载事件。相似地，每一个控件都有一个默认的事件。比如，按钮控件的默认事件就是 Click 事件。
+
+默认事件处理程序可以在 Visual Studio 中创建，仅通过双击设计视图中的控件。以下表格展示了一写常见控件的默认事件：
+
+ 控件 | 默认事件
+-----|----------
+广告控件（AdRotator）| AdCreated
+项目列表（BulletedList）| Click
+按钮（Button）| Click
+日历控件（Calender） | SelectionChanged
+复选框（CheckBox）| CheckedChanged
+复选列表（CheckBoxList)| SelectedIndexChanged
+数据表格（DataGrid）| SelectedIndexChanged
+数据列表（DataList）| SelectedIndexChanged
+下拉列表（DropDownList） | SelectedIndexChanged
+超链接（HyperLink） | Click
+图像按钮（ImageButton） | Click
+热点（ImageMap） | Click
+超链接按钮（LinkButton） | Click
+单选或多选的下拉列表（ListBox ） | SelectedIndexChanged
+菜单（Menu） | MenuItemClick
+单选按钮（RadioButton） | CheckedChanged
+单选按钮组（RadioButtonList） | SelectedIndexChanged
+
+### 服务器端
+
+我们已经研究了页面生命周期和一个页面如何包含不同的控件。页面本身作为一个控制对象被实例化。所有的 web 表单基本上是 ASP.NET 页面类的实例。页面类有以下极其有用的属性，与内部对象所对应：
+
++ 会话
++ 应用程序
++ 缓存
++ 请求  **Request**
++ 响应 **Response**
++ 服务器
++ 用户
++ 跟踪
+
+我们会在适当的时间里讨论每一个对象。在本教程中我们将会探索 Server 对象，Request 对象和 Response 对象。
+
+#### Server 对象
+
+ASP.NET 中的服务器对象是 **System.Web.HttpServerUtility** 类的一个实例。The HttpServerUtility 类提供了大量的属性和方法来执行不同的工作
+
 ## ASP.NET Core
 
 ### ASP.NET Core简介
