@@ -407,6 +407,7 @@ AwesomeLibrary.CSharp 和 AwesomeLibrary.FSharp 的项目文件现在需要将 A
 
 ### ASP.Net 简介
 
+**Active Server Pagese**（ASP，活动服务器页面）
 ASP.NET 是一个 web 开发平台，它提供编程模型、软件基础程序以及多种服务来帮助开发者搭建健壮的网络应用程序。
 
 ASP.NET 工作于 HTTP 协议之上，并使用 HTTP 命令和政策来建立浏览器到用户之间双向的交流与合作。
@@ -944,15 +945,116 @@ HTML 服务器控件主要是保证服务端运行的增强型标准 HTML 控件
 例如，HTML 输入控件：
 
 ```html
-> <input type="text" size="40">
+ <input type="text" size="40">
 ```
 
 它可以通过添加 runat 和 id 属性被转换成一个服务器控件：
 
 ```html
-<input type="text" id="testtext" size="40" runat="server">
+ <input type="text" id="testtext" size="40" runat="server">
 ```
 
+#### 使用HTML服务器控件的优点
+
+尽管 ASP.NET 服务器控件可以完成 HTML 服务器控件执行的每一项工作，HTML 控件在以下情况仍然具有优势：
+
++ 使用静态表达到布局目的。
++ 转换一个 HTML 页面到 ASP.NET 下运行
+
+下面这个表格介绍了 HTML 服务器控件：
+
+控件名称 | HTML 标签
+------- | ---------
+HtmlHead | \<head>element
+HtmlInputButton | \<input type=button|submit|reset>
+HtmlInputCheckbox | \<input type=checkbox>
+HtmlInputFile | \<input type = file>
+HtmlInputHidden | \<input type = hidden>
+HtmlInputImage | \<input type = image>
+HtmlInputPassword | \<input type = password>
+HtmlInputRadioButton | \<input type = radio>
+HtmlInputReset | \<input type = reset>
+HtmlText | \<input type = text|password>
+HtmlImage | \<img> element
+HtmlLink | \<link> element
+HtmlAnchor | \<a> element
+HtmlButton | \<button> element
+HtmlButton | \<button> element
+HtmlForm | \<form> element
+HtmlTable | \<table> element
+HtmlTableCell | \<td> and <th>
+HtmlTableRow | \<tr> element
+HtmlTitle | \<title> element
+HtmlSelect | \<select>  element
+HtmlGenericControl | 未列出的所有 HTML 控件
+
+### 客户端
+
+ASP.NET 的客户端编码有两方面：
+
++ **客户端脚本**：它在浏览器中运行并且依次加速页面的执行。例如，客户端数据有效性能够捕捉无效数据并相应地提醒用户而不经过在服务器中回发。
++ **客户端源代码**：ASP.NET 网页形成了该客户端源代码。例如，ASP.NET 网页的 HTML 源代码包含了若干隐藏区域并能自动注入 Java 描述语言代码，从而保留了信息像视图状态一样，或者进行其他工作保证网页正常运作。
+
+#### 客户端脚本
+
+所有 ASP.NET 服务器控件都允许响应通过 Java 语言或者 VBS 语言绘制的编码。有些 ASP.NET 服务器控件端使用客户端脚本进行对用户需求的反应，而并没有回发到服务器。例如，数据有效性控件。
+
+除了这些脚本，按钮控件具有恰当的 OnClientClick 方法，能够在按钮单击时执行客户端脚本。
+
+传统服务器 HTML 控件有以下几个事件能够在脚本发起时执行脚本：
+
+事件 | 属性
+---- | ----
+onblur | 当控件失去焦点时触发
+onfocus | 当控件获得焦点触发
+onclick | 当控件被单击时触发
+onchange | 当控件值发生改变时触发
+onkeydown | 当用户按下键盘按钮时触发
+onkeypress | 当用户按下字母数字的按键时
+onkeyup | 当用户释放按键时触发
+onmouseover | 当用户移动鼠标指针在控件界面时触发
+onserverclick | 当控件界面被单击时，启动 ServerClick 事件控件
+
+#### 客户端源代码
+
+我们已经在以上内容中讨论过了客户端源代码。ASP.NET 网页通常被编写在两种文件中：
+
++ 内容文件或者审定文件(.aspx)
++ 代码后置的文件
+
+内容文件包含 HTML 或者 ASP.NET 控件标签和文字来形成页面结构。代码后置的文件包含了分类定义。在运行时间，内容文件被解析并被传送到一个页面类。
+
+这个页面类以及在编码文件中的类的定义和系统生成的编码共同组成执行编码（集成），这些集成编码加工所有的回发数据，产生响应和发回客户动作。
+
+### 基础控件
+
+#### 按钮控件
+
+ASP.NET 提供了三种不同类型的按钮控件：
+
++ 按钮：在矩形区域内显示文本。
++ 链接按钮：像超链接一样显示文本。
++ 图像按钮：显示图像。
+
+当用户单击一个按钮时，两个事件被触发：单击和指令。
+
+按钮控件的基础语法：
+
+```html
+<asp:Button ID="Button1" runat="server" onclick="Button1_Click" Text="Click" / >
+```
+
+按钮控件的通用属性：
+
+属性 | 描述
+---- | ----
+Text | 文本显示在按钮上。仅对于按钮和链环按钮的控件。
+ImageUrl | 仅对于图像按钮控件。这个图像是为了显示按钮。
+AlternateText | 仅对于图像按钮控件。如果浏览器无法显示图像，替换文本会显示。
+CausesValidation | 当用户单击按钮时确定是否执行页面验证。默认为真。
+CommandName | 当用户单击按钮时传递给命令事件的字符串值。
+CommandArgument | 当用户单击按钮时传递给命令事件的字符串值。
+PostBackUrl | 当用户单击按钮时出现需要的页面地址。
 ## ASP.NET Core
 
 ### ASP.NET Core简介
