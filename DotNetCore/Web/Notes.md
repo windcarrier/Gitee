@@ -395,15 +395,15 @@ AwesomeLibrary.CSharp 和 AwesomeLibrary.FSharp 的项目文件现在需要将 A
 
 2. 在 *.template.config* 目录下添加配置文件 *template.json*。 如需了解json文件 更多内容请参阅[新用户控制台程序模版定义](https://docs.microsoft.com/zh-cn/dotnet/core/tools/custom-templates#templatejson)
 
-### 
+###
 -----------
 
 ## ASP.NET
 
->[极客学院 ASP.NET 教程](http://wiki.jikexueyuan.com/project/asp-net/environment-setup.html)
->[ASP.NET 学习总结（50+篇）](http://www.shouce.ren/api/view/a/15487)
->[.NET Core+MySql+Nginx 容器化部署](https://www.jianshu.com/p/2a755277a1e6)
->[Asp.net mvc 知多少（一）](https://www.jianshu.com/p/5f6156cacc76)
+> + [极客学院 ASP.NET 教程](http://wiki.jikexueyuan.com/project/asp-net/environment-setup.html)
+> + [ASP.NET 学习总结（50+篇）](http://www.shouce.ren/api/view/a/15487)
+> + [.NET Core+MySql+Nginx 容器化部署](https://www.jianshu.com/p/2a755277a1e6)
+> + [Asp.net mvc 知多少（一）](https://www.jianshu.com/p/5f6156cacc76)
 
 ### ASP.Net 简介
 
@@ -644,14 +644,14 @@ ASP.NET 中的服务器对象是 **System.Web.HttpServerUtility** 类的一个�
 HttpServerUtility类的方法和属性通过ASP.NET提供的内部服务器对象公开的。
 以下表格提供了HttpServerUtility类一系列的属性：
 
-| 属性 | 描述 |
-| ---- | ---- |
-|MachineName|服务器电脑的名称|
-|ScriptTimeOut|以秒为单位获取和设置请求超时的值|
+ 属性 | 描述
+---- | ----
+MachineName | 服务器电脑的名称
+ScriptTimeOut | 以秒为单位获取和设置请求超时的值
 
 以下表格提供了一些重要的方法:
-| 方法 | 描述 |
-| ---- | ---- |
+方法 | 描述
+---- | ----
 CreateObject(String) | 创建一个 COM 对象的实例，由其 ProgID 验证。
 CreateObject(Type) | 创建一个 COM 对象的实例，由其 Type 验证。
 Equals(Object) | 决定具体的对象是否和现有对象一致。
@@ -878,7 +878,7 @@ ViewStateMode | 获取或设置该控件的视图状态。
 Visible | 表示服务器控件是否可见。
 Width | 获取或设置 Web 服务器控件的宽度。
 
-#### 服务器控件的方法:
+#### 服务器控件的方法
 
 方法 | 描述
 --- | ---
@@ -982,7 +982,7 @@ HtmlButton | \<button> element
 HtmlButton | \<button> element
 HtmlForm | \<form> element
 HtmlTable | \<table> element
-HtmlTableCell | \<td> and <th>
+HtmlTableCell | \<td> and \<th>
 HtmlTableRow | \<tr> element
 HtmlTitle | \<title> element
 HtmlSelect | \<select>  element
@@ -1081,6 +1081,451 @@ Columns | 在字符的文本框的宽度。实际宽度是基于用于文本输�
 Rows | 多行文本框的高度。默认值是 0，表示一个单行文本框。
 大多使用属性的标签控件是 'Text'，它代表在标签上显示的文本。
 
+大多使用属性的标签控件是 'Text'，它代表在标签上显示的文本
+
+#### 复选框和单选按钮
+
+一个复选框将显示一个选项，用户可以选中或取消。单选按钮呈现一组用户可以只选择一个选项的选项组。
+
+如果要创建一组单选按钮，您可以为每个单选按钮组中的组名属性指定相同的名称。如果一个以上的组需要呈现一个单一的形式，则指定每个组不同的组的名称。
+
+如果您想按照最初显示的形式来选中复选框或单选按钮，可将其选中属性为 true。如果多个单选按钮在一组的属性设置为 true，则只有最后一个被认为是 true
+
+复选框的基本语法：
+
+```html
+<asp:CheckBox ID= "chkoption" runat= "Server">
+</asp:CheckBox>
+```
+
+单选按钮的基本语法：
+
+```html
+<asp:RadioButton ID= "rdboption" runat= "Server">
+</asp: RadioButton>
+```
+
+复选框和单选按钮的通用属性：
+
+属性 | 描述
+---- | ----
+Text | 在复选框或单选按钮旁边显示的文本。
+Checked | 制定是否被选中，默认为未选中。
+GroupName | 控件归属组的名称。
+
+#### 列表控件
+
+ASP.NET 提供以下控件：
+
++ 下拉式列表，
++ 列表框，
++ 单选按钮列表，
++ 复选框列表，
++ 项目符号列表。
+
+这些控件让用户可以从一个或多个项目列表中选择。列表框和下拉列表包含一个或多个列表项。这些列表可以通过代码或者由 ListItemCollection 编辑器被加载。
+
+列表框控件的基本语法：
+
+```html
+<asp:ListBox ID="ListBox1" runat="server" AutoPostBack="True"    OnSelectedIndexChanged="ListBox1_SelectedIndexChanged">
+</asp:ListBox>
+```
+
+下拉列表控件的基本语法：
+
+```html
+<asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="True"   OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged">
+</asp:DropDownList>
+```
+
+列表框和下拉列表的通用属性：
+
+属性 | 描述
+---- | ----
+Items | 代表了控件内项目的 ListItem 对象的集合。此属性回传 ListItemCollection 类型的对象。
+Rows | 指定在框中显示的项目数。如果实际的列表中比显示的列表包含更多的行，则滚动条会被添加。
+SelectedIndex | 当前所选项目的索引。如果一个以上的项目被选择，则第一个索引选择项目。如果没有选择项目，此属性的值为 -1。
+SelectedValue | 当前选定项的值。如果一个以上的项目被选择，则第一项的值被选择。如果没有选中的项，该属性的值是一个空字符串("")。
+SelectionMode | 表示一个列表框是否允许单个选择或多个选择。
+
+每个列表项对象的通用属性：
+
+属性 | 描述
+---- | ----
+Text | 为项目所显示的文本。
+Selected | 表示项目是否被选定。
+Value | 与项目相关的一串字符。
+
+需要重点关注的是：
+
++ 如果您要在一个下拉列表或列表框中的项目工作，则需使用该控件的项目属性。此属性返回一个 ListItemCollection 对象，它包含该列表的所有项目。
++ 当用户从下拉列表或列表框中选择一个不同的项目时，SelectedIndexChanged 事件被引发。
+
+#### ListItemCollection
+
+ListItemCollection 对象是 ListItem 对象的集合。每个 ListItem 对象代表列表中的一个项目。在一个 ListItemCollection 中项目编号从 0 开始。
+
+当一个列表框中的项目被加载过程中使用的字符串是比如：lstcolor.Items.Add ("Blue") 时，那么文字和列表项的值的属性设置是您指定的字符串值。为了以不同的方式设置，你必须创建一个列表项的对象，然后添加该项目到集合。
+
+ListItemCollection 编辑器用于将项目添加到一个下拉列表或列表框。它被用来创建项目的静态列表。若要显示集合编辑器，则从智能标签菜单中选择编辑项目，或者选择控件，然后在属性窗口的项目属性中单击省略号按钮
+
+ListItemCollection 的通用属性：
+
+属性 | 描述
+---- | ----
+Item(integer) | 表示在指定索引处的项目的 ListItem 对象。
+Count | 在集合中项目的个数。
+
+ListItemCollection 的基本方法：
+方法 | 描述
+---- | ----
+Add(string) | 在集合的末端增加一个新的项目并为项目文本属性分配字符串参数。
+Add(ListItem) | 在集合末端添加一个新的项目。
+Insert(integer, string) | 在集合中指定索引位置插入项目，并为项目文本属性分配字符串参数。
+Insert(integer, ListItem) | 在集合中指定索引中的位置插入项目。
+Remove(string) | 移除与文本值相同的字符串的项目。
+Remove(ListItem) | 移除指定的项目。
+RemoveAt(integer) | 作为整数移除在指定索引中的项目。
+Clear | 移除集合中所有项目。
+FindByValue(string) | 传回与字符串值相同的项目。
+FindByValue(Text) | 传回与字符串文本相同的项目。
+
+#### 单选按钮列表和复选框列表
+
+单选按钮列表呈现互相排斥的选项列表。一个复选框列表列呈现独立选项的列表。这些控件包含 ListItem 对象的集合，它们可以通过控件的项目属性被参考。
+
+单选按钮列表的基本语法：
+
+```html
+<asp:RadioButtonList ID="RadioButtonList1" runat="server" AutoPostBack="True"
+   OnSelectedIndexChanged="RadioButtonList1_SelectedIndexChanged">
+</asp:RadioButtonList>
+```
+
+复选框列表的基本语法：
+
+```html
+<asp:CheckBoxList ID="CheckBoxList1" runat="server" AutoPostBack="True" 
+   OnSelectedIndexChanged="CheckBoxList1_SelectedIndexChanged">
+</asp:CheckBoxList>
+```
+
+复选框和单选按钮列表的通用属性：
+
+属性 | 描述
+---- | ----
+RepeatLayout | 该属性指定在提出格式化列表过程中是否使用标签或普通 HTML 流。默认为表格。
+RepeatDirection | 它指定了方向，在该方向中控件可以被重复。可用的值是水平和垂直。默认是垂直的。
+RepeatColumns | 当重复控件时，它指定了列的数字；默认为 0。
+
+#### 项目符号列表和编号列表
+
+项目符号列表控件创建项目符号列表或编号列表。这些控件包含 ListItem 对象的集合，它们可以通过控件的项目属性被参考。
+
+项目符号列表的基本语法：
+
+```html
+<asp:BulletedList ID="BulletedList1" runat="server">
+</asp:BulletedList>
+```
+
+项目符号列表的通用属性：
+
+属性 | 描述
+---- | ----
+BulletStyle | 该属性指定样式和项目编号的外观或者数字。
+RepeatDirection | 它指定了方向，在该方向中控件可以被重复。可用的值是水平和垂直。默认是垂直的。
+RepeatColumns | 当重复控件时，它指定了列的数字；默认为 0。
+
+#### 超链接控件
+
+超链接控件就像 HTML \<a> 元素。
+
+超链接控件的基本语法：
+
+```html
+<asp:HyperLink ID="HyperLink1" runat="server">
+   HyperLink
+</asp:HyperLink>
+```
+
+它具有以下属性：
+
+属性 | 描述
+---- | ----
+ImageUrl | 由控件显示的图像的路径。
+NavigateUrl | 目标链接地址。
+Text | 作为链接显示的文本。
+Target | 加载链接页面的窗口或框架。
+
+#### 图像控件
+
+若图片无法显示，图像控件则在网页，或者一些替代文本上显示图片。
+
+图像控件的基本语法：
+
+```html
+<asp:Image ID="Image1" runat="server">
+```
+
+它具有以下重要属性：
+
+属性 | 描述
+---- | ----
+AlternateText | 图片不存在时显示替代文本。
+ImageAlign | 对齐选项控件。
+ImageUrl | 由控件显示的图像的路径。
+
+### 指令
+
+ASP.NET 指令是指定可选设置的说明，如注册一个自定义的控制和页面的语言。这些设置介绍了 NET Framework 如何处理单页表单(.aspx)或用户控件(.ascx)网页。
+
+下达指令的基本语法：
+
+```html
+<%@  directive_name attribute=value  [attribute=value]  %>
+```
+
+在这一部分中，我们将介绍 ASP.NET 指令，同时会在整个教程中应用大多数指令。
+
+#### 应用程序指令
+
+应用指令定义特定应用程序的属性。它是在 global.aspx 文件的顶部提供。
+
+应用程序指令的基本语法：
+
+```html
+<%@ Application Language="C#" %>
+```
+
+应用程序指令的属性：
+
+属性 | 描述
+---- | ----
+Inherits | 从类的名称中继承。
+Description | 应用的文本描述。解析器和编译器忽略这一点。
+Language | 应用在代码组中的语言。
+
+#### 集合指令
+
+集合指令链接着一个网页链接的组件或在分析时的应用程序。这可能会出现在整个应用类型链接 Global.asax 文件中，页面文件中，用于链接到另一个网页的用户控件中或用户控件中。
+
+集合控件的基本语法是：
+
+```html
+<%@ Assembly Name ="myassembly" %>
+```
+
+集合控件的属性是：
+
+属性 | 描述
+---- | ----
+Name | 被链接的集合组件的名称。
+Src | 源文件被动态链接和编辑的路径。
+
+#### 控制指令
+
+控制指令是与用户控件一同使用并出现在用户控件(.ascx)文件中。
+
+控制指令的基本语法是：
+
+```html
+<%@ Control Language="C#"  EnableViewState="false" %>
+```
+
+控制指令的属性是：
+
+属性 | 描述
+---- | ----
+AutoEventWireup | 允许或禁用事件处理程序的自动关联的布尔值。
+ClassName | 控件的文件名。
+Debug | 许或禁用编辑调试符号的布尔值。
+Description | 控制页面的文字说明，被编译器忽略。
+EnableViewState | 页面请求为是否保持视图状态的布尔值。
+Explicit | 在 VB 语言下，告知编辑器使用选项显示模式。
+Inherits | 控制页面继承的类。
+Language | 编码和脚本的语言。
+Src | 代码隐藏类的文件名。
+Strict | 在 VB 语言下，告知编辑器使用选项标准模式。
+
+#### 工具指令
+
+工具指令表明网页，母版页或者用户控制页必须执行具有详细说明的.Net 框架界面。
+
+工具指令的基本语法是：
+
+```html
+<%@ Implements  Interface="interface_name" %>
+```
+
+#### 导入指令
+
+导入指令导入一个命名空间到用户控制应用程序的页面。如果在 global.asax 文件中指定了 Import 指令，那么会将其应用到整个应用程序。如果它是在用户控制页面的网页中，则会将其应用到该网页或控件中。
+
+导入指令的基本语法是：
+
+```html
+<%@ namespace="System.Drawing" %>
+```
+
+#### 主要指令
+
+主要指令指定了一个页面文件作为主页。
+
+样本主页指令的基本语法是：
+
+```html
+<%@ MasterPage Language="C#"  AutoEventWireup="true"  CodeFile="SiteMater.master.cs" Inherits="SiteMaster"  %>
+```
+
+#### MasterType 指令
+
+MasterType 指令指定一个类名到页面的主属性，强化其类型。
+
+母版式指令的基本语法是：
+
+```html
+<%@ MasterType attribute="value"[attribute="value" ...]  %>
+```
+
+#### 输出缓存指令
+
+输出缓存指令控制网页或用户控件的输出缓存策略。
+
+输出缓存指令的基本语法：
+
+```html
+<%@ OutputCache Duration="15" VaryByParam="None"  %>
+```
+
+#### 页面指令
+
+页面指令定义特定的页面分析器和编译器的页面文件的属性。
+
+页面指令的基本语法是：
+
+```html
+<%@ Page Language="C#"  AutoEventWireup="true" CodeFile="Default.aspx.cs"  Inherits="_Default"  Trace="true" %>
+```
+
+页面指令的属性是：
+
+属性 | 描述
+---- | ----
+AutoEventWireup | 允许或禁用正在自动绑定到方法页面事件的布尔值;例如，Page_Load。
+Buffer | 允许或禁用 HTTP 响应缓冲的布尔值。
+ClassName | 页面的类别名称。
+ClientTarget | 服务器控件应呈现的内容的浏览器
+CodeFile | 代码隐藏文件的名称。
+Debug | 允许或禁止使用调试符号编译的布尔值。
+Description | 页面的文件说明，由解析器忽略。
+EnableSessionState | 启用或禁用页面会话状态为只读。
+EnableViewState | 允许或禁止跨页请求视图状态的布尔值。
+ErrorPage | 未经处理的页面异常发生的情况下的重定地址。
+Inherits | 后台代码或其他类的名称。
+Language | 代码的编程语言。
+Src | 后台代码类的文件名。
+Trace | 启用或禁用跟踪。
+TraceMode | 表示跟踪信息的显示方式，并按照时间或者类别排序。
+Transaction | 表示交易是否被支持。
+ValidateRequest | 表示所有输入数据是否被有效验证为 hardcoded 列表值得布尔值。
+
+#### 前页型指令
+
+前页型指令为一个页面分配类别，使得该页面类型被强化。
+
+前页型指令的样本的基本语法：
+
+<%@ PreviousPageType attribute="value"[attribute="value" ...]   %>
+
+#### 参考指令
+
+参考指令表明另一个页面或用户控件应编译和链接到当前页面。
+
+参考指令的基本语法是：
+
+```html
+<%@ Reference Page ="somepage.aspx" %>
+```
+
+#### 注册指令
+
+注册指令用于注册定制服务器控件和用户控件。
+
+注册指令的基本语法是：
+
+```html
+<%@ Register Src="~/footer.ascx" TagName="footer" TagPrefix="Tfooter" %>
+```
+
+### 管理状态
+
+超文本传输协议(HTTP)是一种无状态协议。当客户端从服务器断开连接时，ASP.NET 引擎将丢弃页面对象。这样一来，每个 Web 应用程序能够扩展到同时用于大量请求，但是不会耗尽服务器内存。
+
+然而，需要有一些技术来存储各个请求之间的信息并在需要时取回。这个信息则称为状态，即所有控件的当前值和在当前会话中当前用户使用的变量。
+
+ASP.NET 管理四种状态：
+
++ 视图状态
++ 控制状态
++ 会话状态
++ 应用程序状态
+
+#### 视图状态
+
+视图状态是页面及其所有控件的状态。它通过 ASP.NET 框架的反馈保持不变。
+
+当一个页面被发送回客户端，这些页面变化的属性及其控件是确定的，并存储在名为 _VIEWSTATE 的一个隐藏输入字段的值内。当页面被再次回发时，_VIEWSTATE 字段随 HTTP 请求被发送到服务器。
+
+视图状态可以对以下内容启用或者禁用：
+
++ **整个应用程序**：设置 web.config 文件中 部分的 EnableViewState 属性。
++ **一个页面**：设置页面指令的 EnableViewState 属性为 <%@ Page Language="C#" EnableViewState="false" %>
++ **一个控件**：设置控件 .EnableViewState 属性。
+
+它通过使用视图状态对象，该对象是由被一组视图状态项目定义的 StateBag 类别定义的。该 StateBag 是一种数据结构，包含属性值对并被存储为与对象相关联的字符串。
+
+StateBag 类具有以下属性：
+
+属性 | 描述
+---- | ----
+Item(name) | 具有指定名称的视图状态的值，是 StateBag 的默认属性。
+Count | 状态集合中的项目名称。
+Keys | 集合中所有项目的密钥集合。
+Values | 集合中所有项目的值的集合。
+
+StateBag 类具有以下方法：
+
+方法 | 描述
+---- | ----
+Add(name, value) | 添加一个项目到视图状态集合，更新现有项目。
+Clear | 移除集合中所有项目。
+Equals(Object) | 确定指定的对象是否等于当前对象。
+Finalize | 允许释放资源并执行其他清理操作。
+GetEnumerator | 返回存储在 StateBag 对象中重复的 StateItem 对象的密钥/值对的计数器。
+GetType | 获取当前实例的类型。
+IsItemDirty | 检查存储在 StateBag 对象以确认其是否已被修改。
+Remove(name) | 移除制定项目。
+SetDirty | 设置 StateBag 对象的状态以及每个由其包含的 StateItem 对象的 Dirty 属性。
+SetItemDirty | 为在 StateBag 对象中的指定 StateItem 对象设置 Dirty 属性。
+ToString | 返回代表状态包对象的字符串。
+
+#### 控制状态
+
+控制状态不能被直接修改，存取或禁用。
+
+#### 会话状态
+
+当用户连接到 ASP.NET 网站，一个新的会话对象将被创建。当会话状态开启时，新的会话状态会为每一个新的请求而创建。这种会话状态对象会成为运行环境中的一部分并可通过页面使用。
+
+会话状态通常用于存储应用程序数据，比如详细目录，供应商清单，客户记录或购物车。它可以存储用户的信息及其偏好信息，并保存用户未决定的路径。
+
+会话由 120 位的 SessionID 识别和跟踪，从客户端传递到服务器并且作为 cookie 或修改的 URL 回传。SessionID 是全球唯一的，随机的。
+
+会话状态对象由 HttpSessionState 类创建，它定义会话状态项集合。
+
+HttpSessionState 类具有以下属性：
 
 ## ASP.NET Core
 
