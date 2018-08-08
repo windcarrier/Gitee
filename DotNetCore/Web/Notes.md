@@ -1527,6 +1527,325 @@ ToString | 返回代表状态包对象的字符串。
 
 HttpSessionState 类具有以下属性：
 
+属性 | 描述
+---- | ----
+SessionID | 唯一的会话标识符。
+Item(name) | 具有指定名称的会话状态项的值，是 HttpSessionState 类的默认属性。
+Count | 会话状态集合中项的数量。
+TimeOut | 获取和设置时间量，几分钟内，在供应商停止会话状态前在请求间被允许。
+
+HttpSessionState 类有以下方法：
+
+方法 | 描述
+---- | ----
+Add(name, value) | 添加新的项到会话状态集合。
+Clear | 移除会话状态集合中所有项。
+Remove(name) | 移除会话状态集合中的指定项。
+RemoveAll | 移除会话状态集合中所有密钥和值。
+RemoveAt | 从会话状态集合中删除指定索引处的项。
+
+会话状态对象是一个名 - 值对，它可以从会话状态对象中存储和检索信息。同样地，您可以使用以下代码：
+
+```cs
+void StoreSessionInfo()
+{
+   String fromuser = TextBox1.Text;
+   Session["fromuser"] = fromuser;
+}
+
+void RetrieveSessionInfo()
+{
+   String fromuser = Session["fromuser"];
+   Label1.Text = fromuser;
+}
+```
+
+以上代码只存储在会话词典对象中的字符串，但是，它可以存储所有原始数据类型和由原始数据类型组成的阵列，DataSet, DataTable, HashTable, 和图像对象，以及继承 ISerializable 对象的任意用户定义的类。
+
+##### session的存储方式和配置
+
+Session又称为会话状态，是Web系统中最常用的状态，用于维护和当前浏览器实例相关的一些信息。我们控制用户去权限中经常用到Session来存储用户状态，这篇文章会讲下Session的存储方式、在web.config中如何配置Session、Session的生命周期等内容。
+
+ 
+
+　　1、Session的存储方式。
+
+　　session其实分为客户端Session和服务器端Session。
+
+　　当用户首次与Web服务器建立连接的时候，服务器会给用户分发一个 SessionID作为标识。SessionID是一个由24个字符组成的随机字符串。用户每次提交页面，浏览器都会把这个SessionID包含在 HTTP头中提交给Web服务器，这样Web服务器就能区分当前请求页面的是哪一个客户端。这个SessionID就是保存在客户端的，属于客户端Session。
+
+　　其实客户端Session默认是以cookie的形式来存储的，所以当用户禁用了cookie的话，服务器端就得不到SessionID。这时我们可以使用url的方式来存储客户端Session。也就是将SessionID直接写在了url中，当然这种方法不常用。
+
+ 
+
+　　我们大多数提到的Session都是指服务器端Session。他有三种存储方式(自定义存储在这里不做讨论)：
+
+　　1.1保存在IIS进程中：
+
+　　保存在IIS进程中是指把Session数据保存在IIS的运行的进程中，也就是inetinfo.exe这个进程中，这也是默认的Session的存方式，也是最常用的。
+
+　　这种方式的优点是简单，性能最高。但是当重启IIS服务器时Session丢失。
+
+ 
+
+　　1.2.保存在StateServer上
+
+　　这种存储模式是指将Session数据存储在一个称为Asp.Net状态服务进程中，该进程独立于Asp.Net辅助进程或IIS应用程序池的单独进程，使用此模式可以确保在重新启动Web应用程序时保留会话状态，并使会话状态可以用于网络中的多个Web服务器。
+
+ 
+
+　　1.3.保存在SQL Server数据库中
+
+　　可以配置把Session数据存储到SQL Server数据库中，为了进行这样的配置，程序员首先需要准备SQL Server数据服务器，然后在运行.NET自带安装工具安装状态数据库。
+
+　　这种方式在服务器挂掉重启后都还在，因为他存储在内存和磁盘中。
+
+　　下面是这三种方式的比较：
+
+ 	
+InProc
+
+StateServer
+
+SQLServer
+
+存储物理位置
+
+IIS进程（内存）
+
+Windows服务进程（内存）
+
+SQLServer数据库（磁盘）
+
+存储类型限制
+
+无限制
+
+可以序列化的类型
+
+可以序列化的类型
+
+存储大小限制
+
+无限制
+
+使用范围
+
+当前请求上下文，对于每个用户独立
+
+生命周期
+
+第一次访问网站的时候创建Session超时后销毁
+
+优点
+
+性能比较高
+
+Session不依赖Web服务器，不容易丢失
+
+缺点
+
+容易丢失
+
+序列化与反序列化消耗CPU资源
+
+序列化与反序列化消耗CPU资源，从磁盘读取Session比较慢
+
+使用原则
+
+不要存放大量数据
+
+ 
+ 
+
+　　2、在web.config中配置Session
+
+　　Web.config文件中的Session配置信息：
+
+```xml
+<sessionState mode="Off|InProc|StateServer|SQLServer"cookieless="true|false"timeout="number of minutes"stateConnectionString="tcpip=server:port"sqlConnectionString="sql connection string"stateNetworkTimeout="number of seconds"/>
+```
+
+　　mode 设置将Session信息存储到哪里：
+
+　　　　— Off 设置为不使用Session功能；
+
+　　　　— InProc 设置为将Session存储在进程内，就是ASP中的存储方式，这是默认值；
+
+　　　　— StateServer 设置为将Session存储在独立的状态服务中；
+
+　　　　— SQLServer 设置将Session存储在SQL Server中。
+
+　　
+
+　　cookieless 设置客户端的Session信息存储到哪里：
+
+　　　　— ture 使用Cookieless模式；这时客户端的Session信息就不再使用Cookie存储了，而是将其通过URL存储。比如网址为http://localhost/MyTestApplication/(ulqsek45heu3ic2a5zgdl245)/default.aspx
+
+　　　　— false 使用Cookie模式，这是默认值。
+
+ 
+
+　　timeout 设置经过多少分钟后服务器自动放弃Session信息。默认为20分钟。
+
+ 
+
+　　stateConnectionString 设置将Session信息存储在状态服务中时使用的服务器名称和端口号，例如："tcpip=127.0.0.1:42424”。当mode的值是StateServer是，这个属性是必需的。（42424是默认端口）。
+
+ 
+
+　　sqlConnectionString 设置与SQL Server连接时的连接字符串。例如"data source=localhost;Integrated Security=SSPI;Initial Catalog=northwind"。当mode的值是SQLServer时，这个属性是必需的。
+
+ 
+
+　　stateNetworkTimeout 设置当使用StateServer模式存储Session状态时，经过多少秒空闲后，断开Web服务器与存储状态信息的服务器的TCP/IP连接的。默认值是10秒钟。
+
+ 
+
+　　下面来说下用StateServer和SqlServer来存储Session的方法
+
+　　2.1 StateServer
+
+　　第1步是打开状态服务。依次打开“控制面板”→“管理工具”→“服务”命令，找到ASP.NET状态服务一项，右键单击服务选择启动。
+
+　　如果你正式决定使用状态服务存储Session前，别忘记修改服务为自启动（在操作系统重启后服务能自己启动）以免忘记启动服务而造成网站Session不能使用
+
+　　第2步，在system.web节点中加入：stateNetworkTimeout="20"> stateConnectionString表示状态服务器的通信地址（IP：服务端口号）。由于我们现在在本机进行测试，这里设置成本机地址127.0.0.1。状态服务默认的监听端口为42422。当然，您也可以通过修改注册表来修改状态服务的端口号。
+
+　　(修改注册表来修改状态服务的端口号的方法：在运行中输入regedit启动注册表编辑器—依次打开HKEY_LOCAL_MACHINESYSTEMCurrentControlSetServicesaspnet_stateParameters节点，双击Port选项—选择基数为十进制，然后输入一个端口号即可。)
+
+ 
+
+　　2.2 SqlServer
+
+　　在SQL Server中执行一个叫做InstallSqlState.sql的脚本文件。这个脚本文件将在SQL Server中创建一个用来专门存储Session信息的数据库，及一个维护Session信息数据库的SQL Server代理作业。我们可以在以下路径中找到那个文件：
+
+[system drive]\winnt\Microsoft.NET\Framework\[version]\
+
+然后打开查询分析器，连接到SQL Server服务器，打开刚才的那个文件并且执行。稍等片刻，数据库及作业就建立好了。这时，你可以打开企业管理器，看到新增了一个叫ASPState的数据库。
+
+　　修改mode的值改为SQLServer。注意，还要同时修改sqlConnectionString的值，格式为：sqlConnectionString="data source=localhost; Integrated Security=SSPI;"(这种是通过windows集成身份验证)
+
+ 
+
+　　3、Session的生命周期
+
+　　Session的生命周期其实在第一节已经讲过了，和不同的存储过程有关。
+
+ 
+
+　　4、遍历以及销毁Session
+
+　　4.1遍历：
+
+System.Collections.IEnumerator SessionEnum = Session.Keys.GetEnumerator();
+while (SessionEnum.MoveNext())
+{
+    Response.Write(Session[SessionEnum.Current.ToString()].ToString() + " ");
+}
+
+##### aps.net session全面介绍(生命周期，超时时间)
+
+Asp.Net中的Session与Cookie最大的区别在于：Cookie信息全部存放于客户端，Session则只是将一个ID存放在客户端做为与服务端验证的标记，而真正的数据都是放在服务端的内存之中的。　　在传统web编程语言(比如asp)中，session的...
+
+  Asp.Net中的Session与Cookie最大的区别在于：Cookie信息全部存放于客户端，Session则只是将一个ID存放在客户端做为与服务端验证的标记，而真正的数据都是放在服务端的内存之中的。
+
+　　在传统web编程语言(比如asp)中，session的过期完全是按照TimeOut来老老实实处理的，超时值默认是20分钟，但问题是：通常有很多用户只看一眼网页，然后就关浏览器走人了，这种情况下，服务端内存里还长久保存着Session的数据，如果这种用户很多，对服务器资源无疑是一种浪费。默认情况下，系统采用的是InProc模式，即进程内模式。这种情况下，Session是保存在Asp.Net工作进程映射的内存中的，问题是Asp.Net工作进程为了维护良好的平均性能，会被系统经常回收。我们在IIS里可以配置自动回收(比如按时间周期回收，或者当内存使用达到多少值时自动回收)。　当Asp.Net工作进程被回收时，其映射的内存全部被清空并初始化，以便其它程序可以使用，所以Session也跟着一并消失了，就这是为什么Sesssion会无故消失的主要原因。
+
+一、session是怎么存储，提取的？
+
+1.在服务器端有一个session池，用来存储每个用户提交session中的数据，Session对于每一个客户端（或者说浏览器实例）是“人手一份”，用户首次与Web服务器建立连接的时候，服务器会给用户分发一个SessionID作为标识。SessionID是一个由24个字符组成的随机字符串。用户每次提交页面，浏览器都会把这个SessionID包含在HTTP头中提交给Web服务器，这样Web服务器就能区分当前请求页面的是哪一个客户端,而这个SessionID是一cookie的方式保存的在客户端的内存中的，如果想要得到Session池中的数据，服务器就会根据客户端提交的唯一SessionID标识给出相应的数据返回。
+
+2.输入正确的账号密码，点击登录，页面就会输出  “admin --- 点击登录”
+
+二、Session池中每个客户端的数据是怎么存储的？
+
+1.存储在Session池中的数据是全局型的数据，可以跨页面访问，每个SessionID中只存储唯一的数据，如：首先你这样设定：session["userName"]="admin",然后你在会话还没结束的session还没过期的情况下，你又设定：session["userName"]="123";这样这个SessionID没变，然而Session池中的数据则被覆盖。此时session["userName"]的值就是“123”，而不是其它。
+
+2.Session池中的数据不能跨进程访问。如：打开login.aspx页面写入session[“userName”]="admin";然后login页面不关闭，即此会话不结束，在这是你再在另外一个浏览器中打开一个login.aspx页面则session["userName"]=null
+
+3.输入账号密码，点击登录页面输出  “admin --- 点击登录” ，如果紧接着点击获取session按钮，则页面只输出"admin--- 点击获取session"，如果页面不关闭，打开另外一个浏览器，点击获取session按钮，则页面没法应。
+
+三丶session的声明周期与销毁
+
+1.session存储数据计时是滚动计时方式。具体是这样的，如果你打开写入session，从写入开始，此页面如果一直没有提交操作，则默认时间是20分钟，20分钟后session被服务器自动销毁，如过有提交操作，服务器会从提交后重新计时以此类推，直至设定时间内销毁。
+
+2.可以设置session的销毁时间。上面代码有提到。
+
+四丶session中保存的数据是在服务端的，而每个用户如进行登录操作，都要进行session数据写入，所以建议慎用session，就是少用。
+
+五丶代码举例:
+
+```html
+<head runat="server">
+    <title></title>
+    <script src="Scripts/jquery-1.4.1.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        function getSessionClick(action) {   //这个函数是为了知道哪一个提交按钮被点击
+            $("#hidlgc").val("");  //清空隐藏值
+            $("#hidlgc").val(action);   //给隐藏控件赋值
+        }
+    </script>
+</head>
+<body>
+    <form id="form1" method="post" action="MySession.aspx">
+         <table>
+            <tr>
+                <td>账号：</td><td><input type="text" name="txtUid" /></td>`
+            </tr>
+             <tr>
+                <td>密码：</td><td><input type="password" name="txtPwd" /></td>
+             </tr>
+             <tr>              
+                <td colspan="2">
+                    <input type="hidden" value="" id="hidlgc" name="hidlgclick" />
+                    <input onclick="getSessionClick('lgclick')" type="submit" value="登录" />
+                    <input type="submit" onclick="getSessionClick('getSession')" value="获取session" />
+                    <input type="submit" onclick="getSessionClick('backLg')" value="退出登录" />
+                </td>
+             </tr>
+         </table>
+    </form>
+</body>
+```
+
+asp.net后台处理代码:
+
+```cs
+protected void Page_Load(object sender, EventArgs e)
+        {
+            //把用户id写入session中
+            if (Request.Form["hidlgclick"] == "lgclick")
+            {
+                if(Request.Form["txtUid"].ToString()=="admin"&&Request.Form["txtUid"].ToString()=="admin") //判断用户登录
+                {
+                    Session["userName"] = Request.Form["txtUid"].ToString();  //把用户id保存到session中
+                    Response.Write(Session["userName"].ToString()+"---点击登录"); //获取session，并写入页面
+                }
+            }
+            //获取Session
+            if (Request.Form["hidlgclick"] == "getSession")
+            {
+                if (Session["userName"] != null)
+                {
+                    Response.Write(Session["userName"].ToString() + "---点击获取session"); //获取session，并写入页面
+                }
+            }
+            //取消当前会话，相当于注销（退出登录）。
+            if (Request.Form["hidlgclick"] == "backLg")
+            {
+                Session.Abandon();
+            }
+        }
+```
+
+设置session的过期时间:
+
+```html
+<system.web>
+   <sessionState timeout="40"></sessionState>  <!---设置session的过期时间，时间以分钟为单位-->
+```
+
 ## ASP.NET Core
 
 ### ASP.NET Core简介
