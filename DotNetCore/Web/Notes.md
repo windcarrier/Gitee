@@ -1206,7 +1206,7 @@ FindByValue(Text) | 传回与字符串文本相同的项目。
 复选框列表的基本语法：
 
 ```html
-<asp:CheckBoxList ID="CheckBoxList1" runat="server" AutoPostBack="True" 
+<asp:CheckBoxList ID="CheckBoxList1" runat="server" AutoPostBack="True"
    OnSelectedIndexChanged="CheckBoxList1_SelectedIndexChanged">
 </asp:CheckBoxList>
 ```
@@ -1566,17 +1566,13 @@ void RetrieveSessionInfo()
 
 Session又称为会话状态，是Web系统中最常用的状态，用于维护和当前浏览器实例相关的一些信息。我们控制用户去权限中经常用到Session来存储用户状态，这篇文章会讲下Session的存储方式、在web.config中如何配置Session、Session的生命周期等内容。
 
- 
-
-　　1、Session的存储方式。
+1、Session的存储方式。
 
 　　session其实分为客户端Session和服务器端Session。
 
 　　当用户首次与Web服务器建立连接的时候，服务器会给用户分发一个 SessionID作为标识。SessionID是一个由24个字符组成的随机字符串。用户每次提交页面，浏览器都会把这个SessionID包含在 HTTP头中提交给Web服务器，这样Web服务器就能区分当前请求页面的是哪一个客户端。这个SessionID就是保存在客户端的，属于客户端Session。
 
 　　其实客户端Session默认是以cookie的形式来存储的，所以当用户禁用了cookie的话，服务器端就得不到SessionID。这时我们可以使用url的方式来存储客户端Session。也就是将SessionID直接写在了url中，当然这种方法不常用。
-
- 
 
 　　我们大多数提到的Session都是指服务器端Session。他有三种存储方式(自定义存储在这里不做讨论)：
 
@@ -1586,13 +1582,9 @@ Session又称为会话状态，是Web系统中最常用的状态，用于维护�
 
 　　这种方式的优点是简单，性能最高。但是当重启IIS服务器时Session丢失。
 
- 
-
 　　1.2.保存在StateServer上
 
 　　这种存储模式是指将Session数据存储在一个称为Asp.Net状态服务进程中，该进程独立于Asp.Net辅助进程或IIS应用程序池的单独进程，使用此模式可以确保在重新启动Web应用程序时保留会话状态，并使会话状态可以用于网络中的多个Web服务器。
-
- 
 
 　　1.3.保存在SQL Server数据库中
 
@@ -1602,20 +1594,9 @@ Session又称为会话状态，是Web系统中最常用的状态，用于维护�
 
 　　下面是这三种方式的比较：
 
- 	
-InProc
-
-StateServer
-
-SQLServer
-
-存储物理位置
-
-IIS进程（内存）
-
-Windows服务进程（内存）
-
-SQLServer数据库（磁盘）
+x项目  | InProc | StateServer |SQLServer
+  --- | ----- | ---------- | --------
+存储物理位置 | IIS进程（内存） | Windows服务进程（内存） |SQLServer数据库（磁盘）
 
 存储类型限制
 
@@ -1743,6 +1724,8 @@ while (SessionEnum.MoveNext())
 {
     Response.Write(Session[SessionEnum.Current.ToString()].ToString() + " ");
 }
+
+原文出处：[http://www.cnblogs.com/lenther2002/p/4822302.html](http://www.cnblogs.com/lenther2002/p/4822302.html)
 
 ##### aps.net session全面介绍(生命周期，超时时间)
 
