@@ -1777,6 +1777,191 @@ protected void Page_Load(object sender, EventArgs e)
    <sessionState timeout="40"></sessionState>  <!---设置session的过期时间，时间以分钟为单位-->
 ```
 
+#### 应用程序状态
+
+ASP.NET 应用程序是在 Web 服务器上所有网页，代码和单个虚拟目录的其他文件的集合。当信息被存储在应用程序状态，它可以供所有用户使用。
+
+为了提供应用程序状态的使用，ASP.NET 从 HttpApplicationState 类中为每个应用程序创建一个应用程序状态对象，并将该对象存储在服务器内存中。该对象是由类文件 global.asax 表示。
+
+应用程序状态主要被用于存储计数器，其他统计数据及税率，折扣率等所有应用程序数据，并存储用户访问网站的路径。
+
+HttpApplicationState 类具有以下属性：
+
+属性 | 描述
+---- | ----
+Item(name) | 具有指定名称的应用程序项的值，是 HttpApplicationState 的默认属性。
+Count | 应用程序状态集合中项的数量。
+
+HttpApplicationState 类具有以下方法：
+
+方法 | 描述
+---- | ----
+Add(name, value) | 添加新的项目到应用程序状态集合。
+Clear | 移除应用程序状态集合中的所有项。
+Remove(name) | 移除应用程序状态集合中的指定项。
+RemoveAll | 移除一个 HttpApplicationState 集合中所有对象。
+RemoveAt | 移除从由索引找到的集合中的一个 HttpApplicationState 对象。
+Lock() | 锁定应用程序状态集合以便只有当前用户可以访问。
+Unlock() | 解锁应用程序状态集合以便所有用户可以访问。
+
+应用程序状态的数据通常是由为事件编写的处理程序维护：
+
++ 应用程序开启
++ 应用程序结束
++ 应用程序错误
++ 会话开始
++ 会话结束
+
+以下代码片段展示了用于存储应用程序状态信息的基本语法：
+
+```cs
+Void Application_Start(object sender, EventArgs e)
+{
+   Application["startMessage"] = "The application has started.";
+}
+
+Void Application_End(object sender, EventArgs e)
+{
+   Application["endtMessage"] = "The application has ended.";
+}
+```
+
+### 验证器
+
+ASP.NET 的有效性控制是验证用户输入的数据从而确保那些无用的、未经授权的、矛盾的数据不能被存储。
+
+ASP.NET 提供了如下几个方面的验证控制：
+
++ 必要字段验证器（RequiredFieldValidator）
++ 范围验证器（RangeValidator）
++ 比较验证器（CompareValidator）
++ 正则表达式验证器（RegularExpressionValidator）
++ 自定义验证器（CustomValidator）
++ 验证摘要控件（ValidationSummary）
+
+#### BaseValidator 类
+
+有效性验证的类从 BaseValidator 类中继承得到，因此它们继承了它的属性和方法。因此学习这个作为所有有效性控制的基础的基本类的属性和方法对于后续学习将有很大帮助：
+
+组成部分 | 描述
+------- | ----
+ControlToValidate | 获取或设置要验证的输入控件。
+Display | 说明错误提示如何显示。
+EnableClientScript | 说明客户端的是否采取了验证。
+Enabled | 开启或者关闭验证器。
+ErrorMessage | 说明错误字符串。
+Text | 如果验证失败将要显示的文本。
+IsValid | 说明控制值是否有效。
+SetFocusOnError | 在验证失败时是否将焦点设置到相关的输入控件上。
+ValidationGroup | 获取或设置此验证控件所属的验证组的名称。
+Validate | 对关联的输入控件执行验证并更新 IsValid 属性。
+
+#### RequiredFieldValidator 控制
+
+RequiredFieldValidator 控制确保必填字段不为空。它主要和文本框绑定使得用户向文本框输入。
+
+该控制的语法如下：
+
+```html
+<asp:RequiredFieldValidator ID="rfvcandidate"
+   runat="server" ControlToValidate ="ddlcandidate"
+   ErrorMessage="Please choose a candidate"
+   InitialValue="Please choose a candidate">
+
+</asp:RequiredFieldValidator>
+```
+
+#### RangeValidator 控件
+
+RangeValidator 控件负责核实输入的值是否在预设的范围之内。
+
+它有三种特定属性：
+
+属性 | 描述
+---- | ----
+类型（Type） | 它定义了数据类型。可用的数据类型包括：Currency, Date, Double, Integer, 和 String
+最小值（MinimumValue） | 它指定了范围中的最小值
+最大值（MaximumValue） | 它指定了范围中的最大值
+
+这个控件的语法如下：
+
+```html
+<asp:RangeValidator ID="rvclass" runat="server" ControlToValidate="txtclass"
+   ErrorMessage="Enter your class (6 - 12)" MaximumValue="12"
+   MinimumValue="6" Type="Integer">
+</asp:RangeValidator>
+```
+
+CompareValidator 控件
+CompareValidator 控件根据输入到另一个输入控件中的值、常量数值或正确的数据类型来验证值。
+
+它有以下的特定属性：
+
+属性 | 描述
+---- | ----
+Type | 它定义了数据类型。
+ControlToCompare | 它指定了输入控制中需要比较的值。
+ValueToCompare | 它指定了输入控制中不变的值。
+Operator | 它指定了比较的运算符，可用的值包括：相等、不等、大于等于、小于、小于等于、数据类型检查。
+
+这种控件的基本语法如下：
+
+```html
+<asp:CompareValidator ID="CompareValidator1" runat="server"
+   ErrorMessage="CompareValidator">
+
+</asp:CompareValidator>
+```
+
+#### RegularExpressionValidator 控件
+
+RegularExpressionValidator 控件允许通过和正则表达式匹配来确定输入的有效性。正则表达式在 ValidationExpression 的属性里设置。
+
+下表总结了正则表达式通常所用到的语法结构：
+
+转义字符 | 描述
+------- | ----
+\b | 和退格键匹配。
+\t | 和 tab 匹配。
+\r | 和回车键匹配。
+\v | 和垂直制表符匹配。
+\f | 和换页符匹配。
+\n | 和换行匹配。
+\ | 转义符。
+
+除了简单的字符匹配，一类字符可以被设置成匹配的，这类字符叫做通配符。
+
+通配符 | 描述
+----- | ---
+. | 可以匹配除了 \n 之外的任意字符。
+[abcd] | 可以匹配集合中的任意字符。
+[^abcd] | 排除集合中的任意字符。
+[2-7a-mA-M] | 匹配特定范围内的任意字符。
+\w | 匹配任意字母数字字符组和下划线。
+\W | 匹配任何非单词字符。
+\s | 匹配如空格，制表位，换行等字符。
+\S | 匹配任何非空格的字符。
+\d | 匹配任何小数字符。
+\D | 匹配任何非小数字符。
+量词可以表明字符出现的特定字数。
+
+量词 | 描述
+---- | ----
+\* | 零或更多匹配。
+\+ | 一个或更多匹配。
+? | 零或一匹配。
+{N} | N 匹配。
+{N,} | N 或更多匹配。
+{N,M} | 在 N 和 M 之间匹配。
+该控件的基本语法如下：
+
+```html
+<asp:RegularExpressionValidator ID="string" runat="server" ErrorMessage="string"
+   ValidationExpression="string" ValidationGroup="string">
+</asp:RegularExpressionValidator>
+```
+
+
 ## ASP.NET Core
 
 ### ASP.NET Core简介

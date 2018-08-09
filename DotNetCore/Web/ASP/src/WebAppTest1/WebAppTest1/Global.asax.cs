@@ -13,13 +13,13 @@ namespace WebAppTest1
         void Application_Start(object sender, EventArgs e)
         {
             // 在应用程序启动时运行的代码
-
+            Application["startMessage"] = "The application has started.";
         }
 
         void Application_End(object sender, EventArgs e)
         {
             //  在应用程序关闭时运行的代码
-
+            Application["endtMessage"] = "The application has ended.";
         }
 
         void Application_Error(object sender, EventArgs e)
@@ -40,7 +40,6 @@ namespace WebAppTest1
             // 注意: 只有在 Web.config 文件中的 sessionstate 模式设置为
             // InProc 时，才会引发 Session_End 事件。如果会话模式设置为 StateServer 
             // 或 SQLServer，则不会引发该事件。
-
         }
 
     }
