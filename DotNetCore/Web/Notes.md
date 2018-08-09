@@ -2165,6 +2165,28 @@ ADO.NET 技术提供了各种 ASP.NET 控件对象和后台数据之间的桥梁
 这张表包含了以下栏目：ID、Title、AuthorFirstName、AuthorLastName、Topic 和 Publisher。
 下图是这个数据表的截图：
 
+![DataTable](NotesSrc/Pic/data_table.jpg)
+
+下面让我们直接按照下面步骤实践：
+
+（1）创建一个网站并且在网页表格中添加 SqlDataSourceControl。
+
+![sqldatasourcecontrol.jpg](NotesSrc/Pic/sqldatasourcecontrol.jpg)
+
+（2）单击 Configure Data Source 选项。
+
+![configure_data_source.jpg](NotesSrc/Pic/configure_data_source.jpg)
+
+（3）点击 New Connection 按钮建立数据库连接。
+
+![connection_with_database.jpg](NotesSrc/Pic/connection_with_database.jpg)
+
+（4）连接一旦建立，你就可以保存他们以备以后应用。下一步，你会被要求设置 select statement：
+
+![select_statement.jpg](NotesSrc/Pic/select_statement.jpg)
+
+
+
 
 
 

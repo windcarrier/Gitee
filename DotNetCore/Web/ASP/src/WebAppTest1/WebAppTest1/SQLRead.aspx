@@ -14,11 +14,10 @@
          <div>
 
             <asp:SqlDataSource ID="SqlDataSource1" runat="server" 
-               ConnectionString= "<%$   ConnectionStrings:ASPDotNetStepByStepConnectionString%>" 
-               ProviderName= "<%$ ConnectionStrings:
-                  ASPDotNetStepByStepConnectionString.ProviderName %>" 
-               SelectCommand="SELECT [Title], [AuthorLastName], 
-                  [AuthorFirstName], [Topic] FROM [DotNetReferences]">
+               ConnectionString= "<%$ ConnectionStrings:ASPDotNetStepByStepConnectionString %>" 
+               ProviderName= "<%$ ConnectionStrings:ASPDotNetStepByStepConnectionString.ProviderName %>" 
+               
+                 SelectCommand="SELECT [Title], [AuthorFirstName], [AuthorLastName], [Topic] FROM [ASPDotNetStepByStep]">
             </asp:SqlDataSource>
 
             <asp:GridView ID="GridView1" runat="server" 
@@ -30,10 +29,10 @@
                <Columns>
                   <asp:BoundField DataField="Title" HeaderText="Title" 
                      SortExpression="Title" />
-                  <asp:BoundField DataField="AuthorLastName" 
-                     HeaderText="AuthorLastName" SortExpression="AuthorLastName" />
                   <asp:BoundField DataField="AuthorFirstName" 
                      HeaderText="AuthorFirstName" SortExpression="AuthorFirstName" />
+                  <asp:BoundField DataField="AuthorLastName" 
+                     HeaderText="AuthorLastName" SortExpression="AuthorLastName" />
                   <asp:BoundField DataField="Topic" 
                      HeaderText="Topic" SortExpression="Topic" />
                </Columns>
