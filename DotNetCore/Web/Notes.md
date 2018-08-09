@@ -1972,7 +1972,7 @@ CustomValidator 控件允许编写客户端和服务器端特定的验证例程�
 这种控件的基本语法如下：
 
 ```html
-<asp:CustomValidator ID="CustomValidator1" runat="server" 
+<asp:CustomValidator ID="CustomValidator1" runat="server"
    ClientValidationFunction=.cvf_func. ErrorMessage="CustomValidator">
 
 </asp:CustomValidator>
@@ -1989,7 +1989,7 @@ ShowMessageBox：用单独的窗口显示错误信息。
 这个控件的基本语法如下：
 
 ```html
-<asp:ValidationSummary ID="ValidationSummary1" runat="server" 
+<asp:ValidationSummary ID="ValidationSummary1" runat="server"
    DisplayMode = "BulletList" ShowSummary = "true" HeaderText="Errors:" />
 ```
 
@@ -2036,8 +2036,8 @@ protected void btnsubmit_Click(object sender, EventArgs e)
 
       <tr>
          <td class="style1" colspan="3" align="center">
-         <asp:Label ID="lblmsg" 
-            Text="President Election Form : Choose your president" 
+         <asp:Label ID="lblmsg"
+            Text="President Election Form : Choose your president"
             runat="server" />
          </td>
       </tr>
@@ -2058,9 +2058,9 @@ protected void btnsubmit_Click(object sender, EventArgs e)
          </td>
 
          <td>
-            <asp:RequiredFieldValidator ID="rfvcandidate" 
+            <asp:RequiredFieldValidator ID="rfvcandidate"
                runat="server" ControlToValidate ="ddlcandidate"
-               ErrorMessage="Please choose a candidate" 
+               ErrorMessage="Please choose a candidate"
                InitialValue="Please choose a candidate">
             </asp:RequiredFieldValidator>
          </td>
@@ -2081,7 +2081,7 @@ protected void btnsubmit_Click(object sender, EventArgs e)
          </td>
 
          <td>
-            <asp:RequiredFieldValidator ID="rfvhouse" runat="server" 
+            <asp:RequiredFieldValidator ID="rfvhouse" runat="server"
                ControlToValidate="rblhouse" ErrorMessage="Enter your house name" >
             </asp:RequiredFieldValidator>
             <br />
@@ -2098,9 +2098,9 @@ protected void btnsubmit_Click(object sender, EventArgs e)
          </td>
 
          <td>
-            <asp:RangeValidator ID="rvclass" 
-               runat="server" ControlToValidate="txtclass" 
-               ErrorMessage="Enter your class (6 - 12)" MaximumValue="12" 
+            <asp:RangeValidator ID="rvclass"
+               runat="server" ControlToValidate="txtclass"
+               ErrorMessage="Enter your class (6 - 12)" MaximumValue="12"
                MinimumValue="6" Type="Integer">
             </asp:RangeValidator>
          </td>
@@ -2117,8 +2117,8 @@ protected void btnsubmit_Click(object sender, EventArgs e)
          </td>
 
          <td>
-            <asp:RegularExpressionValidator ID="remail" runat="server" 
-               ControlToValidate="txtemail" ErrorMessage="Enter your email" 
+            <asp:RegularExpressionValidator ID="remail" runat="server"
+               ControlToValidate="txtemail" ErrorMessage="Enter your email"
                ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*">
             </asp:RegularExpressionValidator>
          </td>
@@ -2126,17 +2126,46 @@ protected void btnsubmit_Click(object sender, EventArgs e)
 
       <tr>
          <td class="style3" align="center" colspan="3">
-            <asp:Button ID="btnsubmit" runat="server" onclick="btnsubmit_Click" 
+            <asp:Button ID="btnsubmit" runat="server" onclick="btnsubmit_Click"
                style="text-align: center ; width:140px" Text="Submit"  />
          </td>
       </tr>
    </table>
-   <asp:ValidationSummary ID="ValidationSummary1" runat="server" 
+   <asp:ValidationSummary ID="ValidationSummary1" runat="server"
       DisplayMode ="BulletList" ShowSummary ="true" HeaderText="Errors:" />
 </form>
 </body>
 </html>
 ```
+
+### 数据库存取
+
+ASP.NET 允许存取和使用下列数据源：
+
++ 数据库（例如：Access、 SQL Server、 Oracle、 MySQL）
++ XML 文档
++ Business Objects
++ Flat files
+
+ASP.NET 隐藏了复杂的数据存取过程并且提供了更为高级的类和对象，通过他们数据可以更容易的存取。这些类隐藏了所有的连接，数据存取，数据检索和数据操纵的复杂的代码。
+
+ADO.NET 技术提供了各种 ASP.NET 控件对象和后台数据之间的桥梁。在本指导中，我们着眼于数据存取并且简单的介绍数据。
+
+#### 检索和显示数据
+
+在 ASP.NET 中检索和显示数据需要两种类型的数据控制：
+
++ 数据源控制 - 它管理数据的连接、数据的选择和其他工作，例如数据的分页和缓存等等。
++ 数据显示控制 - 这将约束和显示数据并且允许操作数据。
+
+我们将在以后详细探讨数据约束和数据源控制。在本节中，我们将应用 SqlDataSource 控件存取数据。在本章用 GridView 控件显示和操作数据。
+
+我们也会应用 Access 数据库，它包含了市场上有的 .Net 书籍的细节信息。将我们的数据库命名为 ASPDotNetStepByStep.mdb 并且我们将应用名为 DotNetReferences 的数据表。
+
+这张表包含了以下栏目：ID、Title、AuthorFirstName、AuthorLastName、Topic 和 Publisher。
+下图是这个数据表的截图：
+
+
 
 
 ## ASP.NET Core

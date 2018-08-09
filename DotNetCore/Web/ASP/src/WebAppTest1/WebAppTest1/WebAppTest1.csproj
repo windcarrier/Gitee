@@ -59,6 +59,7 @@
     <Content Include="Customer.aspx" />
     <Content Include="HTMLServer.aspx" />
     <Content Include="SessionState.aspx" />
+    <Content Include="SQLRead.aspx" />
     <Content Include="StateConfig.aspx" />
     <Content Include="Styles\Site.css" />
     <Content Include="Default.aspx" />
@@ -150,6 +151,13 @@
     </Compile>
     <Compile Include="Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
+    </Compile>
+    <Compile Include="SQLRead.aspx.cs">
+      <DependentUpon>SQLRead.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SQLRead.aspx.designer.cs">
+      <DependentUpon>SQLRead.aspx</DependentUpon>
     </Compile>
     <Compile Include="StateConfig.aspx.cs">
       <DependentUpon>StateConfig.aspx</DependentUpon>
