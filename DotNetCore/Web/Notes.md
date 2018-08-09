@@ -1961,6 +1961,51 @@ RegularExpressionValidator 控件允许通过和正则表达式匹配来确定�
 </asp:RegularExpressionValidator>
 ```
 
+#### CustomValidator 控件
+
+CustomValidator 控件允许编写客户端和服务器端特定的验证例程来验证值。
+
+客户端验证通过 ClientValidationFunction 来适当的完成。客户端验证例程应该用浏览器能够识别的脚本语言来编写，例如 JavaScript 或者 VBScript。
+
+服务器端的验证例程应该由控件的 ServerValidate 事件处理器来生成。服务器端的验证例程应该用任意的 .Net 语言来编写，例如：C# 或 VB.Net。
+
+这种控件的基本语法如下：
+
+```html
+<asp:CustomValidator ID="CustomValidator1" runat="server" 
+   ClientValidationFunction=.cvf_func. ErrorMessage="CustomValidator">
+
+</asp:CustomValidator>
+```
+
+#### ValidationSummary 控件
+
+ValidationSummary 控件并不会进行任何验证但是会在页面显示一个所有的错误的总结。这个总结可以显示出所有失败的验证控件的错误信息属性的值。
+
+下面两个相互包含的属性列表列出来错误信息：
+
+ShowSummary：用特殊格式显示错误信息。
+ShowMessageBox：用单独的窗口显示错误信息。
+这个控件的基本语法如下：
+
+```html
+<asp:ValidationSummary ID="ValidationSummary1" runat="server" 
+   DisplayMode = "BulletList" ShowSummary = "true" HeaderText="Errors:" />
+```
+
+#### 验证组
+
+复杂的页面会在不同的层面有不同的信息组。在这种情况下，不同的组就要有不同的验证这种情况可以用验证组来解决。
+
+创建一个验证组，你必须通过设置输入控件和验证控件的 ValidationGroup 属性从而把它们放到相同的逻辑组中。
+
+例子
+下面这个例子描述了一个将由全校学生填的表格，这个表格分为四部分是用来竞选校长的。在这里，我们将用验证控件来验证用户所输入的。
+
+这是在设计视图下的形式：
+
+
+
 
 ## ASP.NET Core
 
