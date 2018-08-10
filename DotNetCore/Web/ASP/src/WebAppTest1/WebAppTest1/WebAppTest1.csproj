@@ -67,6 +67,7 @@
     <Content Include="Scripts\jquery-1.4.1-vsdoc.js" />
     <Content Include="Scripts\jquery-1.4.1.js" />
     <Content Include="Scripts\jquery-1.4.1.min.js" />
+    <Content Include="TableBase.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -165,6 +166,13 @@
     </Compile>
     <Compile Include="StateConfig.aspx.designer.cs">
       <DependentUpon>StateConfig.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TableBase.aspx.cs">
+      <DependentUpon>TableBase.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TableBase.aspx.designer.cs">
+      <DependentUpon>TableBase.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebForm1.aspx.cs">
       <DependentUpon>WebForm1.aspx</DependentUpon>
