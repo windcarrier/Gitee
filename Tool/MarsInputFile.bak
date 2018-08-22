@@ -34,7 +34,7 @@ FR_80
 0	0	0	0	0	0	
 0	0	0	0	0	0	
 1	1	1	
-2	0	
+0	0	
 0	0	
 9999999	6000000	0	
 0	0	0	
@@ -1054,7 +1054,7 @@ SECTION
  3.008 
 * Software version : 2.9 R1100 32bit
 * Data version :  3.008 
-* User : dell, Microsoft, 21/08/2018 15:17:42
+* User : dell, Microsoft, 21/08/2018 15:17:19
 * Login : chongwang
 *
 ------------------ MAIN ------------------

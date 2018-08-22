@@ -34,7 +34,7 @@ FR_80
 0	0	0	0	0	0	
 0	0	0	0	0	0	
 1	1	1	
-2	0	
+0	0	
 0	0	
 9999999	6000000	0	
 0	0	0	
@@ -1054,7 +1054,7 @@ SECTION
  3.008 
 * Software version : 2.9 R1100 32bit
 * Data version :  3.008 
-* User : dell, Microsoft, 21/08/2018 15:17:42
+* User : dell, Microsoft, 21/08/2018 15:15:59
 * Login : chongwang
 *
 ------------------ MAIN ------------------
@@ -1075,7 +1075,7 @@ SECTION
 *IsWithDamStabCalc	ZDeepEqWrtline	ShearDam 	 ShearHar
 *StartFr_Nb	StartFr_In	EndFr_Nb	EndFr_In
 XXXXXXXXXX
- 0 	 0 	 0 	 0 	 1 	 1 	 1 	 0 	 0 
+ 0 	 0 	 0 	 0 	 0 	 0 	 0 	 0 	 0 
 0	0	0	0
 0	0	0	0
 0	0
@@ -1095,16 +1095,10 @@ XXXXXXXXXX
 ------------------ PANELS ------------------
 * Name                                    	Bending	SpanS	SpanL	Nnode	Nstigr	pan¡ã	NStrake	NTrans	NSpan	NDeckL
 * Panel¡ã is the panel number for info only, number of elements also
-Panel 1                                 	 100 	 1 	 1 	 1 	 0 	 1 	 1 	 0 	 0 	 0 
-Panel 2                                 	 100 	 1 	 1 	 1 	 0 	 2 	 1 	 0 	 0 	 0 
 *
 ------------------ NODES  ------------------
 * Panel	y	z	Absn¡ã	Inter	Ipan	Inod	Sh.Cur	Sh.yT	Sh.zT	Sh.R	PCod	Knuc	x0	h0	x1	x2	h1	Ncorr
 * warning : Abs n¡ã is given for information ; it is recomputed after reading
- 1 	0.0	0.0	 1 	 0 	 0 	 0 	 0 	 0 	 0 	 0 	 0 	 0 
- 2 	-1.5	1.0	 2 	 0 	 0 	 0 	 0 	 0 	 0 	 0 	 0 	 0 
 *
 ------------------ STRAKES  ------------------
 * Panel	Wid	Th	Cot	HLoc	HBr	Material
- 1 	0.0	 0 	 4 	 0 	 0 	 0 	 0 
- 2 	0.0	 0 	 4 	 0 	 0 	 0 	 0 
