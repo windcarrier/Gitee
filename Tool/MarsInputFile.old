@@ -92,7 +92,7 @@ SECTION
  3.008 
 * Software version : 2.9 R1100 32bit
 * Data version :  3.008 
-* User : dell, Microsoft, 24/08/2018 13:31:34
+* User : dell, Microsoft, 24/08/2018 14:39:08
 * Login : chongwang
 *
 ------------------ MAIN ------------------
@@ -113,7 +113,7 @@ SECTION
 *IsWithDamStabCalc	ZDeepEqWrtline	ShearDam 	 ShearHar
 *StartFr_Nb	StartFr_In	EndFr_Nb	EndFr_In
 111111
- 155 	 32.3 	 32.3 	 58 	 0 	 1 	 1 	 0 	 0 
+ 155 	 32.3 	 32.3 	 58 	 2 	 1 	 1 	 2 	 0 
 0	0	0	60000
 0	0	0	50000
 0	0
@@ -121,7 +121,7 @@ SECTION
  30 	 45 	 6 	 1 	 45 	 0 	 0 	 0 	 0 
  1 	 1 
  0 	 0 	 0 	 0 	 0 	-1 	 0 	 0 	 0 	 0 	 0 
- 0 	-1 	-1 	 2000 	 0 	
+ 1 	-1 	-1 	-2000 	 0 	
 48230029.JAPMOBI.AndrePouce.2000.05.03.06.36.01
 
  0 	 0 
