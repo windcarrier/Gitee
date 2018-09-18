@@ -2,6 +2,16 @@
 
 ## Web方向
 
+### ActionLink
+
+[ActionLink](https://msdn.microsoft.com/library/dd504972(v=vs.108).aspx)
+
+render  英[ˈrendə(r)]
+美[ˈrɛndɚ]
+v.  给予; 使成为; 递交; 表达;
+[例句]It contained so many errors as to render it worthless.
+它错误太多，所以毫无用处。
+
 ### 如何：通过对字符串应用 HTML 编码在 Web 应用程序中防止脚本侵入
 
 [如何：通过对字符串应用 HTML 编码在 Web 应用程序中防止脚本侵入](https://msdn.microsoft.com/library/a2a4yykt(v=vs.100).aspx)
