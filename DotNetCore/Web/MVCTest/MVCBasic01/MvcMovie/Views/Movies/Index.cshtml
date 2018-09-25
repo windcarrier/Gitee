@@ -15,6 +15,14 @@
 <body>
     <p>
         @Html.ActionLink("Create New", "Create")
+        @using (Html.BeginForm("Index","Movies",FormMethod.Get))
+        {
+            <p>
+                Genre: @Html.DropDownList("movieGenreViewBag","All")
+                Title: @Html.TextBox("id")<br />
+                <input type="submit" value="Fileter" />
+            </p>
+        }
     </p>
     <table class="table">
         <tr>
