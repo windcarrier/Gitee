@@ -2,6 +2,12 @@
 
 ## Web方向
 
+### 在 ASP.NET MVC 和 Web Pages 中的 XSRF/CSRF 防护
+
++ [在 ASP.NET 4.5 中的加密改进、 pt。1](https://blogs.msdn.microsoft.com/webdev/2012/10/22/cryptographic-improvements-in-asp-net-4-5-pt-1/)
++ [在 ASP.NET 4.5 中的加密改进、 pt。2](https://blogs.msdn.microsoft.com/webdev/2012/10/23/cryptographic-improvements-in-asp-net-4-5-pt-2/)
++ [在 ASP.NET 4.5 中的加密改进、 pt。3](https://blogs.msdn.microsoft.com/webdev/2012/10/24/cryptographic-improvements-in-asp-net-4-5-pt-3/)
+
 ### ActionLink
 
 [ActionLink](https://msdn.microsoft.com/library/dd504972(v=vs.108).aspx)

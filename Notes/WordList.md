@@ -2,6 +2,14 @@
 
 ## Program
 
+### scaffold
+
+英[ˈskæfəʊld] 美[ˈskæfoʊld]  
+n. 脚手架; <史>断头台;
+[例句]Moore ascended the scaffold and addressed the executioner.  
+穆尔走上断头台，和刽子手说话。  
+[其他] 复数：scaffolds
+
 ### component
 
 英[kəmˈpəʊnənt]  美[kəmˈpoʊnənt]  
