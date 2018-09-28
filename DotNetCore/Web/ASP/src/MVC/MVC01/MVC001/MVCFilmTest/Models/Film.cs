@@ -4,18 +4,18 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
-namespace MvcMoiveUnit.Models
+namespace MVCFilmTest.Models
 {
     public class Film
     {
         public int ID { get; set; }
-        public string Title { get; set; }
+        public string Name { get; set; }
         public DateTime DateTime { get; set; }
         public string Genre { get; set; }
         public decimal Price { get; set; }
     }
-    public class FileDBContext :DbContext
+    public class FilmDBContext : DbContext
     {
-        public DbSet<Film> DbSet { get; set; }//这个是何时被调用的？
+        public DbSet<Film> FilmdbSet { get; set; }
     }
 }

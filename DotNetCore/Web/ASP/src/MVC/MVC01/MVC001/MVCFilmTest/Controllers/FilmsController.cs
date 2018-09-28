@@ -6,18 +6,18 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using MvcMoiveUnit.Models;
+using MVCFilmTest.Models;
 
-namespace MvcMoiveUnit.Controllers
+namespace MVCFilmTest.Controllers
 {
     public class FilmsController : Controller
     {
-        private FileDBContext db = new FileDBContext();
+        private FilmDBContext db = new FilmDBContext();
 
         // GET: Films
         public ActionResult Index()
         {
-            return View(db.DbSet.ToList());
+            return View(db.FilmdbSet.ToList());
         }
 
         // GET: Films/Details/5
@@ -27,7 +27,7 @@ namespace MvcMoiveUnit.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Film film = db.DbSet.Find(id);
+            Film film = db.FilmdbSet.Find(id);
             if (film == null)
             {
                 return HttpNotFound();
@@ -46,11 +46,11 @@ namespace MvcMoiveUnit.Controllers
         // 详细信息，请参阅 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Title,DateTime,Genre,Price")] Film film)
+        public ActionResult Create([Bind(Include = "ID,Name,DateTime,Genre,Price")] Film film)
         {
             if (ModelState.IsValid)
             {
-                db.DbSet.Add(film);
+                db.FilmdbSet.Add(film);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -65,7 +65,7 @@ namespace MvcMoiveUnit.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Film film = db.DbSet.Find(id);
+            Film film = db.FilmdbSet.Find(id);
             if (film == null)
             {
                 return HttpNotFound();
@@ -78,7 +78,7 @@ namespace MvcMoiveUnit.Controllers
         // 详细信息，请参阅 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Title,DateTime,Genre,Price")] Film film)
+        public ActionResult Edit([Bind(Include = "ID,Name,DateTime,Genre,Price")] Film film)
         {
             if (ModelState.IsValid)
             {
@@ -96,7 +96,7 @@ namespace MvcMoiveUnit.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Film film = db.DbSet.Find(id);
+            Film film = db.FilmdbSet.Find(id);
             if (film == null)
             {
                 return HttpNotFound();
@@ -109,8 +109,8 @@ namespace MvcMoiveUnit.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Film film = db.DbSet.Find(id);
-            db.DbSet.Remove(film);
+            Film film = db.FilmdbSet.Find(id);
+            db.FilmdbSet.Remove(film);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
