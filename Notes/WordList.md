@@ -2,6 +2,13 @@
 
 ## Program
 
+### async
+
+英[ə'zɪŋk] 美[ə'zɪŋk]  
+adj. 异步的;
+[例句]Then we use "Async. Run" to run the tasks in parallel.  
+接着，我们使用“Async.Run”来并行运行这些任务。
+
 ### scaffold
 
 英[ˈskæfəʊld] 美[ˈskæfoʊld]  
