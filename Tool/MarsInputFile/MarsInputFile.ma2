@@ -92,7 +92,7 @@ SECTION
  3.008 
 * Software version : 2.9 R1100 32bit
 * Data version :  3.008 
-* User : dell, Microsoft, 26/10/2018 15:05:52
+* User : dell, Microsoft, 26/10/2018 16:01:00
 * Login : chongwang
 *
 ------------------ MAIN ------------------
@@ -133,8 +133,8 @@ FR_80
 ------------------ PANELS ------------------
 * Name                                    	Bending	SpanS	SpanL	Nnode	Nstigr	pan¡ã	NStrake	NTrans	NSpan	NDeckL
 * Panel¡ã is the panel number for info only, number of elements also
-COT3P InsideLBHD                        	 100 	 29.4 	 1 	 2 	 2 	 1 	 9 	 0 	 0 	 0 
-WBT3S InsideLBHD                        	 100 	 29.4 	 1 	 2 	 1 	 2 	 9 	 0 	 0 	 0 
+COT3P InsideLBHD                        	 100 	 29.4 	 1 	 2 	 8 	 1 	 9 	 0 	 0 	 0 
+WBT3S InsideLBHD                        	 100 	 29.4 	 1 	 2 	 0 	 2 	 9 	 0 	 0 	 0 
 COT3S InsideLBHD                        	 100 	 29.4 	 1 	 2 	 0 	 3 	 9 	 0 	 0 	 0 
 COT1P UpperDeck                         	 100 	 29.4 	 1 	 2 	 0 	 4 	 1 	 0 	 0 	 0 
 St8_HoriPanel_InTankWBT3P               	 100 	 29.4 	 1 	 2 	 0 	 5 	 1 	 0 	 0 	 0 
@@ -263,17 +263,32 @@ OnlyShell                               	 100 	 29.4 	 1 	 23 	 0 	 13 	 23 	 0 
 ------------------ STIFF LOC  ------------------
 * Panel	Ipan	Inod	Nstiff	Start	Cot	Spac	Dir	Side	Flange
  1 	 1 	 1 	 1 	 0 	 4 	 1 	 0 	 1 	 1 
- 1 	 1 	 1 	 1 	 2.3 	 4 	 1 	 0 	 1 	 1 
- 2 	 2 	 1 	 1 	 2.3 	 4 	 2.3 	 0 	 1 	 1 
+ 1 	 1 	 1 	 1 	 .7 	 4 	 1 	 0 	 1 	 1 
+ 1 	 1 	 1 	 1 	 1.4 	 4 	 1 	 0 	 1 	 1 
+ 1 	 1 	 1 	 1 	 2.1 	 4 	 1 	 0 	 1 	 1 
+ 1 	 1 	 1 	 1 	 2.8 	 4 	 1 	 0 	 1 	 1 
+ 1 	 1 	 1 	 1 	 3.6 	 4 	 1 	 0 	 1 	 1 
+ 1 	 1 	 1 	 1 	 4.4 	 4 	 1 	 0 	 1 	 1 
+ 1 	 1 	 1 	 1 	 5.2 	 4 	 1 	 0 	 1 	 1 
 *
 ------------------ STIFF SCANT  ------------------
 * Ipan	Type	hweb	tweb	hflan	tflan	Mater.	Igrp	Beff	SpanR	Bracket	BrLen	BrType	hweb	tweb	hflan	tflan	WebYoungMod	FlYoungMod	GlobalId
- 1 	 3 	 500 	 15 	 250 	 30 	 0 	 1 	-1 	 0 	 0 	 0 	 0 	
- 1 	 4 	 400 	 12 	 1 	 30 	 1 	 2 	-1 	 0 	 0 	 0 	 0 	
- 2 	 4 	 400 	 12 	 200 	 1 	 0 	 1 	-1 	 0 	 2 	 0 	 0 	 0 	 0  0 	 0 	 0 	 0 	 0 	 0 	 0 	
+ 1 	 4 	 400 	 12 	 220 	 23 	 0 	 1 	-1 	 0 	 2 	 0 	 0 	 0 	 0  0 	 0 	 0 	 0 	 0 	 0 	 0 	
+ 1 	 4 	 400 	 12 	 220 	 23 	 0 	 2 	-1 	 0 	 2 	 0 	 0 	 0 	 0  0 	 0 	 0 	 0 	 0 	 0 	 0 	
+ 1 	 4 	 400 	 12 	 220 	 23 	 0 	 3 	-1 	 0 	 2 	 0 	 0 	 0 	 0  0 	 0 	 0 	 0 	 0 	 0 	 0 	
+ 1 	 4 	 400 	 12 	 220 	 23 	 0 	 4 	-1 	 0 	 2 	 0 	 0 	 0 	 0  0 	 0 	 0 	 0 	 0 	 0 	 0 	
+ 1 	 4 	 400 	 12 	 220 	 23 	 0 	 5 	-1 	 0 	 2 	 0 	 0 	 0 	 0  0 	 0 	 0 	 0 	 0 	 0 	 0 	
+ 1 	 4 	 400 	 12 	 220 	 23 	 0 	 6 	-1 	 0 	 2 	 0 	 0 	 0 	 0  0 	 0 	 0 	 0 	 0 	 0 	 0 	
+ 1 	 4 	 400 	 12 	 220 	 23 	 0 	 7 	-1 	 0 	 2 	 0 	 0 	 0 	 0  0 	 0 	 0 	 0 	 0 	 0 	 0 	
+ 1 	 4 	 400 	 12 	 220 	 23 	 0 	 8 	-1 	 0 	 2 	 0 	 0 	 0 	 0  0 	 0 	 0 	 0 	 0 	 0 	 0 	
 *
 ------------------ STIFF SCANT BIS ------------------
 *Ipan	Igroup	IStiff	IsUEffSpans	Ul_bdg	Ul_shr	IsSimplySuppA	IsSimplySuppF
  1 	 1 	 1 	 0 	 0 	 0 	 0 	 0 
  1 	 2 	 1 	 0 	 0 	 0 	 0 	 0 
- 2 	 1 	 1 	 0 	 0 	 0 	 0 	 0 
+ 1 	 3 	 1 	 0 	 0 	 0 	 0 	 0 
+ 1 	 4 	 1 	 0 	 0 	 0 	 0 	 0 
+ 1 	 5 	 1 	 0 	 0 	 0 	 0 	 0 
+ 1 	 6 	 1 	 0 	 0 	 0 	 0 	 0 
+ 1 	 7 	 1 	 0 	 0 	 0 	 0 	 0 
+ 1 	 8 	 1 	 0 	 0 	 0 	 0 	 0 
