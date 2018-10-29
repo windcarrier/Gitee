@@ -92,7 +92,7 @@ SECTION
  3.008 
 * Software version : 2.9 R1100 32bit
 * Data version :  3.008 
-* User : dell, Microsoft, 26/10/2018 15:05:52
+* User : dell, Microsoft, 26/10/2018 15:10:00
 * Login : chongwang
 *
 ------------------ MAIN ------------------
@@ -277,3 +277,11 @@ OnlyShell                               	 100 	 29.4 	 1 	 23 	 0 	 13 	 23 	 0 
  1 	 1 	 1 	 0 	 0 	 0 	 0 	 0 
  1 	 2 	 1 	 0 	 0 	 0 	 0 	 0 
  2 	 1 	 1 	 0 	 0 	 0 	 0 	 0 
+*
+------------------ FATIGUE  ------------------
+* Ipan	Igroup	IStiff	b	co.typ	OptFull	OptGrind	Km	ToeAngle	IsColPlateWt	xf	IsSectDataDefault	SNCurveType_Aft	xf2	Reverse	SNCurveType_Fwd
+*Case a  	Case b  	Case c  	Case d  Full Load
+*Case a  	Case b  	Case c  	Case d  Ballast
+ 2 	 1 	 1 	 0 	 1 	 0 	 1 	 1 	 45 	 0 	 0 	-1 	 0 	 0 	 0 	 0  0 	 0 
+ 0 	 0 	 0 	 0 
+ 0 	 0 	 0 	 0 

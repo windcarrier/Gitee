@@ -92,7 +92,7 @@ SECTION
  3.008 
 * Software version : 2.9 R1100 32bit
 * Data version :  3.008 
-* User : dell, Microsoft, 26/10/2018 16:51:05
+* User : dell, Microsoft, 26/10/2018 16:51:02
 * Login : chongwang
 *
 ------------------ MAIN ------------------
@@ -871,24 +871,3 @@ OnlyShell                               	 100 	 29.4 	 1 	 23 	 0 	 13 	 23 	 0 
  11 	 2 	 1 	 0 	 0 	 0 	 0 	 0 
  12 	 1 	 1 	 0 	 0 	 0 	 0 	 0 
  12 	 2 	 1 	 0 	 0 	 0 	 0 	 0 
-*
------------------- COMPLINES  ------------------
-* Number of lines used for each compartment
- 8 
-*
------------------- COMPARTMENTS  ------------------
-* Name
-* Np().Ipan	.Inod	etc.
-* Type	MainDest	UseCalcYZ	UseCalcRoll	UseCalcFreeSurf
-* VcoG(1 to 20) dimmensions	 VcoG(22)	VcoFreeSurf(1to3)
-* VloaT (load type)
-* Vload(1 to 10) load char.
-*Filling level number, Filling level(), Free surface length(), Free surface breadth()
-Compartment 1
- 0 	9999	
- 1 	 1 	-1 	-1 	 0 
-0.0	0.0	0.0	0.0	121.8	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	
- 1 	 0 	 0 
-0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0	 0 	
- 0 	 0 	
- 0 	 0 	 0 	-1 	-1  1 
