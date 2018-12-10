@@ -38,3 +38,7 @@ vi.  询问; 表示怀疑;
 ### Razor语法
 
 [Razor](https://docs.microsoft.com/zh-cn/aspnet/web-pages/overview/getting-started/introducing-razor-syntax-c)
+
+### 重写(Override)与重载(Overload)
+
+[重写与重载](http://www.runoob.com/java/java-override-overload.html)
