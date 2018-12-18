@@ -44,3 +44,17 @@ n.	释放，排放，解除; 释放令; 公映的新影片，发布的新闻[消
 [例句]He was released from custody the next day  
 第二天他被从拘留所里放了出来。  
 [其他]	第三人称单数：releases 现在分词：releasing 过去式：released 过去分词：  released
+
+## syntagmatic
+
+adj.	组合关系的；横组合的;  
+[例句]Analyses on Texts English Reading from the Paradigmatic Relations and Syntagmatic Relations  
+从横组合和纵聚合关系看英语阅读中的文本分析
+
+## paradigmatic
+
+英[ˌpærədɪɡ'mætɪk]
+美[ˌpærədɪɡˈmætɪk]  
+adj.    聚合；范例的; <语>词形变化（表）的;  
+[例句]Their great academic success was paraded as paradigmatic.  
+他们辉煌的学术成就被当作了典范。
