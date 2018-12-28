@@ -2,6 +2,8 @@
 
 ## 架构
 
+### 软件架构设计说明书
+
 ### [STAThread]
 
 每个Thread都有一个关于ApartmentState（线程套间状态）的属性，可以把它设置为STA，MTA，UNKNOW。
@@ -10,4 +12,13 @@
 
 [*why*]
 
+## Word生成报告
+
+### [serializable]
+
+[Serializable特性](http://www.cnblogs.com/GreenLeaves/p/6753261.html)
+
+
 ## 界面
+
+## 工具函数说明
